@@ -314,6 +314,27 @@
       border-radius: 6px;
       font-size: 1rem;
     }
+
+    /* EXCEL TRAINER CODE INPUT */
+    .excel-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .excel-input-group input {
+      flex: 1;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 1.1rem;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .excel-input-group input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
   </style>
 </head>
 <body>
@@ -326,6 +347,7 @@
   <nav>
     <button class="nav-btn active" onclick="showPage('home', event)">🏠 Startseite</button>
     <button class="nav-btn" onclick="showPage('quiz', event)">20-Fragen-Quiz</button>
+    <button class="nav-btn" onclick="showPage('excel-trainer', event)">Excel-Formel-Trainer</button>
     <button class="nav-btn" onclick="showPage('downloads', event)">Downloads</button>
     <button class="nav-btn" onclick="showPage('din', event)">DIN 5008 Guide</button>
     <button class="nav-btn" onclick="showPage('rechner', event)">IHK-Notenrechner</button>
@@ -347,6 +369,14 @@
               <p>Teste dein Wissen zur AP1 mit interaktiven Prüfungsfragen und sofortigem Feedback.</p>
             </div>
             <span class="btn btn-primary" style="width: 100%;">Quiz starten ➔</span>
+          </div>
+
+          <div class="menu-card" onclick="showPage('excel-trainer', event)">
+            <div>
+              <h3>💻 Excel-Formel-Trainer</h3>
+              <p>Tippe die passenden Excel-Formeln für typische Büro- und Prüfungsszenarien ein.</p>
+            </div>
+            <span class="btn btn-primary" style="width: 100%;">Trainer starten ➔</span>
           </div>
 
           <div class="menu-card" onclick="showPage('downloads', event)">
@@ -387,6 +417,25 @@
         <div class="quiz-options" id="quiz-options"></div>
         <div id="quiz-feedback" class="feedback-box" style="display: none;"></div>
         <button id="next-quiz-btn" class="btn btn-primary" onclick="nextQuestion()" style="display: none;">Nächste Frage ➔</button>
+      </div>
+    </div>
+
+    <!-- NEW: EXCEL FORMEL TRAINER PAGE -->
+    <div id="page-excel-trainer" class="page">
+      <div class="card" id="excel-trainer-card">
+        <div class="quiz-header">
+          <span id="excel-progress">Aufgabe 1 von 10</span>
+          <span id="excel-score-display">Punkte: 0 / 10</span>
+        </div>
+        <div class="quiz-question" id="excel-question">Lädt Aufgabe...</div>
+        
+        <div class="excel-input-group">
+          <input type="text" id="excel-user-input" placeholder="z.B. =SVERWEIS(...)" onkeydown="if(event.key === 'KeyE' || event.key === 'Enter') checkExcelAnswer()">
+          <button class="btn btn-primary" onclick="checkExcelAnswer()">Prüfen</button>
+        </div>
+
+        <div id="excel-feedback" class="feedback-box" style="display: none;"></div>
+        <button id="next-excel-btn" class="btn btn-primary" onclick="nextExcelTask()" style="display: none;">Nächste Aufgabe ➔</button>
       </div>
     </div>
 
@@ -711,6 +760,9 @@
       if (pageId === 'quiz' && currentQuizIndex >= quizData.length) {
         resetQuiz();
       }
+      if (pageId === 'excel-trainer' && currentExcelIndex >= excelData.length) {
+        resetExcelTrainer();
+      }
     }
 
     // 20 IHK QUIZ-FRAGEN DATA
@@ -934,6 +986,152 @@
       loadQuestion();
     }
 
+    // EXCEL FORMEL TRAINER DATA & LOGIC
+    const excelData = [
+      {
+        task: "Ermittle den Artikelpreis per SVERWEIS aus der Tabelle A1:D50, wobei der Suchbegriff in A2 steht, der Preis in der 3. Spalte liegt und eine exakte Übereinstimmung gesucht ist.",
+        answers: ["=sverweis(a2;a1:d50;3;falsch)", "=sverweis(a2;a1:d50;3;0)"],
+        hint: "Syntax: =SVERWEIS(Suchkriterium; Matrix; Spaltenindex; 0/FALSCH)"
+      },
+      {
+        question: "Prüfe mit einer WENN-Funktion, ob der Wert in Zelle B2 größer als 100 ist. Wenn ja, gib 'Bonus', sonst 'Kein Bonus' aus.",
+        task: "Prüfe mit einer WENN-Funktion, ob der Wert in Zelle B2 größer als 100 ist. Wenn ja, gib 'Bonus', sonst 'Kein Bonus' aus.",
+        answers: ["=wenn(b2>100;\"bonus\";\"kein bonus\")"],
+        hint: "Syntax: =WENN(Bedingung; Dann-Wert; Sonst-Wert) (Text in Anführungszeichen!)"
+      },
+      {
+        task: "Zähle in dem Bereich B1:B20 alle Zellen, in denen der Wert größer als 50 ist.",
+        answers: ["=zählenwenn(b1:b20;\">50\")"],
+        hint: "Syntax: =ZÄHLENWENN(Bereich; Kriterium)"
+      },
+      {
+        task: "Summiere alle Beträge im Bereich C1:C50, deren zugehöriger Status in B1:B50 den Text 'Bezahlt' enthält.",
+        answers: ["=summewenn(b1:b50;\"bezahlt\";c1:c50)"],
+        hint: "Syntax: =SUMMEWENN(Suchbereich; Kriterium; Summenbereich)"
+      },
+      {
+        task: "Runde den Wert in Zelle A1 kaufmännisch auf genau 2 Nachkommastellen.",
+        answers: ["=runden(a1;2)"],
+        hint: "Syntax: =RUNDEN(Zahl; Anzahl_Stellen)"
+      },
+      {
+        task: "Berechne den Durchschnitt aller Werte im Bereich D1:D10.",
+        answers: ["=mittelwert(d1:d10)"],
+        hint: "Syntax: =MITTELWERT(Bereich)"
+      },
+      {
+        task: "Ermittle den Höchstwert (Maximum) aus dem Bereich E1:E25.",
+        answers: ["=max(e1:e25)"],
+        hint: "Syntax: =MAX(Bereich)"
+      },
+      {
+        task: "Verwende WENNFEHLER, um bei einem eventuellen Fehler in der Division (A1/B1) stattdessen den Text 'Fehler' auszugeben.",
+        answers: ["=wennfehler(a1/b1;\"fehler\")"],
+        hint: "Syntax: =WENNFEHLER(Wert; Wert_falls_Fehler)"
+      },
+      {
+        task: "Verbinde die Vorname-Zelle A2 und Nachname-Zelle B2 mit einem Leerzeichen dazwischen mithilfe der kaufmännischen Und-Verknüpfung (&).",
+        answers: ["=a2&\" \"&b2"],
+        hint: "Nutze das &-Zeichen zur Textverkettung und das Leerzeichen in Anführungszeichen: \" \""
+      },
+      {
+        task: "Ermittle die Anzahl aller numerischen Einträge im Bereich A1:A100.",
+        answers: ["=anzahl(a1:a100)"],
+        hint: "Syntax: =ANZAHL(Bereich) – zählt nur Zahlenzellen."
+      }
+    ];
+
+    let currentExcelIndex = 0;
+    let excelScore = 0;
+
+    function loadExcelTask() {
+      if (currentExcelIndex >= excelData.length) {
+        showExcelResult();
+        return;
+      }
+
+      const item = excelData[currentExcelIndex];
+      document.getElementById('excel-progress').innerText = `Aufgabe ${currentExcelIndex + 1} von ${excelData.length}`;
+      document.getElementById('excel-score-display').innerText = `Punkte: ${excelScore} / ${excelData.length}`;
+      document.getElementById('excel-question').innerText = item.task;
+      document.getElementById('excel-user-input').value = '';
+      document.getElementById('excel-user-input').disabled = false;
+      document.getElementById('excel-feedback').style.display = 'none';
+      document.getElementById('next-excel-btn').style.display = 'none';
+    }
+
+    function checkExcelAnswer() {
+      const userInput = document.getElementById('excel-user-input').value.trim().toLowerCase().replace(/\s+/g, '');
+      const item = excelData[currentExcelIndex];
+      const feedback = document.getElementById('excel-feedback');
+
+      if (!userInput) return;
+
+      document.getElementById('excel-user-input').disabled = true;
+      feedback.style.display = 'block';
+
+      // Prüfen, ob die Eingabe mit einer der erlaubten Antwort-Varianten übereinstimmt
+      const isCorrect = item.answers.some(ans => ans.replace(/\s+/g, '') === userInput);
+
+      if (isCorrect) {
+        excelScore++;
+        feedback.className = 'feedback-box feedback-success';
+        feedback.innerHTML = `✅ <strong>Richtig!</strong> Die Formel stimmt exakt. (${item.hint})`;
+      } else {
+        feedback.className = 'feedback-box feedback-error';
+        feedback.innerHTML = `❌ <strong>Nicht ganz richtig.</strong><br>Mögliche richtige Lösung: <code>${item.answers[0]}</code><br><small>Hinweis: ${item.hint}</small>`;
+      }
+
+      document.getElementById('excel-score-display').innerText = `Punkte: ${excelScore} / ${excelData.length}`;
+      document.getElementById('next-excel-btn').style.display = 'inline-flex';
+    }
+
+    function nextExcelTask() {
+      currentExcelIndex++;
+      loadExcelTask();
+    }
+
+    function showExcelResult() {
+      const percentage = Math.round((excelScore / excelData.length) * 100);
+      let grade = getGradeText(percentage);
+
+      document.getElementById('excel-trainer-card').innerHTML = `
+        <div style="text-align: center; padding: 10px;">
+          <h3 style="font-size: 1.8rem; color: var(--dark-navy); margin-bottom: 12px;">🏆 Excel-Trainer Auswertung</h3>
+          <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 24px;">Ergebnis aus 10 Excel-Formel-Aufgaben:</p>
+
+          <div style="background: #f8fafc; border: 2px solid var(--border-color); border-radius: 12px; padding: 24px; max-width: 450px; margin: 0 auto 24px auto;">
+            <div style="font-size: 3rem; font-weight: 800; color: ${grade.color}; margin-bottom: 8px;">${percentage}%</div>
+            <div style="font-size: 1.4rem; font-weight: 700; color: ${grade.color}; margin-bottom: 12px;">${grade.text}</div>
+            <p style="font-size: 0.95rem; color: #475569;">Erreichte Punkte: <strong>${excelScore} von ${excelData.length}</strong></p>
+          </div>
+
+          <button class="btn btn-primary" onclick="resetExcelTrainer()">Trainer neustarten 🔄</button>
+        </div>
+      `;
+    }
+
+    function resetExcelTrainer() {
+      currentExcelIndex = 0;
+      excelScore = 0;
+      document.getElementById('excel-trainer-card').innerHTML = `
+        <div class="quiz-header">
+          <span id="excel-progress">Aufgabe 1 von 10</span>
+          <span id="excel-score-display">Punkte: 0 / 10</span>
+        </div>
+        <div class="quiz-question" id="excel-question">Lädt Aufgabe...</div>
+        
+        <div class="excel-input-group">
+          <input type="text" id="excel-user-input" placeholder="z.B. =SVERWEIS(...)" onkeydown="if(event.key === 'Enter') checkExcelAnswer()">
+          <button class="btn btn-primary" onclick="checkExcelAnswer()">Prüfen</button>
+        </div>
+
+        <div id="excel-feedback" class="feedback-box" style="display: none;"></div>
+        <button id="next-excel-btn" class="btn btn-primary" onclick="nextExcelTask()" style="display: none;">Nächste Aufgabe ➔</button>
+      `;
+      loadExcelTask();
+    }
+
     function getGradeText(percentage) {
       if (percentage >= 92) return { text: "Note 1 (Sehr gut)", color: "#166534" };
       if (percentage >= 81) return { text: "Note 2 (Gut)", color: "#15803d" };
@@ -1003,6 +1201,7 @@
 
     // INITIAL START
     loadQuestion();
+    loadExcelTask();
   </script>
 </body>
 </html>
