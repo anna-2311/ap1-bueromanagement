@@ -51,7 +51,8 @@
     nav {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
       background: white;
       padding: 12px;
       border-bottom: 1px solid var(--border-color);
@@ -87,8 +88,16 @@
       border-radius: 12px;
       padding: 24px;
       box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
     }
 
+    .card h2 {
+      color: var(--dark-navy);
+      margin-bottom: 12px;
+      font-size: 1.4rem;
+    }
+
+    /* QUIZ STYLES */
     .quiz-header {
       display: flex;
       justify-content: space-between;
@@ -159,6 +168,7 @@
       border-radius: 6px;
       font-weight: 600;
       cursor: pointer;
+      text-decoration: none;
       transition: background 0.2s;
     }
 
@@ -171,12 +181,80 @@
       background: var(--primary-hover);
     }
 
+    /* DOWNLOAD GRID */
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .download-item {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .download-item h4 {
+      color: var(--dark-navy);
+      margin-bottom: 6px;
+    }
+
+    .download-item p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* TABLES */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: var(--dark-navy);
+      font-weight: 700;
+    }
+
     .page {
       display: none;
     }
 
     .page.active {
       display: block;
+    }
+
+    /* FORM STYLES */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
     }
   </style>
 </head>
@@ -189,11 +267,15 @@
 
   <nav>
     <button class="nav-btn active" onclick="showPage('quiz', event)">20-Fragen-Quiz</button>
+    <button class="nav-btn" onclick="showPage('downloads', event)">Downloads</button>
+    <button class="nav-btn" onclick="showPage('din', event)">DIN 5008 Guide</button>
+    <button class="nav-btn" onclick="showPage('rechner', event)">IHK-Notenrechner</button>
     <button class="nav-btn" onclick="showPage('info', event)">Info</button>
   </nav>
 
   <div class="container">
-    <!-- QUIZ PAGE -->
+    
+    <!-- 1. QUIZ PAGE -->
     <div id="page-quiz" class="page active">
       <div class="card" id="quiz-card">
         <div class="quiz-header">
@@ -207,13 +289,113 @@
       </div>
     </div>
 
-    <!-- INFO PAGE -->
+    <!-- 2. DOWNLOADS PAGE -->
+    <div id="page-downloads" class="page">
+      <div class="card">
+        <h2>📁 Übungs- & Lösungsdateien (Excel & Word)</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Lade dir hier die Praxisdateien zur gezielten Prüfungsvorbereitung herunter:</p>
+        
+        <div class="download-grid">
+          <div class="download-item">
+            <div>
+              <h4>📊 Excel AP1 Übungsdatei</h4>
+              <p>Formeln, SVERWEIS, ZÄHLENWENN & Diagramme zur selbstständigen Bearbeitung.</p>
+            </div>
+            <a href="downloads/excel-uebungsdatei-ap1.xlsx" download class="btn btn-primary">Download (.xlsx)</a>
+          </div>
+
+          <div class="download-item">
+            <div>
+              <h4>✅ Excel AP1 Musterlösung</h4>
+              <p>Vollständig ausgefülle Datei inklusive aller Formeln und Formatierungen.</p>
+            </div>
+            <a href="downloads/excel-loesung-ap1.xlsx" download class="btn nav-btn">Download (.xlsx)</a>
+          </div>
+
+          <div class="download-item">
+            <div>
+              <h4>📄 Word Geschäftsbrief Vorlage</h4>
+              <p>DIN 5008 konforme Briefvorlage mit korrekten Abständen und Feldern.</p>
+            </div>
+            <a href="downloads/din5008-briefvorlage.docx" download class="btn btn-primary">Download (.docx)</a>
+          </div>
+
+          <div class="download-item">
+            <div>
+              <h4>📝 DIN 5008 Spickzettel (PDF)</h4>
+              <p>Alle Zeilenabstände, Schreibweisen und Regeln kompakt auf 1 Seite.</p>
+            </div>
+            <a href="downloads/din5008-uebersicht.pdf" download class="btn nav-btn">Download (.pdf)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. DIN 5008 GUIDE PAGE -->
+    <div id="page-din" class="page">
+      <div class="card">
+        <h2>📐 DIN 5008 – Die wichtigsten Abstände (AP1)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Element</th>
+              <th>Anzahl Leerzeilen / Regel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Vor der Betreffzeile</strong></td>
+              <td>2 Leerzeilen nach dem Anschriftfeld</td>
+            </tr>
+            <tr>
+              <td><strong>Nach der Betreffzeile</strong></td>
+              <td>2 Leerzeilen vor der Anrede</td>
+            </tr>
+            <tr>
+              <td><strong>Satzpunkt im Betreff</strong></td>
+              <td>NEIN – Niemals ein Punkt am Ende des Betreffs!</td>
+            </tr>
+            <tr>
+              <td><strong>Vor der Unterschrift</strong></td>
+              <td>3 Leerzeilen für die handschriftliche Signatur</td>
+            </tr>
+            <tr>
+              <td><strong>Word-Absatzabstand</strong></td>
+              <td>0 pt Nachabstand (Standard 8 pt zwingend umstellen!)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4. IHK NOTENRECHNER PAGE -->
+    <div id="page-rechner" class="page">
+      <div class="card">
+        <h2>🧮 IHK-Notenrechner</h2>
+        <p style="color: var(--text-muted); margin-bottom: 16px;">Gib deine erreichte Punktzahl ein, um die offizielle IHK-Note zu berechnen:</p>
+        
+        <div class="form-group">
+          <label for="max-points">Maximal erreichbare Punkte:</label>
+          <input type="number" id="max-points" value="100" oninput="calculateCustomGrade()">
+        </div>
+
+        <div class="form-group">
+          <label for="user-points">Erreichte Punkte:</label>
+          <input type="number" id="user-points" placeholder="z. B. 75" oninput="calculateCustomGrade()">
+        </div>
+
+        <div id="rechner-result" style="display: none; margin-top: 20px; padding: 16px; border-radius: 8px; text-align: center;"></div>
+      </div>
+    </div>
+
+    <!-- 5. INFO PAGE -->
     <div id="page-info" class="page">
       <div class="card">
         <h2>Prüfungsvorbereitung AP1</h2>
-        <p style="margin-top: 10px;">Dieses Quiz bereitet gezielt auf die AP1 (Informationstechnisches Büromanagement) vor. Am Ende erhältst du eine Auswertung nach dem offiziellen IHK-Notenschlüssel.</p>
+        <p style="margin-top: 10px;">Diese Plattform bereitet gezielt auf die AP1 (Informationstechnisches Büromanagement) für Kaufleute für Büromanagement vor. Enthält interaktives Quiz, Formelsammlung und Praxismaterialien.</p>
       </div>
     </div>
+
   </div>
 
   <script>
@@ -404,8 +586,6 @@
         options[selectedIdx].style.background = '#fef2f2';
         options[selectedIdx].style.borderColor = '#fecaca';
         options[q.correct].style.background = '#dcfce7';
-        feedback.className = 'feedback-box feedback-success';
-        feedback.style.borderColor = '#86efac';
         feedback.className = 'feedback-box feedback-error';
         feedback.innerHTML = `❌ <strong>Falsch.</strong> ${q.explanation}`;
       }
@@ -425,7 +605,6 @@
       let statusColor = "";
       let feedbackText = "";
 
-      // Official IHK Grading Scale
       if (percentage >= 92) {
         grade = "Note 1 (Sehr gut)";
         statusColor = "#166534";
@@ -484,6 +663,35 @@
         <button id="next-quiz-btn" class="btn btn-primary" onclick="nextQuestion()" style="display: none;">Nächste Frage ➔</button>
       `;
       loadQuestion();
+    }
+
+    // MANUELLER NOTENRECHNER LOGIK
+    function calculateCustomGrade() {
+      const maxPts = parseFloat(document.getElementById('max-points').value);
+      const userPts = parseFloat(document.getElementById('user-points').value);
+      const resultDiv = document.getElementById('rechner-result');
+
+      if (isNaN(maxPts) || isNaN(userPts) || maxPts <= 0 || userPts < 0) {
+        resultDiv.style.display = 'none';
+        return;
+      }
+
+      const percentage = Math.round((userPts / maxPts) * 100);
+      let grade = "";
+      let color = "";
+
+      if (percentage >= 92) { grade = "Note 1 (Sehr gut)"; color = "#f0fdf4"; }
+      else if (percentage >= 81) { grade = "Note 2 (Gut)"; color = "#f0fdf4"; }
+      else if (percentage >= 67) { grade = "Note 3 (Befriedigend)"; color = "#fefce8"; }
+      else if (percentage >= 50) { grade = "Note 4 (Ausreichend)"; color = "#fefce8"; }
+      else if (percentage >= 30) { grade = "Note 5 (Mangelhaft)"; color = "#fef2f2"; }
+      else { grade = "Note 6 (Ungenügend)"; color = "#fef2f2"; }
+
+      resultDiv.style.display = 'block';
+      resultDiv.style.background = color;
+      resultDiv.innerHTML = `
+        <div style="font-size: 1.5rem; font-weight: 700;">${percentage}% – ${grade}</div>
+      `;
     }
 
     // INITIAL START
