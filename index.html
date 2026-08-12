@@ -96,7 +96,6 @@
       color: #fff;
     }
 
-    /* Dynamic Page Visibility */
     .page-view {
       display: none;
     }
@@ -139,7 +138,8 @@
 
     .btn-group {
       display: flex;
-      gap: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .btn {
@@ -233,7 +233,7 @@
 
     .grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
     }
 
@@ -250,7 +250,6 @@
       box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
     }
 
-    /* Download Card Extensions */
     .download-card {
       display: flex;
       flex-direction: column;
@@ -389,6 +388,41 @@
       color: #991b1b;
     }
 
+    /* Quiz Option Buttons */
+    .quiz-option {
+      width: 100%;
+      text-align: left;
+      padding: 14px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border-color);
+      background: #f8fafc;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-option:hover {
+      background: #e2e8f0;
+      border-color: #cbd5e1;
+    }
+
+    /* Checklist Item */
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
     footer {
       background: var(--dark-navy);
       color: var(--text-muted);
@@ -430,6 +464,7 @@
         <ul>
           <li><a onclick="showPage('home')">Startseite</a></li>
           <li><a onclick="showPage('trainer')">Formeltrainer</a></li>
+          <li><a onclick="showPage('quiz')">IHK-Quiz</a></li>
           <li><a onclick="showPage('din5008')">DIN 5008 Guide</a></li>
           <li><a onclick="showPage('downloads')">Downloads</a></li>
           <li><a href="https://anna-2311.github.io/Bueromanagement/" target="_blank">Zur Hauptseite ↗</a></li>
@@ -444,20 +479,22 @@
       <div class="container hero-grid">
         <div>
           <h1 class="hero-title">120 Minuten PC-Prüfung? <span>Keine Panik.</span></h1>
-          <p class="hero-subtitle">Dein Praxis-Hub für die IHK-Abschlussprüfung Teil 1 (Informationstechnisches Büromanagement). Interaktive Formel-Übungen, Vorlagen & DIN 5008 Guides.</p>
+          <p class="hero-subtitle">Dein Praxis-Hub für die IHK-Abschlussprüfung Teil 1 (Informationstechnisches Büromanagement). Interaktive Formel-Übungen, Quiz, Vorlagen & DIN 5008 Guides.</p>
           <div class="btn-group">
             <button class="btn btn-primary" onclick="showPage('trainer')">Formeltrainer starten ➔</button>
+            <button class="btn btn-secondary" onclick="showPage('quiz')">IHK-Quiz starten ➔</button>
             <button class="btn btn-secondary" onclick="showPage('din5008')">DIN 5008 Guide ➔</button>
           </div>
         </div>
         <div class="hero-card">
-          <h3>⚡ Quick Check: AP1 Fakten</h3>
-          <ul class="feature-list">
-            <li>✅ <strong>Gewichtung:</strong> 25 % der Gesamtnote</li>
-            <li>⏱️ <strong>Dauer:</strong> 120 Minuten am PC</li>
-            <li>📊 <strong>Schwerpunkte:</strong> MS Excel & MS Word</li>
-            <li>⚠️ <strong>Häufigste Falle:</strong> Falsche Formelkopie / Bezugsfehler</li>
-          </ul>
+          <h3>⏱️ 120-Minuten-Prüfungstimer</h3>
+          <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Simuliere die echte IHK-Prüfungszeit direkt bei deinen Übungen:</p>
+          <div id="timer-display" style="font-size: 2.2rem; font-weight: 800; font-family: monospace; color: #38bdf8; margin-bottom: 12px;">120:00</div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="startTimer()">Start</button>
+            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="stopTimer()">Pause</button>
+            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="resetTimer()">Reset</button>
+          </div>
         </div>
       </div>
     </section>
@@ -475,6 +512,12 @@
             <div style="margin-top: 16px; color: var(--accent-blue); font-weight: 600; font-size: 0.9rem;">Modul öffnen ➔</div>
           </div>
 
+          <div class="card" style="cursor: pointer;" onclick="showPage('quiz')">
+            <h3 style="margin-bottom: 10px;">❓ AP1 Theorie- & Praxis-Quiz</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Teste dein Wissen zu Tastatur-Shortcuts, DIN 5008 und Excel-Logiken mit Sofortauswertung.</p>
+            <div style="margin-top: 16px; color: var(--accent-blue); font-weight: 600; font-size: 0.9rem;">Modul öffnen ➔</div>
+          </div>
+
           <div class="card" style="cursor: pointer;" onclick="showPage('din5008')">
             <h3 style="margin-bottom: 10px;">📄 DIN 5008 & Word-Guide</h3>
             <p style="color: var(--text-muted); font-size: 0.9rem;">Zeilenabstände, Form A & B, Seriendruck-Anleitung und die größten Word-Fallen der IHK.</p>
@@ -487,6 +530,22 @@
             <div style="margin-top: 16px; color: var(--accent-blue); font-weight: 600; font-size: 0.9rem;">Modul öffnen ➔</div>
           </div>
         </div>
+
+        <!-- CHECKLISTE FÜR DIE STARTSEITE -->
+        <div style="margin-top: 40px; background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px;">
+          <h3 style="margin-bottom: 8px; color: var(--dark-navy);">✅ Deine AP1 Lernfortschritts-Checkliste</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">Hake ab, was du bereits beherrschst. Dein Fortschritt wird automatisch im Browser gespeichert:</p>
+          
+          <div id="checklist-container">
+            <div class="check-item"><input type="checkbox" id="chk1" onchange="saveChecklist()"><label for="chk1">SVERWEIS mit exakter Übereinstimmung (<code>FALSCH</code> / <code>0</code>) sicher anwenden</label></div>
+            <div class="check-item"><input type="checkbox" id="chk2" onchange="saveChecklist()"><label for="chk2">WENN-Funktionen mit Vergleichsoperatoren (<code>&gt;</code>, <code>&lt;</code>, <code>=</code>) aufstellen</label></div>
+            <div class="check-item"><input type="checkbox" id="chk3" onchange="saveChecklist()"><label for="chk3">Absolute Zellbezüge mit <code>$</code> setzen (Taste <code>F4</code>)</label></div>
+            <div class="check-item"><input type="checkbox" id="chk4" onchange="saveChecklist()"><label for="chk4">DIN 5008 Leerzeilen-Regeln für Betreff (2 Leerzeilen) & Anrede (2 Leerzeilen) auswendig</label></div>
+            <div class="check-item"><input type="checkbox" id="chk5" onchange="saveChecklist()"><label for="chk5">Seriendruck in Word mit Datenquelle verbinden und <code>Wenn...Dann...Sonst</code> Anrede einbauen</label></div>
+            <div class="check-item"><input type="checkbox" id="chk6" onchange="saveChecklist()"><label for="chk6">Standard-Absatzabstand in Word von 8 pt auf 0 pt umstellen</label></div>
+          </div>
+        </div>
+
       </div>
     </section>
   </div>
@@ -527,7 +586,7 @@
           <div id="feedback-box" class="feedback-box"></div>
         </div>
 
-        <!-- ERWEITERUNG 1: TASTATUR-SHORTCUTS CHEAT-SHEET -->
+        <!-- SHORTCUTS CHEAT-SHEET -->
         <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; margin-top: 24px;">
           <h3 style="margin-bottom: 16px; color: var(--dark-navy);">⌨️ Die wichtigsten IHK-Shortcuts (Excel & Word)</h3>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
@@ -550,7 +609,7 @@
           </div>
         </div>
 
-        <!-- ERWEITERUNG 2: FEHLERMELDUNGEN-QUIZZER -->
+        <!-- FEHLERMELDUNGEN-QUIZZER -->
         <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; margin-top: 24px;">
           <h3 style="margin-bottom: 8px; color: var(--dark-navy);">⚠️ Excel-Fehlermeldungen richtig deuten</h3>
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">Klicke auf den Fehler, um die Ursache und Lösung für die AP1 zu sehen:</p>
@@ -565,7 +624,7 @@
           <div id="error-info" style="margin-top: 16px; padding: 14px 18px; background: #f1f5f9; border-radius: 8px; display: none; font-size: 0.9rem; border-left: 4px solid var(--accent-blue);"></div>
         </div>
 
-        <!-- ERWEITERUNG 3: FORMATIERUNGS-CHECKLISTE -->
+        <!-- FORMATIERUNGS-CHECKLISTE -->
         <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; margin-top: 24px;">
           <h3 style="margin-bottom: 16px; color: var(--dark-navy);">📋 IHK-Tabellenformatierung (Punkte-Garantie)</h3>
           <ul style="list-style: none; display: grid; gap: 12px; font-size: 0.95rem;">
@@ -580,7 +639,36 @@
     </section>
   </div>
 
-  <!-- SEITE 3: DIN 5008 GUIDE -->
+  <!-- SEITE 3: IHK QUIZ -->
+  <div id="page-quiz" class="page-view">
+    <section style="background-color: #f1f5f9;">
+      <div class="container">
+        <button class="btn btn-back" onclick="showPage('home')">← Zurück zur Übersicht</button>
+
+        <div class="section-title" style="text-align: left; margin-bottom: 24px;">
+          <h2>AP1 Multiple-Choice Quiz</h2>
+          <p>Teste dein Theoriewissen für die PC-Prüfung. Wähle bei jeder Frage die richtige Antwort aus.</p>
+        </div>
+
+        <div class="card" id="quiz-card" style="max-width: 800px; margin: 0 auto; padding: 32px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 16px; color: var(--text-muted); font-size: 0.9rem;">
+            <span id="quiz-progress">Frage 1 von 5</span>
+            <span id="quiz-score-display">Punkte: 0</span>
+          </div>
+
+          <h3 id="quiz-question" style="font-size: 1.2rem; margin-bottom: 20px; color: var(--dark-navy);">Frage wird geladen...</h3>
+
+          <div id="quiz-options"></div>
+
+          <div id="quiz-feedback" style="margin-top: 16px; padding: 12px 16px; border-radius: 8px; display: none; font-size: 0.9rem;"></div>
+
+          <button id="next-quiz-btn" class="btn btn-primary" style="margin-top: 20px; display: none;" onclick="nextQuestion()">Nächste Frage ➔</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SEITE 4: DIN 5008 GUIDE -->
   <div id="page-din5008" class="page-view">
     <section style="background-color: #ffffff;">
       <div class="container">
@@ -698,37 +786,32 @@
 
         </div>
 
-        <!-- ERWEITERUNG 4: SERIENBRIEF-SCHRITT-FÜR-SCHRITT-GUIDE -->
+        <!-- SERIENBRIEF-GUIDE -->
         <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; margin-top: 32px;">
           <h3 style="margin-bottom: 8px; color: var(--dark-navy);">✉️ Serienbrief-Schritt-für-Schritt-Guide (MS Word)</h3>
           <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Die perfekte Abfolge für die IHK-Prüfung bei Serienbriefen:</p>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
-            
             <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background: #f8fafc;">
               <div style="background: var(--accent-blue); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px;">1</div>
               <h4 style="font-size: 1rem; margin-bottom: 6px;">Hauptdokument starten</h4>
               <p style="font-size: 0.85rem; color: #475569;">Reiter <strong>Sendungen</strong> ➔ <em>Seriendruck starten</em> ➔ <strong>Briefe</strong> auswählen.</p>
             </div>
-
             <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background: #f8fafc;">
               <div style="background: var(--accent-blue); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px;">2</div>
               <h4 style="font-size: 1rem; margin-bottom: 6px;">Datenquelle verknüpfen</h4>
               <p style="font-size: 0.85rem; color: #475569;"><em>Empfänger auswählen</em> ➔ <strong>Vorhandene Liste verwenden...</strong> ➔ Excel-Datei der Aufgabe wählen.</p>
             </div>
-
             <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background: #f8fafc;">
               <div style="background: var(--accent-blue); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px;">3</div>
               <h4 style="font-size: 1rem; margin-bottom: 6px;">Seriendruckfelder einfügen</h4>
               <p style="font-size: 0.85rem; color: #475569;">Cursor ins Anschriftfeld setzen ➔ <em>Seriendruckfeld einfügen</em> (z. B. <code>«Vorname» «Nachname»</code>).</p>
             </div>
-
             <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background: #f8fafc;">
               <div style="background: var(--accent-blue); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px;">4</div>
               <h4 style="font-size: 1rem; margin-bottom: 6px;">Regeln anwenden (Anrede)</h4>
               <p style="font-size: 0.85rem; color: #475569;"><em>Regeln</em> ➔ <strong>Wenn...Dann...Sonst...</strong> nutzen, um dyn. Anreden wie „Sehr geehrte Frau“ / „Sehr geehrter Herr“ einzufügen.</p>
             </div>
-
           </div>
 
           <div style="margin-top: 16px; background: #e0f2fe; border-left: 4px solid var(--accent-blue); padding: 12px; border-radius: 4px; font-size: 0.85rem; color: #0369a1;">
@@ -740,7 +823,7 @@
     </section>
   </div>
 
-  <!-- SEITE 4: DOWNLOADS -->
+  <!-- SEITE 5: DOWNLOADS -->
   <div id="page-downloads" class="page-view">
     <section style="background-color: #f1f5f9;">
       <div class="container">
@@ -752,8 +835,6 @@
         </div>
 
         <div class="grid-3">
-          
-          <!-- S1 (.xlsx) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 1 (2018)</h3>
@@ -762,7 +843,6 @@
             <a href="./Excel%202010%20S1%202018_neu.xlsx" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLSX herunterladen</a>
           </div>
 
-          <!-- S2 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 2 (2018)</h3>
@@ -771,7 +851,6 @@
             <a href="./Excel%202010%20S2%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S3 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 3 (2018)</h3>
@@ -780,7 +859,6 @@
             <a href="./Excel%202010%20S3%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S4 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 4 (2018)</h3>
@@ -789,7 +867,6 @@
             <a href="./Excel%202010%20S4%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S5 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 5 (2018)</h3>
@@ -798,7 +875,6 @@
             <a href="./Excel%202010%20S5%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S6 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 6 (2018)</h3>
@@ -807,7 +883,6 @@
             <a href="./Excel%202010%20S6%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S7 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 7 (2018)</h3>
@@ -816,7 +891,6 @@
             <a href="./Excel%202010%20S7%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S8 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 8 (2018)</h3>
@@ -825,7 +899,6 @@
             <a href="./Excel%202010%20S8%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S9 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 9 (2018)</h3>
@@ -834,16 +907,14 @@
             <a href="./Excel%202010%20S9%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S10 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 10 (2018_neu)</h3>
-              <p>Übung zur Vorbereitung auf AP1 (Überarbeitete Fassung).</p>
+              <p>Übung zur Vorbereitung auf AP1.</p>
             </div>
             <a href="./Excel%202010%20S10%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S11 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 11 (2018)</h3>
@@ -852,7 +923,6 @@
             <a href="./Excel%202010%20S11%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S12 (.xls) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 12 (2018)</h3>
@@ -861,7 +931,6 @@
             <a href="./Excel%202010%20S12%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S13_3 (.xlsx) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 13_3 (2018)</h3>
@@ -869,7 +938,6 @@
             </div>
             <a href="./Excel%202010%20S13_3%202018%20Datei.xlsx" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLSX herunterladen</a>
           </div>
-
         </div>
       </div>
     </section>
@@ -883,6 +951,7 @@
   </footer>
 
   <script>
+    /* PAGE NAVIGATION */
     function showPage(pageId) {
       document.querySelectorAll('.page-view').forEach(page => {
         page.classList.remove('active');
@@ -892,9 +961,47 @@
 
       if (pageId === 'trainer') {
         switchTask('sverweis');
+      } else if (pageId === 'quiz') {
+        loadQuestion();
       }
     }
 
+    /* 120 MINUTEN TIMER */
+    let timerSeconds = 120 * 60;
+    let timerInterval = null;
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      document.getElementById('timer-display').innerText = 
+        `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      if (timerInterval) return;
+      timerInterval = setInterval(() => {
+        if (timerSeconds > 0) {
+          timerSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          alert('⏰ Die 120 Minuten Prüfungszeit sind abgelaufen!');
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    function resetTimer() {
+      stopTimer();
+      timerSeconds = 120 * 60;
+      updateTimerDisplay();
+    }
+
+    /* FORMELTRAINER TASKS */
     const tasks = {
       sverweis: {
         title: "1. SVERWEIS",
@@ -950,7 +1057,7 @@
         `,
         solutions: ["=ZÄHLENWENN(B2:B6;\"A-KUNDE\")", "=ZÄHLENWENN(B2:B6;\"A-Kunde\")", "=ZÄHLENWENN($B$2:$B$6;\"A-KUNDE\")"],
         correctResult: "3",
-        hint: "Syntaxtipp: <code>=ZÄHLENWENN(Bereich; Suchkriterium)</code>. Textkriterien gehören in Anführungszeichen!"
+        hint: "Syntaxtipp: <code>=ZÄHLENWENN(Bereich; Suchkriterium)</code>."
       },
       summewenn: {
         title: "4. SUMMEWENN",
@@ -1089,6 +1196,136 @@
 
       info.innerHTML = details[type];
     }
+
+    /* IHK MULTIPLE-CHOICE QUIZ LOGIC */
+    const quizData = [
+      {
+        question: "Wie viele Leerzeilen stehen laut DIN 5008 direkt VOR der Betreffzeile?",
+        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine Leerzeile"],
+        correct: 1,
+        explanation: "Laut DIN 5008 stehen zwischen dem Anschriftfeld und der Betreffzeile genau 2 Leerzeilen."
+      },
+      {
+        question: "Mit welcher Taste sperrt man in Excel einen Zellbezug (z. B. von A1 zu $A$1)?",
+        options: ["F2", "F4", "F8", "Strg + S"],
+        correct: 1,
+        explanation: "Die Taste F4 schaltet durch die absoluten und gemischten Zellbezüge ($A$1, A$1, $A1)."
+      },
+      {
+        question: "Darf die Betreffzeile in einem DIN 5008 Geschäftsbrief mit einem Punkt enden?",
+        options: ["Ja, immer.", "Nein, niemals.", "Nur wenn sie aus mehr als 5 Wörtern besteht.", "Das ist freigestellt."],
+        correct: 1,
+        explanation: "Der Betreff schließt laut DIN 5008 NIEMALS mit einem Satzpunkt ab."
+      },
+      {
+        question: "Welches Zeichen dient in der deutschen MS Excel-Version als Argumenten-Trennzeichen in Formeln?",
+        options: ["Komma ( , )", "Semikolon ( ; )", "Doppelpunkt ( : )", "Schrägstrich ( / )"],
+        correct: 1,
+        explanation: "In der deutschen Version wird das Semikolon (;) verwendet, da das Komma bereits als Dezimalkomma genutzt wird."
+      },
+      {
+        question: "Welcher Absatzabstand muss in MS Word für die AP1 eingestellt werden, um Überabstände zu vermeiden?",
+        options: ["8 pt Nachabstand", "12 pt Nachabstand", "0 pt (Kein Leerraum)", "1,5-zeilig"],
+        correct: 2,
+        explanation: "Word stellt standardmäßig 8 pt ein. Für DIN 5008 muss dieser Abstand zwingend auf 0 pt gesetzt werden!"
+      }
+    ];
+
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+
+    function loadQuestion() {
+      if (currentQuizIndex >= quizData.length) {
+        document.getElementById('quiz-card').innerHTML = `
+          <div style="text-align: center;">
+            <h3 style="font-size: 1.8rem; color: var(--accent-blue); margin-bottom: 12px;">🎉 Quiz abgeschlossen!</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;">Du hast <strong>${quizScore} von ${quizData.length}</strong> Fragen richtig beantwortet.</p>
+            <button class="btn btn-primary" onclick="resetQuiz()">Quiz neustarten 🔄</button>
+          </div>
+        `;
+        return;
+      }
+
+      const q = quizData[currentQuizIndex];
+      document.getElementById('quiz-progress').innerText = `Frage ${currentQuizIndex + 1} von ${quizData.length}`;
+      document.getElementById('quiz-score-display').innerText = `Punkte: ${quizScore}`;
+      document.getElementById('quiz-question').innerText = q.question;
+      
+      const optionsContainer = document.getElementById('quiz-options');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.innerText = opt;
+        btn.onclick = () => selectQuizOption(idx);
+        optionsContainer.appendChild(btn);
+      });
+
+      document.getElementById('quiz-feedback').style.display = 'none';
+      document.getElementById('next-quiz-btn').style.display = 'none';
+    }
+
+    function selectQuizOption(selectedIdx) {
+      const q = quizData[currentQuizIndex];
+      const feedback = document.getElementById('quiz-feedback');
+      const options = document.querySelectorAll('.quiz-option');
+
+      options.forEach(btn => btn.disabled = true);
+
+      feedback.style.display = 'block';
+
+      if (selectedIdx === q.correct) {
+        quizScore++;
+        options[selectedIdx].style.background = '#dcfce7';
+        options[selectedIdx].style.borderColor = '#86efac';
+        feedback.className = 'feedback-box feedback-success';
+        feedback.innerHTML = `✅ <strong>Richtig!</strong> ${q.explanation}`;
+      } else {
+        options[selectedIdx].style.background = '#fef2f2';
+        options[selectedIdx].style.borderColor = '#fecaca';
+        options[q.correct].style.background = '#dcfce7';
+        feedback.className = 'feedback-box feedback-error';
+        feedback.innerHTML = `❌ <strong>Falsch.</strong> ${q.explanation}`;
+      }
+
+      document.getElementById('quiz-score-display').innerText = `Punkte: ${quizScore}`;
+      document.getElementById('next-quiz-btn').style.display = 'inline-flex';
+    }
+
+    function nextQuestion() {
+      currentQuizIndex++;
+      loadQuestion();
+    }
+
+    function resetQuiz() {
+      currentQuizIndex = 0;
+      quizScore = 0;
+      location.reload();
+    }
+
+    /* LOCALSTORAGE FOR CHECKLIST */
+    function saveChecklist() {
+      for (let i = 1; i <= 6; i++) {
+        const chk = document.getElementById(`chk${i}`);
+        if (chk) {
+          localStorage.setItem(`ap1_chk_${i}`, chk.checked);
+        }
+      }
+    }
+
+    function loadChecklist() {
+      for (let i = 1; i <= 6; i++) {
+        const chk = document.getElementById(`chk${i}`);
+        const saved = localStorage.getItem(`ap1_chk_${i}`);
+        if (chk && saved !== null) {
+          chk.checked = (saved === 'true');
+        }
+      }
+    }
+
+    // Init Checklist state on page load
+    document.addEventListener('DOMContentLoaded', loadChecklist);
   </script>
 
 </body>
