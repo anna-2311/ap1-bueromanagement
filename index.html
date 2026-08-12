@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AKTE · IHK AP1 Interaktive Übungen</title>
+  <title>AKTE · IHK AP1 Prüfungsvorbereitung Complete</title>
   <style>
     :root {
       --primary-color: #2563eb;
@@ -20,11 +20,45 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: var(--bg-light); color: var(--text-main); line-height: 1.6; padding-bottom: 40px; }
-    header { background-color: var(--dark-navy); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--primary-color); }
     
-    nav { display: flex; justify-content: center; gap: 8px; background: white; padding: 12px; border-bottom: 1px solid var(--border-color); flex-wrap: wrap; }
-    .nav-btn { padding: 8px 16px; border: 1px solid var(--border-color); background: white; border-radius: 6px; cursor: pointer; font-weight: 600; color: var(--text-main); }
-    .nav-btn:hover, .nav-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+    header {
+      background-color: var(--dark-navy);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 4px solid var(--primary-color);
+    }
+
+    header h1 { font-size: 1.8rem; margin-bottom: 5px; }
+    header p { font-size: 0.95rem; color: #94a3b8; }
+    
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      background: white;
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .nav-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border-color);
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
 
     .container { max-width: 850px; margin: 30px auto; padding: 0 20px; }
     .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; }
@@ -32,16 +66,23 @@
     .page { display: none; }
     .page.active { display: block; }
 
-    /* Interactive Inputs & Styling */
+    /* QUIZ STYLES */
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+    .quiz-question { font-size: 1.2rem; font-weight: 700; color: var(--dark-navy); margin-bottom: 20px; }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .quiz-option { padding: 14px 18px; border: 2px solid var(--border-color); border-radius: 8px; background: white; text-align: left; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
+    .quiz-option:hover:not(:disabled) { border-color: var(--primary-color); background: #eff6ff; }
+
+    /* INTERACTIVE MODULES STYLES */
     .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
     .input-group { display: flex; flex-direction: column; gap: 5px; }
     .input-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
     .input-group input, .input-group select { padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 1rem; }
     
-    .btn { padding: 10px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; background: var(--primary-color); color: white; margin-top: 15px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; background: var(--primary-color); color: white; margin-top: 15px; transition: background 0.2s; }
     .btn:hover { background: var(--primary-hover); }
 
-    .feedback-box { padding: 15px; border-radius: 8px; margin-top: 15px; font-weight: 500; display: none; }
+    .feedback-box { padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 0.95rem; display: none; }
     .feedback-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: var(--success); }
     .feedback-error { background: #fef2f2; border: 1px solid #fecaca; color: var(--error); }
 
@@ -54,20 +95,35 @@
 <body>
 
   <header>
-    <h1>AKTE · IHK AP1 Interaktives Training</h1>
-    <p>Kaufleute für Büromanagement – Praxisnahe Prüfungsübungen</p>
+    <h1>AKTE · IHK AP1 Prüfungsvorbereitung</h1>
+    <p>Kaufleute für Büromanagement – Theorie & Interaktive Praxis</p>
   </header>
 
   <nav>
-    <button class="nav-btn active" onclick="showPage('excel-builder')">1. Excel-Formel-Baukasten</button>
-    <button class="nav-btn" onclick="showPage('din-checker')">2. DIN 5008 Fehlersuche</button>
-    <button class="nav-btn" onclick="showPage('calc-task')">3. Kalkulations-Trainer</button>
+    <button class="nav-btn active" onclick="showPage('quiz')">📝 20-Fragen-Quiz</button>
+    <button class="nav-btn" onclick="showPage('excel-builder')">📊 Excel-Baukasten</button>
+    <button class="nav-btn" onclick="showPage('din-checker')">✉️ DIN 5008 Fehlersuche</button>
+    <button class="nav-btn" onclick="showPage('calc-task')">🧮 Kalkulations-Trainer</button>
   </nav>
 
   <div class="container">
 
-    <!-- MODUL 1: EXCEL FORMEL BAUKASTEN -->
-    <div id="page-excel-builder" class="page active">
+    <!-- TAB 1: 20-FRAGEN QUIZ -->
+    <div id="page-quiz" class="page active">
+      <div class="card" id="quiz-card">
+        <div class="quiz-header">
+          <span id="quiz-progress">Frage 1 von 20</span>
+          <span id="quiz-score-display">Punkte: 0 / 20</span>
+        </div>
+        <div class="quiz-question" id="quiz-question">Lädt Frage...</div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div id="quiz-feedback" class="feedback-box"></div>
+        <button id="next-quiz-btn" class="btn" onclick="nextQuestion()" style="display: none;">Nächste Frage ➔</button>
+      </div>
+    </div>
+
+    <!-- TAB 2: EXCEL FORMEL BAUKASTEN -->
+    <div id="page-excel-builder" class="page">
       <div class="card">
         <h3>📊 IHK-Aufgabe: SVERWEIS & Logik verknüpfen</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">
@@ -94,7 +150,7 @@
       </div>
     </div>
 
-    <!-- MODUL 2: DIN 5008 FEHLERSUCHE -->
+    <!-- TAB 3: DIN 5008 FEHLERSUCHE -->
     <div id="page-din-checker" class="page">
       <div class="card">
         <h3>✉️ IHK-Aufgabe: Fehler im Geschäftsbrief finden</h3>
@@ -120,7 +176,7 @@
       </div>
     </div>
 
-    <!-- MODUL 3: KALKULATIONS-TRAINER -->
+    <!-- TAB 4: KALKULATIONS-TRAINER -->
     <div id="page-calc-task" class="page">
       <div class="card">
         <h3>🧮 IHK-Aufgabe: Bezugskalkulation</h3>
@@ -152,7 +208,7 @@
   </div>
 
   <script>
-    // Navigation
+    // NAVIGATION
     function showPage(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -160,7 +216,133 @@
       event.target.classList.add('active');
     }
 
-    // Excel Check
+    // --- QUIZ LOGIC (20 FRAGEN & NOTENBERECHNUNG) ---
+    const quizData = [
+      { question: "1. Wie viele Leerzeilen stehen laut DIN 5008 direkt VOR der Betreffzeile?", options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine Leerzeile"], correct: 1, explanation: "Zwischen Anschriftfeld und Betreffzeile stehen laut DIN 5008 genau 2 Leerzeilen." },
+      { question: "2. Wie viele Leerzeilen gehören VOR die Anrede im Geschäftsbrief?", options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine Leerzeile"], correct: 1, explanation: "Vor der Anrede werden laut DIN 5008 ebenfalls 2 Leerzeilen eingefügt." },
+      { question: "3. Darf die Betreffzeile laut DIN 5008 mit einem Satzpunkt enden?", options: ["Ja, immer", "Nein, niemals", "Nur bei langen Sätzen", "Freigestellt"], correct: 1, explanation: "Der Betreff schließt laut DIN 5008 NIEMALS mit einem Satzpunkt ab." },
+      { question: "4. Wie viele Leerzeilen werden für die handschriftliche Unterschrift reserviert?", options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "4 Leerzeilen"], correct: 2, explanation: "Zwischen Grußformel und gedrucktem Namen werden 3 Leerzeilen für die Unterschrift gelassen." },
+      { question: "5. Welcher Absatzabstand muss in MS Word für IHK-Briefe eingestellt werden?", options: ["8 pt Nachabstand", "12 pt Nachabstand", "0 pt (Kein Leerraum)", "1,5-zeilig"], correct: 2, explanation: "Word stellt standardmäßig 8 pt ein. Für DIN 5008 muss dieser Nachabstand zwingend auf 0 pt gesetzt werden!" },
+      { question: "6. Wie lautet der Shortcut, um in Word das tagesaktuelle Datum als Feld einzufügen?", options: ["Strg + D", "Alt + Umschalt + D", "Strg + F5", "Alt + F12"], correct: 1, explanation: "Mit 'Alt + Umschalt + D' wird das aktuelle Datum automatisch in Word eingefügt." },
+      { question: "7. In welchem Menüband-Reiter startet man in Word einen Seriendruck?", options: ["Einfügen", "Layout", "Sendungen", "Referenzen"], correct: 2, explanation: "Serienbriefe und Seriendruckfelder werden unter dem Reiter 'Sendungen' verwaltet." },
+      { question: "8. Welcher Schriftauszeichnungstyp soll für den Betreff verwendet werden?", options: ["Kursiv", "Fett", "Unterstrichen", "Kapitälchen"], correct: 1, explanation: "Die Betreffzeile wird hervorgehoben – in der Regel durch Fettdruck." },
+      { question: "9. Mit welcher Taste sperrt man in Excel einen Zellbezug (z. B. A1 zu $A$1)?", options: ["F2", "F4", "F8", "Strg + S"], correct: 1, explanation: "Die Taste F4 schaltet durch absolute und gemischte Zellbezüge ($A$1, A$1, $A1)." },
+      { question: "10. Welches Trennzeichen trennt Argumente in deutschen Excel-Formeln?", options: ["Komma ( , )", "Semikolon ( ; )", "Doppelpunkt ( : )", "Schrägstrich ( / )"], correct: 1, explanation: "In der deutschen Excel-Version wird das Semikolon (;) verwendet." },
+      { question: "11. Was bedeutet der Formelfehler '#NV' in Excel?", options: ["Nullwert erhalten", "Nicht vorhanden / Wert nicht gefunden", "Ungültiger Bezug", "Spalte zu schmal"], correct: 1, explanation: "#NV bedeutet 'Nicht vorhanden' – häufig beim SVERWEIS, wenn der Suchbegriff fehlt." },
+      { question: "12. Was bewirkt die Formel =ZÄHLENWENN(A1:A10; '>50')?", options: ["Summiert alle Zahlen über 50", "Zählt, wie viele Zellen einen Wert größer als 50 enthalten", "Gibt die Zahl 50 aus", "Zeigt einen Fehler an"], correct: 1, explanation: "ZÄHLENWENN zählt die Anzahl der Zellen, die das Suchkriterium erfüllen." },
+      { question: "13. Wie lautet das 4. Argument beim SVERWEIS für eine exakte Übereinstimmung?", options: ["WAHR oder 1", "FALSCH oder 0", "EXAKT", "SUCHE"], correct: 1, explanation: "Für eine exakte Suche muss das vierte Argument zwingend auf FALSCH (oder 0) gesetzt werden." },
+      { question: "14. Welche Formel rundet den Wert in B2 kaufmännisch auf 2 Dezimalstellen?", options: ["=RUNDEN(B2; 2)", "=RUNDEN(B2; ,2)", "=KAUFMÄNNISCH(B2; 2)", "=RUNDEN.AB(B2; 2)"], correct: 0, explanation: "Die Syntax lautet =RUNDEN(Zahl; Anzahl_Stellen)." },
+      { question: "15. Wie richtet man Währungsbeträge in einer IHK-Tabelle korrekterweise aus?", options: ["Zentriert", "Linksbündig", "Rechtsbündig mit 2 Nachkommastellen & €-Zeichen", "Blocksatz"], correct: 2, explanation: "Zahlen und Währungen werden in professionellen Tabellen immer rechtsbündig ausgerichtet." },
+      { question: "16. Mit welcher Tastenkombination öffnet man das Fenster 'Zellen formatieren'?", options: ["Strg + 1", "Strg + F", "Alt + F1", "Strg + Shift + F"], correct: 0, explanation: "'Strg + 1' öffnet blitzschnell das Formatierungsmenü in Excel." },
+      { question: "17. Was bedeutet der Fehler '###' in einer Excel-Zelle?", options: ["Formel ist falsch", "Zellbezug gelöscht", "Spaltenbreite ist zu gering für die Anzeige", "Division durch Null"], correct: 2, explanation: "### zeigt an, dass die Spalte zu schmal ist, um das Ergebnis oder Datum vollständig darzustellen." },
+      { question: "18. Welcher Shortcut schaltet in Excel den AutoFilter an bzw. aus?", options: ["Strg + F", "Strg + Umschalt + L", "Alt + F4", "Strg + A"], correct: 1, explanation: "'Strg + Umschalt + L' aktiviert oder deaktiviert den Filter augenblicklich." },
+      { question: "19. Welcher Begriff beschreibt den Schutz personenbezogener Daten vor Missbrauch?", options: ["Datensicherheit", "Datenschutz (DSGVO)", "Data Mining", "Compliance"], correct: 1, explanation: "Der Schutz der Persönlichkeitsrechte bei der Datenverarbeitung fällt unter den Datenschutz." },
+      { question: "20. Welche Ergänzung kennzeichnet eine Summenzeile in einer IHK-Tabelle optisch korrekt?", options: ["Keine Besonderheit", "Gelber Hintergrund", "Doppelter Unterstrich / fett hervorgehoben", "Kursiver Text"], correct: 2, explanation: "Ergebniszeilen (Gesamtsummen) werden mit doppeltem Unterstrich oder fetter Abgrenzung hervorgehoben." }
+    ];
+
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+
+    function loadQuestion() {
+      if (currentQuizIndex >= quizData.length) {
+        showIhkResult();
+        return;
+      }
+
+      const q = quizData[currentQuizIndex];
+      document.getElementById('quiz-progress').innerText = `Frage ${currentQuizIndex + 1} von ${quizData.length}`;
+      document.getElementById('quiz-score-display').innerText = `Punkte: ${quizScore} / ${quizData.length}`;
+      document.getElementById('quiz-question').innerText = q.question;
+      
+      const optionsContainer = document.getElementById('quiz-options');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.innerText = opt;
+        btn.onclick = () => selectQuizOption(idx);
+        optionsContainer.appendChild(btn);
+      });
+
+      document.getElementById('quiz-feedback').style.display = 'none';
+      document.getElementById('next-quiz-btn').style.display = 'none';
+    }
+
+    function selectQuizOption(selectedIdx) {
+      const q = quizData[currentQuizIndex];
+      const feedback = document.getElementById('quiz-feedback');
+      const options = document.querySelectorAll('.quiz-option');
+
+      options.forEach(btn => btn.disabled = true);
+      feedback.style.display = 'block';
+
+      if (selectedIdx === q.correct) {
+        quizScore++;
+        options[selectedIdx].style.background = '#dcfce7';
+        options[selectedIdx].style.borderColor = '#86efac';
+        feedback.className = 'feedback-box feedback-success';
+        feedback.innerHTML = `✅ <strong>Richtig!</strong> ${q.explanation}`;
+      } else {
+        options[selectedIdx].style.background = '#fef2f2';
+        options[selectedIdx].style.borderColor = '#fecaca';
+        options[q.correct].style.background = '#dcfce7';
+        feedback.className = 'feedback-box feedback-error';
+        feedback.innerHTML = `❌ <strong>Falsch.</strong> ${q.explanation}`;
+      }
+
+      document.getElementById('quiz-score-display').innerText = `Punkte: ${quizScore} / ${quizData.length}`;
+      document.getElementById('next-quiz-btn').style.display = 'inline-flex';
+    }
+
+    function nextQuestion() {
+      currentQuizIndex++;
+      loadQuestion();
+    }
+
+    function showIhkResult() {
+      const percentage = Math.round((quizScore / quizData.length) * 100);
+      let grade = "", statusColor = "", feedbackText = "";
+
+      if (percentage >= 92) { grade = "Note 1 (Sehr gut)"; statusColor = "#166534"; feedbackText = "Hervorragende Leistung! Du bist bestens auf die AP1 vorbereitet."; }
+      else if (percentage >= 81) { grade = "Note 2 (Gut)"; statusColor = "#15803d"; feedbackText = "Starke Vorbereitung! Nur noch kleine Feinschliff-Themen offen."; }
+      else if (percentage >= 67) { grade = "Note 3 (Befriedigend)"; statusColor = "#b45309"; feedbackText = "Gutes Fundament. Schau dir die falsch beantworteten Fragen nochmal an."; }
+      else if (percentage >= 50) { grade = "Note 4 (Ausreichend)"; statusColor = "#d97706"; feedbackText = "Bestanden! Aber zur Sicherheit solltest du die Formeln & Regeln weiter vertiefen."; }
+      else if (percentage >= 30) { grade = "Note 5 (Mangelhaft)"; statusColor = "#dc2626"; feedbackText = "Nicht bestanden. Wiederhole vor allem den DIN 5008 Guide und den Formeltrainer."; }
+      else { grade = "Note 6 (Ungenügend)"; statusColor = "#991b1b"; feedbackText = "Dringender Nachholbedarf. Gehe die Grundlagen Schritt für Schritt durch."; }
+
+      document.getElementById('quiz-card').innerHTML = `
+        <div style="text-align: center; padding: 10px;">
+          <h3 style="font-size: 1.8rem; color: var(--dark-navy); margin-bottom: 12px;">🏆 Quiz-Auswertung</h3>
+          <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 24px;">Ergebnis aus 20 AP1-Prüfungsfragen:</p>
+          <div style="background: #f8fafc; border: 2px solid var(--border-color); border-radius: 12px; padding: 24px; max-width: 450px; margin: 0 auto 24px auto;">
+            <div style="font-size: 3rem; font-weight: 800; color: ${statusColor}; margin-bottom: 8px;">${percentage}%</div>
+            <div style="font-size: 1.4rem; font-weight: 700; color: ${statusColor}; margin-bottom: 12px;">${grade}</div>
+            <p style="font-size: 0.95rem; color: #475569;">Erreichte Punkte: <strong>${quizScore} von ${quizData.length}</strong></p>
+          </div>
+          <p style="font-size: 1rem; color: var(--text-main); margin-bottom: 24px; font-weight: 500;">${feedbackText}</p>
+          <button class="btn" onclick="resetQuiz()">Quiz neustarten 🔄</button>
+        </div>
+      `;
+    }
+
+    function resetQuiz() {
+      currentQuizIndex = 0;
+      quizScore = 0;
+      document.getElementById('quiz-card').innerHTML = `
+        <div class="quiz-header">
+          <span id="quiz-progress">Frage 1 von 20</span>
+          <span id="quiz-score-display">Punkte: 0 / 20</span>
+        </div>
+        <div class="quiz-question" id="quiz-question">Lädt Frage...</div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div id="quiz-feedback" class="feedback-box"></div>
+        <button id="next-quiz-btn" class="btn" onclick="nextQuestion()" style="display: none;">Nächste Frage ➔</button>
+      `;
+      loadQuestion();
+    }
+
+    // --- INTERACTIVE MODULES LOGIC ---
     function checkExcelFormula() {
       const val = document.getElementById('f-sverweis').value;
       const fb = document.getElementById('excel-feedback');
@@ -175,7 +357,6 @@
       }
     }
 
-    // DIN 5008 Check
     let selectedErrors = {};
     function toggleError(id, el) {
       selectedErrors[id] = !selectedErrors[id];
@@ -187,7 +368,6 @@
       const fb = document.getElementById('din-feedback');
       fb.style.display = 'block';
 
-      // Correct errors: 1 (should be 2 blank lines), 2 (no period in subject), 3 (should be 2 blank lines)
       if (selectedErrors[1] && selectedErrors[2] && selectedErrors[3]) {
         fb.className = 'feedback-box feedback-success';
         fb.innerHTML = '🎯 <strong>Alle 3 Fehler gefunden!</strong><br>1. Vor dem Betreff stehen 2 Leerzeilen.<br>2. Der Betreff hat KEINEN Punkt.<br>3. Vor der Anrede stehen ebenfalls 2 Leerzeilen.';
@@ -197,7 +377,6 @@
       }
     }
 
-    // Calculation Check
     function checkCalculation() {
       const zep = parseFloat(document.getElementById('calc-zep').value);
       const bep = parseFloat(document.getElementById('calc-bep').value);
@@ -205,9 +384,6 @@
       const fb = document.getElementById('calc-feedback');
       fb.style.display = 'block';
 
-      // LEP 500 - 10% (50) = ZEP 450
-      // ZEP 450 - 2% (9) = BEP 441
-      // BEP 441 + 15 = 456
       if (zep === 450 && bep === 441 && end === 456) {
         fb.className = 'feedback-box feedback-success';
         fb.innerHTML = '🎉 <strong>Vollkommen richtig!</strong><br>• ZEP: 500 € - 10% = 450 €<br>• BEP: 450 € - 2% = 441 €<br>• Bezugspreis: 441 € + 15 € = 456 €';
@@ -216,6 +392,9 @@
         fb.innerHTML = '❌ <strong>Rechnungsfehler.</strong> Rechenweg beachten:<br>LEP (500 €) - Rabatt (10%) = ZEP (450 €)<br>ZEP (450 €) - Skonto (2%) = BEP (441 €)<br>BEP + Bezugskosten (15 €) = Bezugspreis.';
       }
     }
+
+    // INITIAL START
+    loadQuestion();
   </script>
 </body>
 </html>
