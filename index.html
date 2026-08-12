@@ -476,8 +476,8 @@
           </div>
 
           <div class="card" style="cursor: pointer;" onclick="showPage('din5008')">
-            <h3 style="margin-bottom: 10px;">📄 DIN 5008 Brief-Guide</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Zeilenabstände, Form A & B und die 2 größten Word-Fallen der IHK auf einen Blick.</p>
+            <h3 style="margin-bottom: 10px;">📄 DIN 5008 & Word-Guide</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Zeilenabstände, Form A & B, Seriendruck-Anleitung und die größten Word-Fallen der IHK.</p>
             <div style="margin-top: 16px; color: var(--accent-blue); font-weight: 600; font-size: 0.9rem;">Modul öffnen ➔</div>
           </div>
 
@@ -526,6 +526,56 @@
 
           <div id="feedback-box" class="feedback-box"></div>
         </div>
+
+        <!-- ERWEITERUNG 1: TASTATUR-SHORTCUTS CHEAT-SHEET -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; margin-top: 24px;">
+          <h3 style="margin-bottom: 16px; color: var(--dark-navy);">⌨️ Die wichtigsten IHK-Shortcuts (Excel & Word)</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid var(--accent-blue);">
+              <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">F4</code>
+              <span style="font-size: 0.9rem; margin-left: 8px;"><strong>Absolute Bezüge ($A$1):</strong> Sperrt Spalte und Zeile in Excel-Formeln.</span>
+            </div>
+            <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid var(--accent-blue);">
+              <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Strg + Umschalt + L</code>
+              <span style="font-size: 0.9rem; margin-left: 8px;"><strong>AutoFilter:</strong> Schaltet Filter in Tabellenblättern blitzschnell an/aus.</span>
+            </div>
+            <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid var(--accent-blue);">
+              <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Alt + Umschalt + D</code>
+              <span style="font-size: 0.9rem; margin-left: 8px;"><strong>Datum in Word:</strong> Fügt das tagesaktuelle Datum als Feld ein.</span>
+            </div>
+            <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid var(--accent-blue);">
+              <code style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Strg + 1</code>
+              <span style="font-size: 0.9rem; margin-left: 8px;"><strong>Zellen formatieren:</strong> Öffnet direkt das Excel-Dialogfeld für Währung, Datum & Ränder.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ERWEITERUNG 2: FEHLERMELDUNGEN-QUIZZER -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; margin-top: 24px;">
+          <h3 style="margin-bottom: 8px; color: var(--dark-navy);">⚠️ Excel-Fehlermeldungen richtig deuten</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">Klicke auf den Fehler, um die Ursache und Lösung für die AP1 zu sehen:</p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+            <button onclick="toggleError('nv')" style="padding: 10px; border: 1px solid var(--border-color); background: #f8fafc; border-radius: 6px; cursor: pointer; text-align: left; font-weight: bold;">❌ #NV</button>
+            <button onclick="toggleError('bezug')" style="padding: 10px; border: 1px solid var(--border-color); background: #f8fafc; border-radius: 6px; cursor: pointer; text-align: left; font-weight: bold;">❌ #BEZUG!</button>
+            <button onclick="toggleError('wert')" style="padding: 10px; border: 1px solid var(--border-color); background: #f8fafc; border-radius: 6px; cursor: pointer; text-align: left; font-weight: bold;">❌ #WERT!</button>
+            <button onclick="toggleError('raute')" style="padding: 10px; border: 1px solid var(--border-color); background: #f8fafc; border-radius: 6px; cursor: pointer; text-align: left; font-weight: bold;">❌ ###</button>
+          </div>
+
+          <div id="error-info" style="margin-top: 16px; padding: 14px 18px; background: #f1f5f9; border-radius: 8px; display: none; font-size: 0.9rem; border-left: 4px solid var(--accent-blue);"></div>
+        </div>
+
+        <!-- ERWEITERUNG 3: FORMATIERUNGS-CHECKLISTE -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; margin-top: 24px;">
+          <h3 style="margin-bottom: 16px; color: var(--dark-navy);">📋 IHK-Tabellenformatierung (Punkte-Garantie)</h3>
+          <ul style="list-style: none; display: grid; gap: 12px; font-size: 0.95rem;">
+            <li style="display: flex; align-items: center; gap: 10px;">📌 <strong>Ausrichtung:</strong> Textbündig nach links, Zahlen/Beträge streng nach rechts ausrichten.</li>
+            <li style="display: flex; align-items: center; gap: 10px;">📌 <strong>Währungen:</strong> Einheiten immer auf zweistellig mit Tausendertrennzeichen einstellen (z. B. <code>1.250,00 €</code>).</li>
+            <li style="display: flex; align-items: center; gap: 10px;">📌 <strong>Überschriften:</strong> Hervorheben (fett), optisch abgrenzen (z. B. dezenter Hintergrund) und Zeilenumbruch aktivieren.</li>
+            <li style="display: flex; align-items: center; gap: 10px;">📌 <strong>Ergebniszeilen:</strong> Summenzeilen immer mit doppeltem Unterstrich oder fettem Rand abschließen.</li>
+          </ul>
+        </div>
+
       </div>
     </section>
   </div>
@@ -647,6 +697,45 @@
           </div>
 
         </div>
+
+        <!-- ERWEITERUNG 4: SERIENBRIEF-SCHRITT-FÜR-SCHRITT-GUIDE -->
+        <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; margin-top: 32px;">
+          <h3 style="margin-bottom: 8px; color: var(--dark-navy);">✉️ Serienbrief-Schritt-für-Schritt-Guide (MS Word)</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Die perfekte Abfolge für die IHK-Prüfung bei Serienbriefen:</p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+            
+            <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background: #f8fafc;">
+              <div style="background: var(--accent-blue); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px;">1</div>
+              <h4 style="font-size: 1rem; margin-bottom: 6px;">Hauptdokument starten</h4>
+              <p style="font-size: 0.85rem; color: #475569;">Reiter <strong>Sendungen</strong> ➔ <em>Seriendruck starten</em> ➔ <strong>Briefe</strong> auswählen.</p>
+            </div>
+
+            <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background: #f8fafc;">
+              <div style="background: var(--accent-blue); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px;">2</div>
+              <h4 style="font-size: 1rem; margin-bottom: 6px;">Datenquelle verknüpfen</h4>
+              <p style="font-size: 0.85rem; color: #475569;"><em>Empfänger auswählen</em> ➔ <strong>Vorhandene Liste verwenden...</strong> ➔ Excel-Datei der Aufgabe wählen.</p>
+            </div>
+
+            <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background: #f8fafc;">
+              <div style="background: var(--accent-blue); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px;">3</div>
+              <h4 style="font-size: 1rem; margin-bottom: 6px;">Seriendruckfelder einfügen</h4>
+              <p style="font-size: 0.85rem; color: #475569;">Cursor ins Anschriftfeld setzen ➔ <em>Seriendruckfeld einfügen</em> (z. B. <code>«Vorname» «Nachname»</code>).</p>
+            </div>
+
+            <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background: #f8fafc;">
+              <div style="background: var(--accent-blue); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 10px;">4</div>
+              <h4 style="font-size: 1rem; margin-bottom: 6px;">Regeln anwenden (Anrede)</h4>
+              <p style="font-size: 0.85rem; color: #475569;"><em>Regeln</em> ➔ <strong>Wenn...Dann...Sonst...</strong> nutzen, um dyn. Anreden wie „Sehr geehrte Frau“ / „Sehr geehrter Herr“ einzufügen.</p>
+            </div>
+
+          </div>
+
+          <div style="margin-top: 16px; background: #e0f2fe; border-left: 4px solid var(--accent-blue); padding: 12px; border-radius: 4px; font-size: 0.85rem; color: #0369a1;">
+            💡 <strong>Wichtig für die Abgabe:</strong> Vergiss vor dem Speichern oder Drucken nicht, auf <em>„Ergebnisse anzeigen“</em> zu klicken, um zu prüfen, ob die Daten richtig eingesetzt werden!
+          </div>
+        </div>
+
       </div>
     </section>
   </div>
@@ -772,7 +861,7 @@
             <a href="./Excel%202010%20S12%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <!-- S13_3 (.xlsx - KORRIGIERT) -->
+          <!-- S13_3 (.xlsx) -->
           <div class="card download-card">
             <div>
               <h3>📊 Szenario 13_3 (2018)</h3>
@@ -985,6 +1074,20 @@
         errorMsg += `<br>💡 <strong>Hinweis:</strong> ${t.hint}<br>Musterlösung: <code>${t.solutions[0]}</code>`;
         feedback.innerHTML = errorMsg;
       }
+    }
+
+    function toggleError(type) {
+      const info = document.getElementById('error-info');
+      info.style.display = 'block';
+
+      const details = {
+        nv: "<strong>#NV (Nicht vorhanden):</strong> Ein Suchkriterium wurde im SVERWEIS/XVERWEIS nicht gefunden. <br>💡 <em>Lösung:</em> Tippfehler im Suchbegriff prüfen oder prüfen, ob der Suchbereich exakt gewählt wurde.",
+        bezug: "<strong>#BEZUG! (Ungültiger Bezug):</strong> Eine Zelle, auf die verwiesen wurde, wurde gelöscht oder verschoben.<br>💡 <em>Lösung:</em> Formel rückgängig machen oder Zellverweise neu zuweisen.",
+        wert: "<strong>#WERT! (Falscher Datentyp):</strong> Es wird z. B. versucht, mit Text zu rechnen (z. B. '100 €' als Text statt als formatierte Zahl).<br>💡 <em>Lösung:</em> Prüfen, ob Zahlen als reiner Text formatiert sind.",
+        raute: "<strong>### (Spaltenbreite zu gering):</strong> Die Spalte ist zu schmal, um das Ergebnis oder Datum anzuzeigen.<br>💡 <em>Lösung:</em> Doppelklick auf die Spaltentrennung oben im Kopf, um die Breite automatisch anzupassen."
+      };
+
+      info.innerHTML = details[type];
     }
   </script>
 
