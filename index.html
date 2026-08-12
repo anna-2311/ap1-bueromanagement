@@ -309,6 +309,40 @@
       font-weight: 600;
     }
 
+    /* LETTER PREVIEW BOX FOR DIN 5008 */
+    .letter-preview {
+      background: #ffffff;
+      border: 2px dashed #94a3b8;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 15px 0 25px 0;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #334155;
+    }
+
+    .letter-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .letter-box-left {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      padding: 10px;
+      width: 52%;
+      border-radius: 4px;
+    }
+
+    .letter-box-right {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      padding: 10px;
+      width: 44%;
+      border-radius: 4px;
+    }
+
     .page {
       display: none;
     }
@@ -442,7 +476,7 @@
       </div>
     </div>
 
-    <!-- EXCEL FORMEL TRAINER PAGE MIT TABELLEN -->
+    <!-- EXCEL FORMEL TRAINER PAGE -->
     <div id="page-excel-trainer" class="page">
       <div class="card" id="excel-trainer-card">
         <div class="quiz-header">
@@ -586,7 +620,7 @@
           <div class="download-item">
             <div>
               <h4>📊 Excel 2010 S13_3 2018 Datei</h4>
-              <p>Übungsdatei Szenario 13.3.</p>
+            <p>Übungsdatei Szenario 13.3.</p>
             </div>
             <a href="Excel 2010 S13_3 2018 Datei.xlsx" download class="btn btn-primary">Download (.xlsx)</a>
           </div>
@@ -599,10 +633,36 @@
       <div class="card">
         <h2>📐 DIN 5008 Masterguide – Geschäftsbriefe perfekt formatieren</h2>
         <p style="color: var(--text-muted); margin-bottom: 20px;">
-          Der offizielle Leitfaden für die IHK-Prüfung im Ausbildungsberuf Kaufleute für Büromanagement. Hier sind alle zentralen Vorgaben kompakt zusammengefasst:
+          Der offizielle Leitfaden für die IHK-Prüfung im Ausbildungsberuf Kaufleute für Büromanagement. Hier sind alle zentralen Vorgaben und visuellen Strukturen kompakt zusammengefasst:
         </p>
 
-        <h3 style="color: var(--dark-navy); margin-top: 15px; font-size: 1.1rem;">1. Layout & Grundeinstellungen (Word)</h3>
+        <h3 style="color: var(--dark-navy); margin-top: 15px; font-size: 1.1rem;">1. Visuelles Beispiel: Muster-Briefkopf (Form A)</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">So sieht die korrekte Aufteilung des Anschriftfeldes und des Informationsblocks im oberen Teil eines DIN-5008-Geschäftsbriefs aus:</p>
+        
+        <div class="letter-preview">
+          <div style="font-weight: bold; color: var(--primary-color); margin-bottom: 12px;">[Absenderzeile / Firmenkopf einzeilig: Firmenname · Straße · PLZ Ort]</div>
+          <div class="letter-row">
+            <div class="letter-box-left">
+              <span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 4px;">Anschriftfeld (84,7 x 45 mm)</span>
+              Herrn<br>
+              Max Mustermann<br>
+              Musterstraße 12<br>
+              12345 Musterstadt
+            </div>
+            <div class="letter-box-right">
+              <span style="font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 4px;">Informationsblock</span>
+              Telefon: 02351 12345<br>
+              E-Mail: info@firma.de<br>
+              Zeichen: mu-<br>
+              Datum: 2026-08-12
+            </div>
+          </div>
+          <div style="margin-top: 15px; font-size: 0.8rem; color: #64748b; border-top: 1px solid #cbd5e1; pt: 8px;">
+            ⬇️ Genau <strong>2 Leerzeilen</strong> Abstand bis zur fetten Betreffzeile!
+          </div>
+        </div>
+
+        <h3 style="color: var(--dark-navy); margin-top: 25px; font-size: 1.1rem;">2. Layout & Grundeinstellungen (Word)</h3>
         <table>
           <thead>
             <tr>
@@ -622,30 +682,6 @@
             <tr>
               <td><strong>Schriftart & Größe</strong></td>
               <td>Gut lesbare Standardschrift (z. B. Arial, Calibri oder Times New Roman), meist in Größe 10 bis 12 pt.</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3 style="color: var(--dark-navy); margin-top: 20px; font-size: 1.1rem;">2. Der Briefkopf & Anschriftenfeld (Form Form A)</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Bereich</th>
-              <th>Details & Abstände</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Anschriftfeld</strong></td>
-              <td>Größe: 84,7 x 45 mm (für Fensterbriefumschläge DL). Enthält Name, Straße, PLZ und Ort.</td>
-            </tr>
-            <tr>
-              <td><strong>Informationsblock</strong></td>
-              <td>Rechts neben dem Anschriftfeld (Telefon, E-Mail, Datum, Zeichen). Wird einzeilig oder blockweise aufgebaut.</td>
-            </tr>
-            <tr>
-              <td><strong>Datum</strong></td>
-              <td>Rechtsbündig oder im Informationsblock. Schreibweise numerisch (JJJJ-MM-TT) oder alphabetisch (z. B. 12. August 2026). Kein Punkt nach ISO-Datum!</td>
             </tr>
           </tbody>
         </table>
@@ -673,18 +709,25 @@
             </tr>
             <tr>
               <td><strong>Anrede & Fließtext</strong></td>
-              <td>Nach der Anrede (z. B. „Sehr geehrte Frau Müller,”) folgt 1 Leerzeile bis zum Textbeginn. Der Text beginnt kleingeschrieben, wenn direkt ein vollständiger Satz folgt (optional auch groß bei eigenständigem Einschub).</td>
+              <td>Nach der Anrede (z. B. „Sehr geehrte Frau Müller,”) folgt 1 Leerzeile bis zum Textbeginn. Der Text beginnt kleingeschrieben, wenn direkt ein vollständiger Satz folgt.</td>
             </tr>
             <tr>
               <td><strong>Grußformel & Unterschrift</strong></td>
-              <td>Zwischen Textende und Grußformel (z. B. „Mit freundlichen Grüßen”) 1 Leerzeile. Danach exakt <strong>3 Leerzeilen</strong> für die handschriftliche Unterschrift, gefolgt vom maschinenschriftlich gedruckten Namen.</td>
-            </tr>
-            <tr>
-              <td><strong>Anlagen & Verteiler</strong></td>
-              <td>Das Wort „Anlage(n)” oder „Anlagen:” steht mit 1 Leerzeile Abstand unter dem Namen. Evtl. Dateianhänge oder Seitenzahlen werden hier aufgeführt.</td>
+              <td>Zwischen Textende und Grußformel (z. B. „Mit freundlichen Grüßen”) 1 Leerzeile. Danach exakt <strong>3 Leerzeilen</strong> für die handschriftliche Unterschrift.</td>
             </tr>
           </tbody>
         </table>
+
+        <!-- DIN 5008 MINI-QUIZ -->
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-top: 30px;" id="din-quiz-container">
+          <h3 style="color: var(--dark-navy); margin-bottom: 15px; font-size: 1.2rem;">🧠 Mini-Quiz: Teste dein DIN-5008-Wissen</h3>
+          <div id="din-quiz-progress" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Frage 1 von 4</div>
+          <div id="din-quiz-question" style="font-weight: 700; font-size: 1.05rem; color: var(--dark-navy); margin-bottom: 12px;">Lädt Frage...</div>
+          <div id="din-quiz-options" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
+          <div id="din-quiz-feedback" class="feedback-box" style="display: none;"></div>
+          <button id="din-next-btn" class="btn btn-primary" onclick="nextDinQuizQuestion()" style="display: none;">Nächste Frage ➔</button>
+        </div>
+
       </div>
     </div>
 
@@ -1007,7 +1050,117 @@
       loadQuestion();
     }
 
-    // EXCEL FORMEL TRAINER DATA & LOGIC (MIT TABELLEN-VORSCHAU)
+    // DIN 5008 MINI-QUIZ DATA & LOGIC
+    const dinQuizData = [
+      {
+        question: "Wie viele Leerzeilen stehen zwischen Anschriftfeld und Betreffzeile?",
+        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine"],
+        correct: 1,
+        explanation: "Nach DIN 5008 wird der Betreff exakt 2 Leerzeilen unter dem Anschriftfeld platziert."
+      },
+      {
+        question: "Darf ein Schlusspunkt am Ende der Betreffzeile stehen?",
+        options: ["Ja, immer", "Nein, niemals", "Nur bei langen Betreffs", "Optional"],
+        correct: 1,
+        explanation: "Der Betreff erhält in Geschäftsbriefen nach DIN 5008 niemals einen Schlusspunkt."
+      },
+      {
+        question: "Welchen Nachabstand muss man in MS Word für Briefe einstellen?",
+        options: ["8 pt", "12 pt", "0 pt", "Auto"],
+        correct: 2,
+        explanation: "Word hat standardmäßig 8 pt voreingestellt, für DIN 5008 muss dies zwingend auf 0 pt geändert werden."
+      },
+      {
+        question: "Wie viele Leerzeilen sind für die Unterschrift zwischen Grußformel und Name vorgesehen?",
+        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "4 Leerzeilen"],
+        correct: 2,
+        explanation: "Es werden exakt 3 Leerzeilen für die handschriftliche Unterschrift freigehalten."
+      }
+    ];
+
+    let currentDinQuizIndex = 0;
+    let dinQuizScore = 0;
+
+    function loadDinQuizQuestion() {
+      if (currentDinQuizIndex >= dinQuizData.length) {
+        showDinQuizResult();
+        return;
+      }
+
+      const q = dinQuizData[currentDinQuizIndex];
+      document.getElementById('din-quiz-progress').innerText = `Frage ${currentDinQuizIndex + 1} von ${dinQuizData.length}`;
+      document.getElementById('din-quiz-question').innerText = q.question;
+      
+      const container = document.getElementById('din-quiz-options');
+      container.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.innerText = opt;
+        btn.onclick = () => selectDinQuizOption(idx);
+        container.appendChild(btn);
+      });
+
+      document.getElementById('din-quiz-feedback').style.display = 'none';
+      document.getElementById('din-next-btn').style.display = 'none';
+    }
+
+    function selectDinQuizOption(selectedIdx) {
+      const q = dinQuizData[currentDinQuizIndex];
+      const feedback = document.getElementById('din-quiz-feedback');
+      const options = document.querySelectorAll('#din-quiz-options .quiz-option');
+
+      options.forEach(btn => btn.disabled = true);
+      feedback.style.display = 'block';
+
+      if (selectedIdx === q.correct) {
+        dinQuizScore++;
+        options[selectedIdx].style.background = '#dcfce7';
+        options[selectedIdx].style.borderColor = '#86efac';
+        feedback.className = 'feedback-box feedback-success';
+        feedback.innerHTML = `✅ <strong>Richtig!</strong> ${q.explanation}`;
+      } else {
+        options[selectedIdx].style.background = '#fef2f2';
+        options[selectedIdx].style.borderColor = '#fecaca';
+        options[q.correct].style.background = '#dcfce7';
+        feedback.className = 'feedback-box feedback-error';
+        feedback.innerHTML = `❌ <strong>Falsch.</strong> ${q.explanation}`;
+      }
+
+      document.getElementById('din-next-btn').style.display = 'inline-flex';
+    }
+
+    function nextDinQuizQuestion() {
+      currentDinQuizIndex++;
+      loadDinQuizQuestion();
+    }
+
+    function showDinQuizResult() {
+      document.getElementById('din-quiz-container').innerHTML = `
+        <div style="text-align: center; padding: 10px;">
+          <h3 style="font-size: 1.4rem; color: var(--dark-navy); margin-bottom: 8px;">🎉 DIN-5008-Quiz beendet!</h3>
+          <p style="font-size: 1rem; color: var(--text-muted); margin-bottom: 16px;">Du hast <strong>${dinQuizScore} von ${dinQuizData.length}</strong> Fragen richtig beantwortet.</p>
+          <button class="btn btn-primary" onclick="resetDinQuiz()">Quiz wiederholen 🔄</button>
+        </div>
+      `;
+    }
+
+    function resetDinQuiz() {
+      currentDinQuizIndex = 0;
+      dinQuizScore = 0;
+      document.getElementById('din-quiz-container').innerHTML = `
+        <h3 style="color: var(--dark-navy); margin-bottom: 15px; font-size: 1.2rem;">🧠 Mini-Quiz: Teste dein DIN-5008-Wissen</h3>
+        <div id="din-quiz-progress" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Frage 1 von 4</div>
+        <div id="din-quiz-question" style="font-weight: 700; font-size: 1.05rem; color: var(--dark-navy); margin-bottom: 12px;">Lädt Frage...</div>
+        <div id="din-quiz-options" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
+        <div id="din-quiz-feedback" class="feedback-box" style="display: none;"></div>
+        <button id="din-next-btn" class="btn btn-primary" onclick="nextDinQuizQuestion()" style="display: none;">Nächste Frage ➔</button>
+      `;
+      loadDinQuizQuestion();
+    }
+
+    // EXCEL FORMEL TRAINER DATA & LOGIC
     const excelData = [
       {
         task: "Ermittle den Artikelpreis per SVERWEIS aus der Tabelle (Suchbegriff in A2, Bereich A1:D50, Preis in der 3. Spalte, exakte Übereinstimmung).",
@@ -1280,6 +1433,7 @@
 
     loadQuestion();
     loadExcelTask();
+    loadDinQuizQuestion();
   </script>
 </body>
 </html>
