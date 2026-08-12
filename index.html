@@ -35,14 +35,13 @@
       line-height: 1.6;
     }
 
-    /* Container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
-    /* Header Navigation */
+    /* Header */
     header {
       background-color: var(--dark-navy);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -95,7 +94,7 @@
       color: #fff;
     }
 
-    /* Hero Section */
+    /* Hero */
     .hero {
       background: linear-gradient(135deg, var(--dark-navy) 0%, var(--dark-card) 100%);
       color: #fff;
@@ -191,7 +190,6 @@
       font-size: 0.95rem;
     }
 
-    /* Main Content Sections */
     section {
       padding: 60px 0;
     }
@@ -211,7 +209,6 @@
       color: var(--text-muted);
     }
 
-    /* Grid Layouts */
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -256,7 +253,92 @@
       margin-bottom: 20px;
     }
 
-    /* Footer */
+    /* Interactive Trainer Styling */
+    .trainer-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .excel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.85rem;
+      margin: 16px 0;
+    }
+
+    .excel-table th {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      text-align: center;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .excel-table td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      color: #1e293b;
+    }
+
+    .excel-row-num {
+      background: #f1f5f9;
+      font-weight: bold;
+      text-align: center;
+      width: 40px;
+      color: #475569;
+    }
+
+    .target-cell {
+      background: #fef08a !important;
+      font-weight: bold;
+    }
+
+    .formula-input-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .formula-input {
+      flex: 1;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 1rem;
+      padding: 12px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .formula-input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .feedback-box {
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .feedback-success {
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #166534;
+    }
+
+    .feedback-error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
     footer {
       background: var(--dark-navy);
       color: var(--text-muted);
@@ -266,12 +348,6 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    footer a {
-      color: #94a3b8;
-      text-decoration: none;
-    }
-
-    /* Responsive Design */
     @media (max-width: 768px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -284,6 +360,9 @@
       }
       .hero-title {
         font-size: 2rem;
+      }
+      .formula-input-group {
+        flex-direction: column;
       }
     }
   </style>
@@ -299,7 +378,7 @@
       </a>
       <nav>
         <ul>
-          <li><a href="#excel">Excel-Tools</a></li>
+          <li><a href="#trainer">Formeltrainer</a></li>
           <li><a href="#din5008">DIN 5008 Guide</a></li>
           <li><a href="#downloads">Downloads</a></li>
           <li><a href="https://anna-2311.github.io/Bueromanagement/" target="_blank">Zur Hauptseite ↗</a></li>
@@ -313,9 +392,9 @@
     <div class="container hero-grid">
       <div>
         <h1 class="hero-title">120 Minuten PC-Prüfung? <span>Keine Panik.</span></h1>
-        <p class="hero-subtitle">Dein Praxis-Hub für die IHK-Abschlussprüfung Teil 1 (Informationstechnisches Büromanagement). Formeln, Vorlagen & Übungsdateien auf den Punkt gebracht.</p>
+        <p class="hero-subtitle">Dein Praxis-Hub für die IHK-Abschlussprüfung Teil 1 (Informationstechnisches Büromanagement). Interaktive Formel-Übungen, Vorlagen & DIN 5008 Guides.</p>
         <div class="btn-group">
-          <a href="#excel" class="btn btn-primary">Excel Formel-Hub</a>
+          <a href="#trainer" class="btn btn-primary">Formeltrainer starten</a>
           <a href="#din5008" class="btn btn-secondary">DIN 5008 Guide</a>
         </div>
       </div>
@@ -331,36 +410,100 @@
     </div>
   </section>
 
-  <!-- Section: Excel Tools -->
-  <section id="excel">
+  <!-- Interactive Formel-Trainer Section -->
+  <section id="trainer" style="background-color: #f1f5f9;">
     <div class="container">
       <div class="section-title">
-        <h2>MS Excel Praxis-Tools</h2>
-        <p>Die wichtigsten Formeln und Kalkulationsschemata für die IHK-Prüfung.</p>
+        <h2>Interaktiver Formel-Trainer (IHK-Praxis)</h2>
+        <p>Testen Sie Ihre Excel-Kenntnisse unter Reallabor-Bedingungen. Wählen Sie eine Aufgabe und geben Sie die richtige Formel ein.</p>
       </div>
-      <div class="grid-3">
-        
-        <div class="card">
-          <div class="card-icon">fx</div>
-          <h3>Formelsammlung</h3>
-          <p>WENN, SVERWEIS, XVERWEIS, RUNDEN und ZÄHLENWENN übersichtlich erklärt inklusive IHK-Fallstricken.</p>
-          <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;">Formeln öffnen</a>
+
+      <div class="trainer-card">
+        <!-- Task Selection Tabs -->
+        <div style="display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px;">
+          <button id="tab-sverweis" onclick="switchTask('sverweis')" style="padding: 8px 16px; border-radius: 6px; border: none; background: var(--accent-blue); color: #fff; font-weight: 600; cursor: pointer;">
+            Aufgabe 1: SVERWEIS (Artikelrabatt)
+          </button>
+          <button id="tab-wenn" onclick="switchTask('wenn')" style="padding: 8px 16px; border-radius: 6px; border: none; background: #e2e8f0; color: var(--text-main); font-weight: 600; cursor: pointer;">
+            Aufgabe 2: WENN-Funktion (Skonto)
+          </button>
         </div>
 
-        <div class="card">
-          <div class="card-icon">🧮</div>
-          <h3>Kalkulationsschemata</h3>
-          <p>Bezugskalkulation, Differenzkalkulation und Handelskalkulation schrittweise in Excel umsetzen.</p>
-          <a href="#" class="btn btn-secondary" style="width: 100%; justify-content: center; color: var(--text-main); border-color: var(--border-color);">Anschauen</a>
+        <!-- Task Description -->
+        <div id="task-description" style="font-size: 0.95rem; margin-bottom: 16px;">
+          <strong>Szenario SVERWEIS:</strong> Ermitteln Sie für die Artikelnummer in Zelle <code>B2</code> den passenden Rabattsatz aus der Preisliste (Bereich <code>E2:F5</code>). Das Ergebnis soll in Zelle <code>C2</code> angezeigt werden.
         </div>
 
-        <div class="card">
-          <div class="card-icon">📊</div>
-          <h3>Diagramme & Pivot</h3>
-          <p>Beschriftung, Achsenskalierung und Pivot-Tabellen nach IHK-Vorgaben gestalten.</p>
-          <a href="#" class="btn btn-secondary" style="width: 100%; justify-content: center; color: var(--text-main); border-color: var(--border-color);">Anschauen</a>
+        <!-- Excel Grid Simulation -->
+        <table class="excel-table" id="excel-grid">
+          <thead>
+            <tr>
+              <th class="excel-row-num"></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+              <th>E</th>
+              <th>F</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="excel-row-num">1</td>
+              <td><strong>Kunde</strong></td>
+              <td><strong>Art.-Nr.</strong></td>
+              <td><strong>Rabatt</strong></td>
+              <td></td>
+              <td><strong>Art.-Nr. (Liste)</strong></td>
+              <td><strong>Rabatt (%)</strong></td>
+            </tr>
+            <tr>
+              <td class="excel-row-num">2</td>
+              <td>Müller GmbH</td>
+              <td>A-102</td>
+              <td class="target-cell" id="target-cell-display">?</td>
+              <td></td>
+              <td>A-101</td>
+              <td>3 %</td>
+            </tr>
+            <tr>
+              <td class="excel-row-num">3</td>
+              <td>Bauer AG</td>
+              <td>A-104</td>
+              <td></td>
+              <td></td>
+              <td>A-102</td>
+              <td>5 %</td>
+            </tr>
+            <tr>
+              <td class="excel-row-num">4</td>
+              <td>Schmidt KG</td>
+              <td>A-101</td>
+              <td></td>
+              <td></td>
+              <td>A-103</td>
+              <td>7 %</td>
+            </tr>
+            <tr>
+              <td class="excel-row-num">5</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>A-104</td>
+              <td>10 %</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Formula Input Box -->
+        <div class="formula-input-group">
+          <input type="text" id="formula-input" class="formula-input" placeholder="Geben Sie hier Ihre Formel ein (z. B. =SVERWEIS(...))" autocomplete="off">
+          <button class="btn btn-primary" onclick="checkFormula()">Formel prüfen</button>
         </div>
 
+        <!-- Feedback Box -->
+        <div id="feedback-box" class="feedback-box"></div>
       </div>
     </div>
   </section>
@@ -470,7 +613,6 @@
             </tbody>
           </table>
 
-          <!-- Warnbox -->
           <div style="background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #ef4444; padding: 14px; border-radius: 6px; font-size: 0.85rem; color: #991b1b;">
             <strong>⚠️ Die 2 größten Punktabzugs-Fallen in Word:</strong>
             <ul style="margin-top: 6px; padding-left: 18px;">
@@ -522,6 +664,124 @@
       <p>AKTE · Prüfungsvorbereitung Büromanagement | Erstellt für die IHK-Abschlussprüfung Teil 1</p>
     </div>
   </footer>
+
+  <!-- Trainer JavaScript Code -->
+  <script>
+    let currentTask = 'sverweis';
+
+    function switchTask(task) {
+      currentTask = task;
+      const desc = document.getElementById('task-description');
+      const grid = document.getElementById('excel-grid');
+      const input = document.getElementById('formula-input');
+      const feedback = document.getElementById('feedback-box');
+      
+      const tabSverweis = document.getElementById('tab-sverweis');
+      const tabWenn = document.getElementById('tab-wenn');
+
+      feedback.style.display = 'none';
+      input.value = '';
+
+      if (task === 'sverweis') {
+        tabSverweis.style.background = 'var(--accent-blue)';
+        tabSverweis.style.color = '#fff';
+        tabWenn.style.background = '#e2e8f0';
+        tabWenn.style.color = 'var(--text-main)';
+
+        desc.innerHTML = '<strong>Szenario SVERWEIS:</strong> Ermitteln Sie für die Artikelnummer in Zelle <code>B2</code> den passenden Rabattsatz aus der Preisliste (Bereich <code>E2:F5</code>). Das Ergebnis soll in Zelle <code>C2</code> angezeigt werden.';
+        
+        grid.innerHTML = `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Kunde</strong></td><td><strong>Art.-Nr.</strong></td><td><strong>Rabatt</strong></td><td></td><td><strong>Art.-Nr. (Liste)</strong></td><td><strong>Rabatt (%)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>Müller GmbH</td><td>A-102</td><td class="target-cell" id="target-cell-display">?</td><td></td><td>A-101</td><td>3 %</td></tr>
+            <tr><td class="excel-row-num">3</td><td>Bauer AG</td><td>A-104</td><td></td><td></td><td>A-102</td><td>5 %</td></tr>
+            <tr><td class="excel-row-num">4</td><td>Schmidt KG</td><td>A-101</td><td></td><td></td><td>A-103</td><td>7 %</td></tr>
+            <tr><td class="excel-row-num">5</td><td></td><td></td><td></td><td></td><td>A-104</td><td>10 %</td></tr>
+          </tbody>
+        `;
+      } else {
+        tabWenn.style.background = 'var(--accent-blue)';
+        tabWenn.style.color = '#fff';
+        tabSverweis.style.background = '#e2e8f0';
+        tabSverweis.style.color = 'var(--text-main)';
+
+        desc.innerHTML = '<strong>Szenario WENN:</strong> Prüfen Sie den Rechnungsbetrag in Zelle <code>B2</code>. Beträgt dieser mehr als 1.000 €, wird ein Skonto von 3 % gewährt ("3 %"), sonst kein Skonto ("0 %"). Formel gehört in Zelle <code>C2</code>.';
+
+        grid.innerHTML = `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Rechnungs-Nr.</strong></td><td><strong>Betrag (€)</strong></td><td><strong>Skonto (%)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>RE-2026-01</td><td>1250</td><td class="target-cell" id="target-cell-display">?</td></tr>
+            <tr><td class="excel-row-num">3</td><td>RE-2026-02</td><td>850</td><td></td></tr>
+            <tr><td class="excel-row-num">4</td><td>RE-2026-03</td><td>1000</td><td></td></tr>
+          </tbody>
+        `;
+      }
+    }
+
+    function checkFormula() {
+      const input = document.getElementById('formula-input').value.trim().toUpperCase().replace(/\s+/g, '');
+      const feedback = document.getElementById('feedback-box');
+      const targetDisplay = document.getElementById('target-cell-display');
+
+      feedback.style.display = 'block';
+
+      if (!input.startsWith('=')) {
+        feedback.className = 'feedback-box feedback-error';
+        feedback.innerHTML = '❌ <strong>Fehler:</strong> Jede Excel-Formel muss mit einem Gleichheitszeichen (<code>=</code>) beginnen!';
+        return;
+      }
+
+      if (currentTask === 'sverweis') {
+        const validFormulas = [
+          '=SVERWEIS(B2;E2:F5;2;FALSCH)',
+          '=SVERWEIS(B2;E2:F5;2;0)',
+          '=SVERWEIS(B2;$E$2:$F$5;2;FALSCH)',
+          '=SVERWEIS(B2;$E$2:$F$5;2;0)'
+        ];
+
+        if (validFormulas.includes(input)) {
+          feedback.className = 'feedback-box feedback-success';
+          feedback.innerHTML = '🎉 <strong>Korrekt!</strong> Perfekt gelöst. Mit <code>FALSCH</code> bzw. <code>0</code> wird exakt gesucht.';
+          targetDisplay.innerText = '5 %';
+        } else if (input.includes(',')) {
+          feedback.className = 'feedback-box feedback-error';
+          feedback.innerHTML = '⚠️ <strong>IHK-Falle:</strong> Du hast Kommas (<code>,</code>) statt Semikolons (<code>;</code>) als Trennzeichen verwendet!';
+        } else if (!input.includes('FALSCH') && !input.includes('0')) {
+          feedback.className = 'feedback-box feedback-error';
+          feedback.innerHTML = '⚠️ <strong>Achtung:</strong> Bei Text/Artikelnrsuchen fehlt das 4. Argument <code>FALSCH</code> bzw. <code>0</code> für die genaue Übereinstimmung.';
+        } else {
+          feedback.className = 'feedback-box feedback-error';
+          feedback.innerHTML = '❌ <strong>Musterlösung:</strong> <code>=SVERWEIS(B2; E2:F5; 2; FALSCH)</code>';
+        }
+
+      } else {
+        const validFormulas = [
+          '=WENN(B2>1000;"3%";"0%")',
+          '=WENN(B2>1000;0,03;0)',
+          '=WENN(B2>1000;"3%";"KEIN")',
+          '=WENN(B2>1000;"3%";"0")'
+        ];
+
+        if (validFormulas.includes(input)) {
+          feedback.className = 'feedback-box feedback-success';
+          feedback.innerHTML = '🎉 <strong>Korrekt!</strong> Die WENN-Funktion wurde sauber aufgebaut.';
+          targetDisplay.innerText = '3 %';
+        } else if (input.includes(',')) {
+          feedback.className = 'feedback-box feedback-error';
+          feedback.innerHTML = '⚠️ <strong>IHK-Falle:</strong> Achte auf das Semikolon (<code>;</code>) zum Trennen der Argumente!';
+        } else {
+          feedback.className = 'feedback-box feedback-error';
+          feedback.innerHTML = '❌ <strong>Musterlösung:</strong> <code>=WENN(B2 > 1000; "3%"; "0%")</code>';
+        }
+      }
+    }
+  </script>
 
 </body>
 </html>
