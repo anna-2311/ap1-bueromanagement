@@ -228,31 +228,6 @@
       box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
     }
 
-    .card-icon {
-      width: 48px;
-      height: 48px;
-      background: #e0f2fe;
-      color: var(--accent-blue);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    .card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 20px;
-    }
-
     /* Interactive Trainer Styling */
     .trainer-card {
       background: #ffffff;
@@ -262,12 +237,45 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.03);
     }
 
+    .task-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    .task-btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: #f8fafc;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .task-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .task-btn.active {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+    }
+
     .excel-table {
       width: 100%;
       border-collapse: collapse;
       font-family: 'Consolas', 'Courier New', monospace;
       font-size: 0.85rem;
       margin: 16px 0;
+      overflow-x: auto;
+      display: block;
     }
 
     .excel-table th {
@@ -283,6 +291,7 @@
       border: 1px solid #cbd5e1;
       padding: 6px 12px;
       color: #1e293b;
+      white-space: nowrap;
     }
 
     .excel-row-num {
@@ -414,87 +423,29 @@
   <section id="trainer" style="background-color: #f1f5f9;">
     <div class="container">
       <div class="section-title">
-        <h2>Interaktiver Formel-Trainer (IHK-Praxis)</h2>
-        <p>Testen Sie Ihre Excel-Kenntnisse unter Reallabor-Bedingungen. Wählen Sie eine Aufgabe und geben Sie die richtige Formel ein.</p>
+        <h2>Interaktiver IHK-Formeltrainer</h2>
+        <p>Wähle eine prüfungsrelevante Funktion und schreibe die exakte Excel-Formel für die gelbe Zelle.</p>
       </div>
 
       <div class="trainer-card">
         <!-- Task Selection Tabs -->
-        <div style="display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px;">
-          <button id="tab-sverweis" onclick="switchTask('sverweis')" style="padding: 8px 16px; border-radius: 6px; border: none; background: var(--accent-blue); color: #fff; font-weight: 600; cursor: pointer;">
-            Aufgabe 1: SVERWEIS (Artikelrabatt)
-          </button>
-          <button id="tab-wenn" onclick="switchTask('wenn')" style="padding: 8px 16px; border-radius: 6px; border: none; background: #e2e8f0; color: var(--text-main); font-weight: 600; cursor: pointer;">
-            Aufgabe 2: WENN-Funktion (Skonto)
-          </button>
+        <div class="task-nav">
+          <button class="task-btn active" id="btn-sverweis" onclick="switchTask('sverweis')">1. SVERWEIS</button>
+          <button class="task-btn" id="btn-wenn" onclick="switchTask('wenn')">2. WENN</button>
+          <button class="task-btn" id="btn-zaehlenwenn" onclick="switchTask('zaehlenwenn')">3. ZÄHLENWENN</button>
+          <button class="task-btn" id="btn-summewenn" onclick="switchTask('summewenn')">4. SUMMEWENN</button>
+          <button class="task-btn" id="btn-runden" onclick="switchTask('runden')">5. RUNDEN</button>
+          <button class="task-btn" id="btn-xverweis" onclick="switchTask('xverweis')">6. XVERWEIS</button>
+          <button class="task-btn" id="btn-statistik" onclick="switchTask('statistik')">7. MITTELWERT / MAX</button>
         </div>
 
         <!-- Task Description -->
-        <div id="task-description" style="font-size: 0.95rem; margin-bottom: 16px;">
-          <strong>Szenario SVERWEIS:</strong> Ermitteln Sie für die Artikelnummer in Zelle <code>B2</code> den passenden Rabattsatz aus der Preisliste (Bereich <code>E2:F5</code>). Das Ergebnis soll in Zelle <code>C2</code> angezeigt werden.
-        </div>
+        <div id="task-description" style="font-size: 0.95rem; margin-bottom: 16px;"></div>
 
         <!-- Excel Grid Simulation -->
-        <table class="excel-table" id="excel-grid">
-          <thead>
-            <tr>
-              <th class="excel-row-num"></th>
-              <th>A</th>
-              <th>B</th>
-              <th>C</th>
-              <th>D</th>
-              <th>E</th>
-              <th>F</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="excel-row-num">1</td>
-              <td><strong>Kunde</strong></td>
-              <td><strong>Art.-Nr.</strong></td>
-              <td><strong>Rabatt</strong></td>
-              <td></td>
-              <td><strong>Art.-Nr. (Liste)</strong></td>
-              <td><strong>Rabatt (%)</strong></td>
-            </tr>
-            <tr>
-              <td class="excel-row-num">2</td>
-              <td>Müller GmbH</td>
-              <td>A-102</td>
-              <td class="target-cell" id="target-cell-display">?</td>
-              <td></td>
-              <td>A-101</td>
-              <td>3 %</td>
-            </tr>
-            <tr>
-              <td class="excel-row-num">3</td>
-              <td>Bauer AG</td>
-              <td>A-104</td>
-              <td></td>
-              <td></td>
-              <td>A-102</td>
-              <td>5 %</td>
-            </tr>
-            <tr>
-              <td class="excel-row-num">4</td>
-              <td>Schmidt KG</td>
-              <td>A-101</td>
-              <td></td>
-              <td></td>
-              <td>A-103</td>
-              <td>7 %</td>
-            </tr>
-            <tr>
-              <td class="excel-row-num">5</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>A-104</td>
-              <td>10 %</td>
-            </tr>
-          </tbody>
-        </table>
+        <div id="excel-grid-container">
+          <table class="excel-table" id="excel-grid"></table>
+        </div>
 
         <!-- Formula Input Box -->
         <div class="formula-input-group">
@@ -639,7 +590,7 @@
         <div class="card">
           <h3>📁 Übung: Bezugskalkulation</h3>
           <p>Unformatierte Excel-Tabelle mit Lieferrabatt, Skonto und Frachtkosten.</p>
-          <a href="#" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">.XLSX herunterladen</a>
+          <a href="./Bezugskalkulation_Uebung.xlsx" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">.XLSX herunterladen</a>
         </div>
 
         <div class="card">
@@ -667,30 +618,11 @@
 
   <!-- Trainer JavaScript Code -->
   <script>
-    let currentTask = 'sverweis';
-
-    function switchTask(task) {
-      currentTask = task;
-      const desc = document.getElementById('task-description');
-      const grid = document.getElementById('excel-grid');
-      const input = document.getElementById('formula-input');
-      const feedback = document.getElementById('feedback-box');
-      
-      const tabSverweis = document.getElementById('tab-sverweis');
-      const tabWenn = document.getElementById('tab-wenn');
-
-      feedback.style.display = 'none';
-      input.value = '';
-
-      if (task === 'sverweis') {
-        tabSverweis.style.background = 'var(--accent-blue)';
-        tabSverweis.style.color = '#fff';
-        tabWenn.style.background = '#e2e8f0';
-        tabWenn.style.color = 'var(--text-main)';
-
-        desc.innerHTML = '<strong>Szenario SVERWEIS:</strong> Ermitteln Sie für die Artikelnummer in Zelle <code>B2</code> den passenden Rabattsatz aus der Preisliste (Bereich <code>E2:F5</code>). Das Ergebnis soll in Zelle <code>C2</code> angezeigt werden.';
-        
-        grid.innerHTML = `
+    const tasks = {
+      sverweis: {
+        title: "1. SVERWEIS",
+        desc: "<strong>Szenario SVERWEIS:</strong> Ermitteln Sie für die Artikelnummer in Zelle <code>B2</code> den passenden Rabattsatz aus der Preistabelle (Bereich <code>E2:F5</code>). Die Formel gehört in Zelle <code>C2</code>.",
+        grid: `
           <thead>
             <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
           </thead>
@@ -701,16 +633,15 @@
             <tr><td class="excel-row-num">4</td><td>Schmidt KG</td><td>A-101</td><td></td><td></td><td>A-103</td><td>7 %</td></tr>
             <tr><td class="excel-row-num">5</td><td></td><td></td><td></td><td></td><td>A-104</td><td>10 %</td></tr>
           </tbody>
-        `;
-      } else {
-        tabWenn.style.background = 'var(--accent-blue)';
-        tabWenn.style.color = '#fff';
-        tabSverweis.style.background = '#e2e8f0';
-        tabSverweis.style.color = 'var(--text-main)';
-
-        desc.innerHTML = '<strong>Szenario WENN:</strong> Prüfen Sie den Rechnungsbetrag in Zelle <code>B2</code>. Beträgt dieser mehr als 1.000 €, wird ein Skonto von 3 % gewährt ("3 %"), sonst kein Skonto ("0 %"). Formel gehört in Zelle <code>C2</code>.';
-
-        grid.innerHTML = `
+        `,
+        solutions: ["=SVERWEIS(B2;E2:F5;2;FALSCH)", "=SVERWEIS(B2;E2:F5;2;0)", "=SVERWEIS(B2;$E$2:$F$5;2;FALSCH)", "=SVERWEIS(B2;$E$2:$F$5;2;0)"],
+        correctResult: "5 %",
+        hint: "Denken Sie an das vierte Argument (<code>FALSCH</code> oder <code>0</code>) für eine exakte Übereinstimmung!"
+      },
+      wenn: {
+        title: "2. WENN",
+        desc: "<strong>Szenario WENN:</strong> Prüfen Sie den Rechnungsbetrag in Zelle <code>B2</code>. Beträgt dieser mehr als 1.000 €, soll ein Skonto von 3 % gewährt werden (<code>\"3%\"</code>), sonst kein Skonto (<code>\"0%\"</code>). Formel gehört in Zelle <code>C2</code>.",
+        grid: `
           <thead>
             <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th></tr>
           </thead>
@@ -718,16 +649,132 @@
             <tr><td class="excel-row-num">1</td><td><strong>Rechnungs-Nr.</strong></td><td><strong>Betrag (€)</strong></td><td><strong>Skonto (%)</strong></td></tr>
             <tr><td class="excel-row-num">2</td><td>RE-2026-01</td><td>1250</td><td class="target-cell" id="target-cell-display">?</td></tr>
             <tr><td class="excel-row-num">3</td><td>RE-2026-02</td><td>850</td><td></td></tr>
-            <tr><td class="excel-row-num">4</td><td>RE-2026-03</td><td>1000</td><td></td></tr>
           </tbody>
-        `;
+        `,
+        solutions: ["=WENN(B2>1000;\"3%\";\"0%\")", "=WENN(B2>1000;0,03;0)", "=WENN(B2>1000;\"3%\";\"0\")"],
+        correctResult: "3 %",
+        hint: "Vergessen Sie nicht die Anführungszeichen bei der Textausgabe (z. B. <code>\"3%\"</code>)."
+      },
+      zaehlenwenn: {
+        title: "3. ZÄHLENWENN",
+        desc: "<strong>Szenario ZÄHLENWENN:</strong> Zählen Sie im Bereich <code>B2:B6</code> alle Kunden, die den Status <code>\"A-Kunde\"</code> haben. Das Ergebnis gehört in Zelle <code>E2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Kunde</strong></td><td><strong>Status</strong></td><td></td><td><strong>Anzahl A-Kunden:</strong></td><td class="target-cell" id="target-cell-display">?</td></tr>
+            <tr><td class="excel-row-num">2</td><td>Müller GmbH</td><td>A-Kunde</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">3</td><td>Bauer AG</td><td>B-Kunde</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">4</td><td>Schmidt KG</td><td>A-Kunde</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">5</td><td>Meier GmbH</td><td>C-Kunde</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">6</td><td>Schulze e.K.</td><td>A-Kunde</td><td></td><td></td><td></td></tr>
+          </tbody>
+        `,
+        solutions: ["=ZÄHLENWENN(B2:B6;\"A-KUNDE\")", "=ZÄHLENWENN(B2:B6;\"A-Kunde\")", "=ZÄHLENWENN($B$2:$B$6;\"A-KUNDE\")"],
+        correctResult: "3",
+        hint: "Syntaxtipp: <code>=ZÄHLENWENN(Bereich; Suchkriterium)</code>. Textkriterien gehören in Anführungszeichen!"
+      },
+      summewenn: {
+        title: "4. SUMMEWENN",
+        desc: "<strong>Szenario SUMMEWENN:</strong> Berechnen Sie die Gesamt-Umsatzsumme aller Aufträge aus der Region <code>\"Nord\"</code> im Bereich <code>A2:B5</code>. Das Ergebnis gehört in Zelle <code>E2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Region</strong></td><td><strong>Umsatz (€)</strong></td><td></td><td><strong>Umsatz Nord:</strong></td><td class="target-cell" id="target-cell-display">?</td></tr>
+            <tr><td class="excel-row-num">2</td><td>Nord</td><td>5000</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">3</td><td>Süd</td><td>3000</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">4</td><td>Nord</td><td>4500</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">5</td><td>West</td><td>2000</td><td></td><td></td><td></td></tr>
+          </tbody>
+        `,
+        solutions: ["=SUMMEWENN(A2:A5;\"NORD\";B2:B5)", "=SUMMEWENN(A2:A5;\"Nord\";B2:B5)", "=SUMMEWENN($A$2:$A$5;\"Nord\";$B$2:$B$5)"],
+        correctResult: "9.500,00 €",
+        hint: "Syntaxtipp: <code>=SUMMEWENN(Kriterien_Bereich; Kriterium; [Summe_Bereich])</code>."
+      },
+      runden: {
+        title: "5. RUNDEN",
+        desc: "<strong>Szenario RUNDEN:</strong> Runden Sie den errechneten Endbetrag aus Zelle <code>B2</code> kaufmännisch auf genau 2 Nachkommastellen. Die Formel gehört in Zelle <code>C2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Position</strong></td><td><strong>Berechnet (€)</strong></td><td><strong>Gerundet (€)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>Nettobetrag</td><td>142.85714</td><td class="target-cell" id="target-cell-display">?</td></tr>
+          </tbody>
+        `,
+        solutions: ["=RUNDEN(B2;2)"],
+        correctResult: "142,86 €",
+        hint: "Verwenden Sie die Funktion <code>=RUNDEN(Zahl; Anzahl_Stellen)</code> mit <code>2</code> für Cent-Beträge."
+      },
+      xverweis: {
+        title: "6. XVERWEIS",
+        desc: "<strong>Szenario XVERWEIS:</strong> Suchen Sie mit der modernen XVERWEIS-Funktion nach der Artikelnummer in <code>B2</code> im Suchbereich <code>E2:E5</code> und geben Sie den Preis aus dem Rückgabebereich <code>F2:F5</code> aus. Formel gehört in <code>C2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Kunde</strong></td><td><strong>Art.-Nr.</strong></td><td><strong>Preis (€)</strong></td><td></td><td><strong>Art.-Nr.</strong></td><td><strong>Preis (€)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>Müller GmbH</td><td>A-103</td><td class="target-cell" id="target-cell-display">?</td><td></td><td>A-101</td><td>12,00</td></tr>
+            <tr><td class="excel-row-num">3</td><td></td><td></td><td></td><td></td><td>A-102</td><td>15,50</td></tr>
+            <tr><td class="excel-row-num">4</td><td></td><td></td><td></td><td></td><td>A-103</td><td>8,90</td></tr>
+            <tr><td class="excel-row-num">5</td><td></td><td></td><td></td><td></td><td>A-104</td><td>24,00</td></tr>
+          </tbody>
+        `,
+        solutions: ["=XVERWEIS(B2;E2:E5;F2:F5)", "=XVERWEIS(B2;$E$2:$E$5;$F$2:$F$5)"],
+        correctResult: "8,90 €",
+        hint: "Syntaxtipp: <code>=XVERWEIS(Suchkriterium; Suchmatrix; Rückgabematrix)</code>."
+      },
+      statistik: {
+        title: "7. MITTELWERT / MAX",
+        desc: "<strong>Szenario MITTELWERT:</strong> Berechnen Sie den durchschnittlichen Umsatz der Monate Januar bis April (Bereich <code>B2:B5</code>). Die Formel gehört in Zelle <code>B6</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Monat</strong></td><td><strong>Umsatz (€)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>Januar</td><td>12000</td></tr>
+            <tr><td class="excel-row-num">3</td><td>Februar</td><td>15000</td></tr>
+            <tr><td class="excel-row-num">4</td><td>März</td><td>9000</td></tr>
+            <tr><td class="excel-row-num">5</td><td>April</td><td>18000</td></tr>
+            <tr><td class="excel-row-num">6</td><td><strong>Durchschnitt:</strong></td><td class="target-cell" id="target-cell-display">?</td></tr>
+          </tbody>
+        `,
+        solutions: ["=MITTELWERT(B2:B5)", "=MITTELWERT($B$2:$B$5)"],
+        correctResult: "13.500,00 €",
+        hint: "Nutzen Sie die Excel-Standardfunktion <code>=MITTELWERT(Bereich)</code>."
       }
+    };
+
+    let currentTaskKey = 'sverweis';
+
+    function switchTask(taskKey) {
+      currentTaskKey = taskKey;
+      const t = tasks[taskKey];
+
+      // Update button styling
+      document.querySelectorAll('.task-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`btn-${taskKey}`).classList.add('active');
+
+      // Update content
+      document.getElementById('task-description').innerHTML = t.desc;
+      document.getElementById('excel-grid').innerHTML = t.grid;
+      document.getElementById('formula-input').value = '';
+      
+      const feedback = document.getElementById('feedback-box');
+      feedback.style.display = 'none';
     }
 
     function checkFormula() {
       const input = document.getElementById('formula-input').value.trim().toUpperCase().replace(/\s+/g, '');
       const feedback = document.getElementById('feedback-box');
       const targetDisplay = document.getElementById('target-cell-display');
+      const t = tasks[currentTaskKey];
 
       feedback.style.display = 'block';
 
@@ -737,50 +784,837 @@
         return;
       }
 
-      if (currentTask === 'sverweis') {
-        const validFormulas = [
-          '=SVERWEIS(B2;E2:F5;2;FALSCH)',
-          '=SVERWEIS(B2;E2:F5;2;0)',
-          '=SVERWEIS(B2;$E$2:$F$5;2;FALSCH)',
-          '=SVERWEIS(B2;$E$2:$F$5;2;0)'
-        ];
-
-        if (validFormulas.includes(input)) {
-          feedback.className = 'feedback-box feedback-success';
-          feedback.innerHTML = '🎉 <strong>Korrekt!</strong> Perfekt gelöst. Mit <code>FALSCH</code> bzw. <code>0</code> wird exakt gesucht.';
-          targetDisplay.innerText = '5 %';
-        } else if (input.includes(',')) {
-          feedback.className = 'feedback-box feedback-error';
-          feedback.innerHTML = '⚠️ <strong>IHK-Falle:</strong> Du hast Kommas (<code>,</code>) statt Semikolons (<code>;</code>) als Trennzeichen verwendet!';
-        } else if (!input.includes('FALSCH') && !input.includes('0')) {
-          feedback.className = 'feedback-box feedback-error';
-          feedback.innerHTML = '⚠️ <strong>Achtung:</strong> Bei Text/Artikelnrsuchen fehlt das 4. Argument <code>FALSCH</code> bzw. <code>0</code> für die genaue Übereinstimmung.';
-        } else {
-          feedback.className = 'feedback-box feedback-error';
-          feedback.innerHTML = '❌ <strong>Musterlösung:</strong> <code>=SVERWEIS(B2; E2:F5; 2; FALSCH)</code>';
-        }
-
+      if (t.solutions.includes(input)) {
+        feedback.className = 'feedback-box feedback-success';
+        feedback.innerHTML = `🎉 <strong>Korrekt!</strong> Perfekt gelöst. Ergebnis: <strong>${t.correctResult}</strong>`;
+        targetDisplay.innerText = t.correctResult;
       } else {
-        const validFormulas = [
-          '=WENN(B2>1000;"3%";"0%")',
-          '=WENN(B2>1000;0,03;0)',
-          '=WENN(B2>1000;"3%";"KEIN")',
-          '=WENN(B2>1000;"3%";"0")'
-        ];
-
-        if (validFormulas.includes(input)) {
-          feedback.className = 'feedback-box feedback-success';
-          feedback.innerHTML = '🎉 <strong>Korrekt!</strong> Die WENN-Funktion wurde sauber aufgebaut.';
-          targetDisplay.innerText = '3 %';
-        } else if (input.includes(',')) {
-          feedback.className = 'feedback-box feedback-error';
-          feedback.innerHTML = '⚠️ <strong>IHK-Falle:</strong> Achte auf das Semikolon (<code>;</code>) zum Trennen der Argumente!';
-        } else {
-          feedback.className = 'feedback-box feedback-error';
-          feedback.innerHTML = '❌ <strong>Musterlösung:</strong> <code>=WENN(B2 > 1000; "3%"; "0%")</code>';
+        feedback.className = 'feedback-box feedback-error';
+        let errorMsg = '❌ <strong>Nicht ganz korrekt.</strong> ';
+        
+        if (input.includes(',')) {
+          errorMsg += 'Achten Sie auf das Semikolon (<code>;</code>) als Trennzeichen in der deutschen Excel-Version! ';
         }
+        
+        errorMsg += `<br>💡 <strong>Hinweis:</strong> ${t.hint}<br>Musterlösung: <code>${t.solutions[0]}</code>`;
+        feedback.innerHTML = errorMsg;
       }
     }
+
+    // Initialisierung der ersten Aufgabe beim Laden
+    window.onload = function() {
+      switchTask('sverweis');
+    };
+  </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AKTE · AP1 Praxis-Hub | Büromanagement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-blue: #0284c7;
+      --accent-hover: #0369a1;
+      --dark-navy: #0f172a;
+      --dark-card: #1e293b;
+      --border-color: #e2e8f0;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--dark-navy);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .logo-badge {
+      background: var(--accent-blue);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+    }
+
+    nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--dark-navy) 0%, var(--dark-card) 100%);
+      color: #fff;
+      padding: 80px 0 60px 0;
+      border-bottom: 4px solid var(--accent-blue);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      color: #38bdf8;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      margin-bottom: 30px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-blue);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 30px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      color: #38bdf8;
+    }
+
+    .feature-list {
+      list-style: none;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+    }
+
+    section {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Interactive Trainer Styling */
+    .trainer-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .task-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 16px;
+    }
+
+    .task-btn {
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: #f8fafc;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .task-btn:hover {
+      background: #e2e8f0;
+    }
+
+    .task-btn.active {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+    }
+
+    .excel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.85rem;
+      margin: 16px 0;
+      overflow-x: auto;
+      display: block;
+    }
+
+    .excel-table th {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      text-align: center;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    .excel-table td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      color: #1e293b;
+      white-space: nowrap;
+    }
+
+    .excel-row-num {
+      background: #f1f5f9;
+      font-weight: bold;
+      text-align: center;
+      width: 40px;
+      color: #475569;
+    }
+
+    .target-cell {
+      background: #fef08a !important;
+      font-weight: bold;
+    }
+
+    .formula-input-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .formula-input {
+      flex: 1;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 1rem;
+      padding: 12px 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .formula-input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .feedback-box {
+      margin-top: 16px;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .feedback-success {
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #166534;
+    }
+
+    .feedback-error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    footer {
+      background: var(--dark-navy);
+      color: var(--text-muted);
+      padding: 40px 0;
+      text-align: center;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-wrapper {
+        flex-direction: column;
+        gap: 12px;
+        height: auto;
+        padding: 16px 0;
+      }
+      .hero-title {
+        font-size: 2rem;
+      }
+      .formula-input-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-wrapper">
+      <a href="#" class="logo">
+        <span>AKTE</span>
+        <span class="logo-badge">AP1 HUB</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#trainer">Formeltrainer</a></li>
+          <li><a href="#din5008">DIN 5008 Guide</a></li>
+          <li><a href="#downloads">Downloads</a></li>
+          <li><a href="https://anna-2311.github.io/Bueromanagement/" target="_blank">Zur Hauptseite ↗</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1 class="hero-title">120 Minuten PC-Prüfung? <span>Keine Panik.</span></h1>
+        <p class="hero-subtitle">Dein Praxis-Hub für die IHK-Abschlussprüfung Teil 1 (Informationstechnisches Büromanagement). Interaktive Formel-Übungen, Vorlagen & DIN 5008 Guides.</p>
+        <div class="btn-group">
+          <a href="#trainer" class="btn btn-primary">Formeltrainer starten</a>
+          <a href="#din5008" class="btn btn-secondary">DIN 5008 Guide</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>⚡ Quick Check: AP1 Fakten</h3>
+        <ul class="feature-list">
+          <li>✅ <strong>Gewichtung:</strong> 25 % der Gesamtnote</li>
+          <li>⏱️ <strong>Dauer:</strong> 120 Minuten am PC</li>
+          <li>📊 <strong>Schwerpunkte:</strong> MS Excel & MS Word</li>
+          <li>⚠️ <strong>Häufigste Falle:</strong> Falsche Formelkopie / Bezugsfehler</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Formel-Trainer Section -->
+  <section id="trainer" style="background-color: #f1f5f9;">
+    <div class="container">
+      <div class="section-title">
+        <h2>Interaktiver IHK-Formeltrainer</h2>
+        <p>Wähle eine prüfungsrelevante Funktion und schreibe die exakte Excel-Formel für die gelbe Zelle.</p>
+      </div>
+
+      <div class="trainer-card">
+        <!-- Task Selection Tabs -->
+        <div class="task-nav">
+          <button class="task-btn active" id="btn-sverweis" onclick="switchTask('sverweis')">1. SVERWEIS</button>
+          <button class="task-btn" id="btn-wenn" onclick="switchTask('wenn')">2. WENN</button>
+          <button class="task-btn" id="btn-zaehlenwenn" onclick="switchTask('zaehlenwenn')">3. ZÄHLENWENN</button>
+          <button class="task-btn" id="btn-summewenn" onclick="switchTask('summewenn')">4. SUMMEWENN</button>
+          <button class="task-btn" id="btn-runden" onclick="switchTask('runden')">5. RUNDEN</button>
+          <button class="task-btn" id="btn-xverweis" onclick="switchTask('xverweis')">6. XVERWEIS</button>
+          <button class="task-btn" id="btn-statistik" onclick="switchTask('statistik')">7. MITTELWERT / MAX</button>
+        </div>
+
+        <!-- Task Description -->
+        <div id="task-description" style="font-size: 0.95rem; margin-bottom: 16px;"></div>
+
+        <!-- Excel Grid Simulation -->
+        <div id="excel-grid-container">
+          <table class="excel-table" id="excel-grid"></table>
+        </div>
+
+        <!-- Formula Input Box -->
+        <div class="formula-input-group">
+          <input type="text" id="formula-input" class="formula-input" placeholder="Geben Sie hier Ihre Formel ein (z. B. =SVERWEIS(...))" autocomplete="off">
+          <button class="btn btn-primary" onclick="checkFormula()">Formel prüfen</button>
+        </div>
+
+        <!-- Feedback Box -->
+        <div id="feedback-box" class="feedback-box"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIN 5008 Geschäftsbrief Guide Modul -->
+  <section id="din5008" style="background-color: #ffffff; padding: 60px 0; border-top: 1px solid #e2e8f0;">
+    <div class="container">
+      <div class="section-title">
+        <h2>DIN 5008 Geschäftsbrief-Raster (Form A & B)</h2>
+        <p>Aufbau, Zeilenabstände und die häufigsten IHK-Stolpersteine in MS Word auf einen Blick.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; align-items: start;">
+        
+        <!-- Visuelle Brief-Vorschau -->
+        <div style="background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 24px; font-family: sans-serif; font-size: 0.85rem;">
+          <div style="font-weight: bold; color: #64748b; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem;">
+            📄 Visueller Zonen-Aufbau
+          </div>
+
+          <div style="background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #0284c7; padding: 8px 12px; margin-bottom: 8px; border-radius: 4px;">
+            <span style="color: #0284c7; font-weight: bold; font-size: 0.75rem;">1. ABSENDER-RÜCKSENDEANGABE</span><br>
+            <span style="color: #64748b; font-size: 0.8rem;">Max. 8 pt | Einzeilig über dem Anschriftfeld</span>
+          </div>
+
+          <div style="background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #0369a1; padding: 8px 12px; margin-bottom: 8px; border-radius: 4px;">
+            <span style="color: #0369a1; font-weight: bold; font-size: 0.75rem;">2. EMPFÄNGER-ANSCHRIFTFELD (9 ZEILEN)</span><br>
+            <span style="color: #334155;">Firma Musterfrau GmbH<br>Herrn Max Mustermann<br>Hauptstraße 12<br>12345 Musterstadt</span>
+          </div>
+
+          <div style="background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; text-align: center; padding: 4px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; margin-bottom: 8px;">
+            ⬇️ 2 LEERZEILEN
+          </div>
+
+          <div style="background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #0f172a; padding: 8px 12px; margin-bottom: 8px; border-radius: 4px;">
+            <span style="color: #0f172a; font-weight: bold;">3. BETREFFZEILE (FETT, KEIN PUNKT)</span>
+          </div>
+
+          <div style="background: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; text-align: center; padding: 4px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; margin-bottom: 8px;">
+            ⬇️ 2 LEERZEILEN
+          </div>
+
+          <div style="background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #f59e0b; padding: 8px 12px; margin-bottom: 8px; border-radius: 4px;">
+            <span style="color: #d97706; font-weight: bold; font-size: 0.75rem;">4. ANREDE</span><br>
+            <span style="color: #334155;">Sehr geehrte Damen und Herren,</span>
+          </div>
+
+          <div style="background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569; text-align: center; padding: 4px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; margin-bottom: 8px;">
+            ⬇️ 1 LEERZEILE
+          </div>
+
+          <div style="background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #10b981; padding: 8px 12px; margin-bottom: 8px; border-radius: 4px;">
+            <span style="color: #059669; font-weight: bold; font-size: 0.75rem;">5. BRIEFTEXT</span><br>
+            <span style="color: #334155;">wir bedanken uns für Ihre Anfrage... (Text beginnt klein)</span>
+          </div>
+
+          <div style="background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569; text-align: center; padding: 4px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; margin-bottom: 8px;">
+            ⬇️ 1 LEERZEILE
+          </div>
+
+          <div style="background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #6366f1; padding: 8px 12px; border-radius: 4px;">
+            <span style="color: #4f46e5; font-weight: bold; font-size: 0.75rem;">6. GRUSSFORMEL & UNTERSCHRIFT</span><br>
+            <span style="color: #334155;">Freundliche Grüße<br><br><i>(3 Leerzeilen für Unterschrift)</i><br>Max Muster</span>
+          </div>
+        </div>
+
+        <!-- Tabelle der Leerzeilen-Regeln -->
+        <div>
+          <h3 style="font-size: 1.2rem; margin-bottom: 16px;">Spickzettel: Die IHK-Leerzeilen-Regel</h3>
+          
+          <table style="width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; margin-bottom: 20px;">
+            <thead>
+              <tr style="background: #0f172a; color: #fff; text-align: left; font-size: 0.85rem;">
+                <th style="padding: 10px 12px;">Position</th>
+                <th style="padding: 10px 12px;">Leerzeilen davor</th>
+              </tr>
+            </thead>
+            <tbody style="font-size: 0.9rem;">
+              <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 10px 12px; font-weight: 600;">Betreffzeile</td>
+                <td style="padding: 10px 12px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-weight: bold;">2 Leerzeilen</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                <td style="padding: 10px 12px; font-weight: 600;">Anrede</td>
+                <td style="padding: 10px 12px;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-weight: bold;">2 Leerzeilen</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 10px 12px; font-weight: 600;">Textabsätze</td>
+                <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px; font-weight: bold;">1 Leerzeile</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                <td style="padding: 10px 12px; font-weight: 600;">Grußformel</td>
+                <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px; font-weight: bold;">1 Leerzeile</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0;">
+                <td style="padding: 10px 12px; font-weight: 600;">Firmenname</td>
+                <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px; font-weight: bold;">1 Leerzeile</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                <td style="padding: 10px 12px; font-weight: 600;">Unterschrift-Name</td>
+                <td style="padding: 10px 12px;"><span style="background: #fef3c7; color: #d97706; padding: 2px 8px; border-radius: 4px; font-weight: bold;">3 Leerzeilen</span></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 12px; font-weight: 600;">Anlagenvermerk</td>
+                <td style="padding: 10px 12px;"><span style="background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px; font-weight: bold;">1 Leerzeile</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #ef4444; padding: 14px; border-radius: 6px; font-size: 0.85rem; color: #991b1b;">
+            <strong>⚠️ Die 2 größten Punktabzugs-Fallen in Word:</strong>
+            <ul style="margin-top: 6px; padding-left: 18px;">
+              <li><strong>Automatischer Absatzabstand:</strong> MS Word fügt standardmäßig 8 pt Nachabstand ein. In der AP1 zwingend auf <i>"Kein Leerraum"</i> stellen!</li>
+              <li><strong>Schlusspunkt im Betreff:</strong> Der Betreff darf <u>niemals</u> mit einem Punkt enden.</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Downloads -->
+  <section id="downloads" style="background-color: #f1f5f9;">
+    <div class="container">
+      <div class="section-title">
+        <h2>Download-Bereich</h2>
+        <p>Lade unformatierte Rohdateien herunter, um unter realen Prüfungsbedingungen zu üben.</p>
+      </div>
+      <div class="grid-3">
+        
+        <div class="card">
+          <h3>📁 Übung: Bezugskalkulation</h3>
+          <p>Unformatierte Excel-Tabelle mit Lieferrabatt, Skonto und Frachtkosten.</p>
+          <a href="./Bezugskalkulation_Uebung.xlsx" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">.XLSX herunterladen</a>
+        </div>
+
+        <div class="card">
+          <h3>📁 Übung: Serienbrief & Word</h3>
+          <p>Word-Rohtext und Excel-Datenquelle zum Erstellen eines IHK-Geschäftsbriefs.</p>
+          <a href="#" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">.ZIP Paket herunterladen</a>
+        </div>
+
+        <div class="card">
+          <h3>📄 DIN 5008 Cheat Sheet</h3>
+          <p>Das wichtigste Zeilen- & Abstandsnetz für den Geschäftsbrief als PDF.</p>
+          <a href="./AP1_Excel_Formelsammlung.pdf" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">PDF herunterladen</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>AKTE · Prüfungsvorbereitung Büromanagement | Erstellt für die IHK-Abschlussprüfung Teil 1</p>
+    </div>
+  </footer>
+
+  <!-- Trainer JavaScript Code -->
+  <script>
+    const tasks = {
+      sverweis: {
+        title: "1. SVERWEIS",
+        desc: "<strong>Szenario SVERWEIS:</strong> Ermitteln Sie für die Artikelnummer in Zelle <code>B2</code> den passenden Rabattsatz aus der Preistabelle (Bereich <code>E2:F5</code>). Die Formel gehört in Zelle <code>C2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Kunde</strong></td><td><strong>Art.-Nr.</strong></td><td><strong>Rabatt</strong></td><td></td><td><strong>Art.-Nr. (Liste)</strong></td><td><strong>Rabatt (%)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>Müller GmbH</td><td>A-102</td><td class="target-cell" id="target-cell-display">?</td><td></td><td>A-101</td><td>3 %</td></tr>
+            <tr><td class="excel-row-num">3</td><td>Bauer AG</td><td>A-104</td><td></td><td></td><td>A-102</td><td>5 %</td></tr>
+            <tr><td class="excel-row-num">4</td><td>Schmidt KG</td><td>A-101</td><td></td><td></td><td>A-103</td><td>7 %</td></tr>
+            <tr><td class="excel-row-num">5</td><td></td><td></td><td></td><td></td><td>A-104</td><td>10 %</td></tr>
+          </tbody>
+        `,
+        solutions: ["=SVERWEIS(B2;E2:F5;2;FALSCH)", "=SVERWEIS(B2;E2:F5;2;0)", "=SVERWEIS(B2;$E$2:$F$5;2;FALSCH)", "=SVERWEIS(B2;$E$2:$F$5;2;0)"],
+        correctResult: "5 %",
+        hint: "Denken Sie an das vierte Argument (<code>FALSCH</code> oder <code>0</code>) für eine exakte Übereinstimmung!"
+      },
+      wenn: {
+        title: "2. WENN",
+        desc: "<strong>Szenario WENN:</strong> Prüfen Sie den Rechnungsbetrag in Zelle <code>B2</code>. Beträgt dieser mehr als 1.000 €, soll ein Skonto von 3 % gewährt werden (<code>\"3%\"</code>), sonst kein Skonto (<code>\"0%\"</code>). Formel gehört in Zelle <code>C2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Rechnungs-Nr.</strong></td><td><strong>Betrag (€)</strong></td><td><strong>Skonto (%)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>RE-2026-01</td><td>1250</td><td class="target-cell" id="target-cell-display">?</td></tr>
+            <tr><td class="excel-row-num">3</td><td>RE-2026-02</td><td>850</td><td></td></tr>
+          </tbody>
+        `,
+        solutions: ["=WENN(B2>1000;\"3%\";\"0%\")", "=WENN(B2>1000;0,03;0)", "=WENN(B2>1000;\"3%\";\"0\")"],
+        correctResult: "3 %",
+        hint: "Vergessen Sie nicht die Anführungszeichen bei der Textausgabe (z. B. <code>\"3%\"</code>)."
+      },
+      zaehlenwenn: {
+        title: "3. ZÄHLENWENN",
+        desc: "<strong>Szenario ZÄHLENWENN:</strong> Zählen Sie im Bereich <code>B2:B6</code> alle Kunden, die den Status <code>\"A-Kunde\"</code> haben. Das Ergebnis gehört in Zelle <code>E2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Kunde</strong></td><td><strong>Status</strong></td><td></td><td><strong>Anzahl A-Kunden:</strong></td><td class="target-cell" id="target-cell-display">?</td></tr>
+            <tr><td class="excel-row-num">2</td><td>Müller GmbH</td><td>A-Kunde</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">3</td><td>Bauer AG</td><td>B-Kunde</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">4</td><td>Schmidt KG</td><td>A-Kunde</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">5</td><td>Meier GmbH</td><td>C-Kunde</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">6</td><td>Schulze e.K.</td><td>A-Kunde</td><td></td><td></td><td></td></tr>
+          </tbody>
+        `,
+        solutions: ["=ZÄHLENWENN(B2:B6;\"A-KUNDE\")", "=ZÄHLENWENN(B2:B6;\"A-Kunde\")", "=ZÄHLENWENN($B$2:$B$6;\"A-KUNDE\")"],
+        correctResult: "3",
+        hint: "Syntaxtipp: <code>=ZÄHLENWENN(Bereich; Suchkriterium)</code>. Textkriterien gehören in Anführungszeichen!"
+      },
+      summewenn: {
+        title: "4. SUMMEWENN",
+        desc: "<strong>Szenario SUMMEWENN:</strong> Berechnen Sie die Gesamt-Umsatzsumme aller Aufträge aus der Region <code>\"Nord\"</code> im Bereich <code>A2:B5</code>. Das Ergebnis gehört in Zelle <code>E2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Region</strong></td><td><strong>Umsatz (€)</strong></td><td></td><td><strong>Umsatz Nord:</strong></td><td class="target-cell" id="target-cell-display">?</td></tr>
+            <tr><td class="excel-row-num">2</td><td>Nord</td><td>5000</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">3</td><td>Süd</td><td>3000</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">4</td><td>Nord</td><td>4500</td><td></td><td></td><td></td></tr>
+            <tr><td class="excel-row-num">5</td><td>West</td><td>2000</td><td></td><td></td><td></td></tr>
+          </tbody>
+        `,
+        solutions: ["=SUMMEWENN(A2:A5;\"NORD\";B2:B5)", "=SUMMEWENN(A2:A5;\"Nord\";B2:B5)", "=SUMMEWENN($A$2:$A$5;\"Nord\";$B$2:$B$5)"],
+        correctResult: "9.500,00 €",
+        hint: "Syntaxtipp: <code>=SUMMEWENN(Kriterien_Bereich; Kriterium; [Summe_Bereich])</code>."
+      },
+      runden: {
+        title: "5. RUNDEN",
+        desc: "<strong>Szenario RUNDEN:</strong> Runden Sie den errechneten Endbetrag aus Zelle <code>B2</code> kaufmännisch auf genau 2 Nachkommastellen. Die Formel gehört in Zelle <code>C2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Position</strong></td><td><strong>Berechnet (€)</strong></td><td><strong>Gerundet (€)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>Nettobetrag</td><td>142.85714</td><td class="target-cell" id="target-cell-display">?</td></tr>
+          </tbody>
+        `,
+        solutions: ["=RUNDEN(B2;2)"],
+        correctResult: "142,86 €",
+        hint: "Verwenden Sie die Funktion <code>=RUNDEN(Zahl; Anzahl_Stellen)</code> mit <code>2</code> für Cent-Beträge."
+      },
+      xverweis: {
+        title: "6. XVERWEIS",
+        desc: "<strong>Szenario XVERWEIS:</strong> Suchen Sie mit der modernen XVERWEIS-Funktion nach der Artikelnummer in <code>B2</code> im Suchbereich <code>E2:E5</code> und geben Sie den Preis aus dem Rückgabebereich <code>F2:F5</code> aus. Formel gehört in <code>C2</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Kunde</strong></td><td><strong>Art.-Nr.</strong></td><td><strong>Preis (€)</strong></td><td></td><td><strong>Art.-Nr.</strong></td><td><strong>Preis (€)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>Müller GmbH</td><td>A-103</td><td class="target-cell" id="target-cell-display">?</td><td></td><td>A-101</td><td>12,00</td></tr>
+            <tr><td class="excel-row-num">3</td><td></td><td></td><td></td><td></td><td>A-102</td><td>15,50</td></tr>
+            <tr><td class="excel-row-num">4</td><td></td><td></td><td></td><td></td><td>A-103</td><td>8,90</td></tr>
+            <tr><td class="excel-row-num">5</td><td></td><td></td><td></td><td></td><td>A-104</td><td>24,00</td></tr>
+          </tbody>
+        `,
+        solutions: ["=XVERWEIS(B2;E2:E5;F2:F5)", "=XVERWEIS(B2;$E$2:$E$5;$F$2:$F$5)"],
+        correctResult: "8,90 €",
+        hint: "Syntaxtipp: <code>=XVERWEIS(Suchkriterium; Suchmatrix; Rückgabematrix)</code>."
+      },
+      statistik: {
+        title: "7. MITTELWERT / MAX",
+        desc: "<strong>Szenario MITTELWERT:</strong> Berechnen Sie den durchschnittlichen Umsatz der Monate Januar bis April (Bereich <code>B2:B5</code>). Die Formel gehört in Zelle <code>B6</code>.",
+        grid: `
+          <thead>
+            <tr><th class="excel-row-num"></th><th>A</th><th>B</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="excel-row-num">1</td><td><strong>Monat</strong></td><td><strong>Umsatz (€)</strong></td></tr>
+            <tr><td class="excel-row-num">2</td><td>Januar</td><td>12000</td></tr>
+            <tr><td class="excel-row-num">3</td><td>Februar</td><td>15000</td></tr>
+            <tr><td class="excel-row-num">4</td><td>März</td><td>9000</td></tr>
+            <tr><td class="excel-row-num">5</td><td>April</td><td>18000</td></tr>
+            <tr><td class="excel-row-num">6</td><td><strong>Durchschnitt:</strong></td><td class="target-cell" id="target-cell-display">?</td></tr>
+          </tbody>
+        `,
+        solutions: ["=MITTELWERT(B2:B5)", "=MITTELWERT($B$2:$B$5)"],
+        correctResult: "13.500,00 €",
+        hint: "Nutzen Sie die Excel-Standardfunktion <code>=MITTELWERT(Bereich)</code>."
+      }
+    };
+
+    let currentTaskKey = 'sverweis';
+
+    function switchTask(taskKey) {
+      currentTaskKey = taskKey;
+      const t = tasks[taskKey];
+
+      // Update button styling
+      document.querySelectorAll('.task-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`btn-${taskKey}`).classList.add('active');
+
+      // Update content
+      document.getElementById('task-description').innerHTML = t.desc;
+      document.getElementById('excel-grid').innerHTML = t.grid;
+      document.getElementById('formula-input').value = '';
+      
+      const feedback = document.getElementById('feedback-box');
+      feedback.style.display = 'none';
+    }
+
+    function checkFormula() {
+      const input = document.getElementById('formula-input').value.trim().toUpperCase().replace(/\s+/g, '');
+      const feedback = document.getElementById('feedback-box');
+      const targetDisplay = document.getElementById('target-cell-display');
+      const t = tasks[currentTaskKey];
+
+      feedback.style.display = 'block';
+
+      if (!input.startsWith('=')) {
+        feedback.className = 'feedback-box feedback-error';
+        feedback.innerHTML = '❌ <strong>Fehler:</strong> Jede Excel-Formel muss mit einem Gleichheitszeichen (<code>=</code>) beginnen!';
+        return;
+      }
+
+      if (t.solutions.includes(input)) {
+        feedback.className = 'feedback-box feedback-success';
+        feedback.innerHTML = `🎉 <strong>Korrekt!</strong> Perfekt gelöst. Ergebnis: <strong>${t.correctResult}</strong>`;
+        targetDisplay.innerText = t.correctResult;
+      } else {
+        feedback.className = 'feedback-box feedback-error';
+        let errorMsg = '❌ <strong>Nicht ganz korrekt.</strong> ';
+        
+        if (input.includes(',')) {
+          errorMsg += 'Achten Sie auf das Semikolon (<code>;</code>) als Trennzeichen in der deutschen Excel-Version! ';
+        }
+        
+        errorMsg += `<br>💡 <strong>Hinweis:</strong> ${t.hint}<br>Musterlösung: <code>${t.solutions[0]}</code>`;
+        feedback.innerHTML = errorMsg;
+      }
+    }
+
+    // Initialisierung der ersten Aufgabe beim Laden
+    window.onload = function() {
+      switchTask('sverweis');
+    };
   </script>
 
 </body>
