@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AKTE · AP1 Praxis-Hub | Büromanagement</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-blue: #0284c7;
+      --accent-hover: #0369a1;
+      --dark-navy: #0f172a;
+      --dark-card: #1e293b;
+      --border-color: #e2e8f0;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header Navigation */
+    header {
+      background-color: var(--dark-navy);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .logo-badge {
+      background: var(--accent-blue);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+    }
+
+    nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--dark-navy) 0%, var(--dark-card) 100%);
+      color: #fff;
+      padding: 80px 0 60px 0;
+      border-bottom: 4px solid var(--accent-blue);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      color: #38bdf8;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      margin-bottom: 30px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-blue);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 30px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      color: #38bdf8;
+    }
+
+    .feature-list {
+      list-style: none;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+    }
+
+    /* Main Content Sections */
+    section {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+    }
+
+    /* Grid Layouts */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: #e0f2fe;
+      color: var(--accent-blue);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-navy);
+      color: var(--text-muted);
+      padding: 40px 0;
+      text-align: center;
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    footer a {
+      color: #94a3b8;
+      text-decoration: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-wrapper {
+        flex-direction: column;
+        gap: 12px;
+        height: auto;
+        padding: 16px 0;
+      }
+      .hero-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-wrapper">
+      <a href="#" class="logo">
+        <span>AKTE</span>
+        <span class="logo-badge">AP1 HUB</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#excel">Excel-Tools</a></li>
+          <li><a href="#word">Word & DIN 5008</a></li>
+          <li><a href="#downloads">Downloads</a></li>
+          <li><a href="https://anna-2311.github.io/Bueromanagement/" target="_blank">Zur Hauptseite ↗</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1 class="hero-title">120 Minuten PC-Prüfung? <span>Keine Panik.</span></h1>
+        <p class="hero-subtitle">Dein Praxis-Hub für die IHK-Abschlussprüfung Teil 1 (Informationstechnisches Büromanagement). Formeln, Vorlagen & Übungsdateien auf den Punkt gebracht.</p>
+        <div class="btn-group">
+          <a href="#excel" class="btn btn-primary">Excel Formel-Hub</a>
+          <a href="#downloads" class="btn btn-secondary">Übungsdateien (.xlsx)</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>⚡ Quick Check: AP1 Fakten</h3>
+        <ul class="feature-list">
+          <li>✅ <strong>Gewichtung:</strong> 25 % der Gesamtnote</li>
+          <li>⏱️ <strong>Dauer:</strong> 120 Minuten am PC</li>
+          <li>📊 <strong>Schwerpunkte:</strong> MS Excel & MS Word</li>
+          <li>⚠️ <strong>Häufigste Falle:</strong> Falsche Formelkopie / Bezugsfehler</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Excel Tools -->
+  <section id="excel">
+    <div class="container">
+      <div class="section-title">
+        <h2>MS Excel Praxis-Tools</h2>
+        <p>Die wichtigsten Formeln und Kalkulationsschemata für die IHK-Prüfung.</p>
+      </div>
+      <div class="grid-3">
+        
+        <div class="card">
+          <div class="card-icon">fx</div>
+          <h3>Formelsammlung</h3>
+          <p>WENN, SVERWEIS, XVERWEIS, RUNDEN und ZÄHLENWENN übersichtlich erklärt inklusive IHK-Fallstricken.</p>
+          <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;">Formeln öffnen</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🧮</div>
+          <h3>Kalkulationsschemata</h3>
+          <p>Bezugskalkulation, Differenzkalkulation und Handelskalkulation schrittweise in Excel umsetzen.</p>
+          <a href="#" class="btn btn-secondary" style="width: 100%; justify-content: center; color: var(--text-main); border-color: var(--border-color);">Anschauen</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Diagramme & Pivot</h3>
+          <p>Beschriftung, Achsenskalierung und Pivot-Tabellen nach IHK-Vorgaben gestalten.</p>
+          <a href="#" class="btn btn-secondary" style="width: 100%; justify-content: center; color: var(--text-main); border-color: var(--border-color);">Anschauen</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Downloads -->
+  <section id="downloads" style="background-color: #f1f5f9;">
+    <div class="container">
+      <div class="section-title">
+        <h2>Download-Bereich</h2>
+        <p>Lade unformatierte Rohdateien herunter, um unter realen Prüfungsbedingungen zu üben.</p>
+      </div>
+      <div class="grid-3">
+        
+        <div class="card">
+          <h3>📁 Übung: Bezugskalkulation</h3>
+          <p>Unformatierte Excel-Tabelle mit Lieferrabatt, Skonto und Frachtkosten.</p>
+          <a href="#" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">.XLSX herunterladen</a>
+        </div>
+
+        <div class="card">
+          <h3>📁 Übung: Serienbrief & Word</h3>
+          <p>Word-Rohtext und Excel-Datenquelle zum Erstellen eines IHK-Geschäftsbriefs.</p>
+          <a href="#" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">.ZIP Paket herunterladen</a>
+        </div>
+
+        <div class="card">
+          <h3>📄 DIN 5008 Cheat Sheet</h3>
+          <p>Das wichtigste Zeilen- & Abstandsnetz für den Geschäftsbrief als PDF.</p>
+          <a href="./AP1_Excel_Formelsammlung.pdf" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">PDF herunterladen</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>AKTE · Prüfungsvorbereitung Büromanagement | Erstellt für die IHK-Abschlussprüfung Teil 1</p>
+    </div>
+  </footer>
+
+</body>
+</html>
