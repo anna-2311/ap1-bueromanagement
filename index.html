@@ -166,10 +166,10 @@
     }
 
     .quiz-question {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--dark-navy);
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .quiz-options {
@@ -285,6 +285,28 @@
       background: #f1f5f9;
       color: var(--dark-navy);
       font-weight: 700;
+    }
+
+    /* MINI TABLE FOR EXCEL TRAINER */
+    .mini-table {
+      width: 100%;
+      margin: 15px 0 20px 0;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      font-size: 0.85rem;
+    }
+
+    .mini-table th, .mini-table td {
+      padding: 6px 10px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .mini-table th {
+      background: #e2e8f0;
+      color: var(--dark-navy);
+      font-weight: 600;
     }
 
     .page {
@@ -420,7 +442,7 @@
       </div>
     </div>
 
-    <!-- NEW: EXCEL FORMEL TRAINER PAGE -->
+    <!-- EXCEL FORMEL TRAINER PAGE MIT TABELLEN -->
     <div id="page-excel-trainer" class="page">
       <div class="card" id="excel-trainer-card">
         <div class="quiz-header">
@@ -428,9 +450,10 @@
           <span id="excel-score-display">Punkte: 0 / 10</span>
         </div>
         <div class="quiz-question" id="excel-question">Lädt Aufgabe...</div>
+        <div id="excel-table-container"></div>
         
         <div class="excel-input-group">
-          <input type="text" id="excel-user-input" placeholder="z.B. =SVERWEIS(...)" onkeydown="if(event.key === 'KeyE' || event.key === 'Enter') checkExcelAnswer()">
+          <input type="text" id="excel-user-input" placeholder="z.B. =SVERWEIS(...)" onkeydown="if(event.key === 'Enter') checkExcelAnswer()">
           <button class="btn btn-primary" onclick="checkExcelAnswer()">Prüfen</button>
         </div>
 
@@ -571,7 +594,7 @@
       </div>
     </div>
 
-    <!-- 3. DIN 5008 GUIDE PAGE (ERWEITERT) -->
+    <!-- 3. DIN 5008 GUIDE PAGE -->
     <div id="page-din" class="page">
       <div class="card">
         <h2>📐 DIN 5008 Masterguide – Geschäftsbriefe perfekt formatieren</h2>
@@ -665,7 +688,7 @@
       </div>
     </div>
 
-    <!-- 4. IHK NOTENRECHNER PAGE (VOLLSTÄNDIG MIT AP1 & AP2) -->
+    <!-- 4. IHK NOTENRECHNER PAGE -->
     <div id="page-rechner" class="page">
       <div class="card">
         <h2>🧮 IHK-Notenrechner (Komplett: AP1 & AP2)</h2>
@@ -749,7 +772,6 @@
       
       document.getElementById('page-' + pageId).classList.add('active');
       
-      // Nav-Button aktiv setzen, falls über Menü-Kacheln geklickt wurde
       if (evt && evt.target) {
         const btn = evt.target.classList.contains('nav-btn') ? evt.target : document.querySelector(`button[onclick*="'${pageId}'"]`);
         if (btn) btn.classList.add('active');
@@ -924,7 +946,6 @@
       const options = document.querySelectorAll('.quiz-option');
 
       options.forEach(btn => btn.disabled = true);
-
       feedback.style.display = 'block';
 
       if (selectedIdx === q.correct) {
@@ -986,58 +1007,123 @@
       loadQuestion();
     }
 
-    // EXCEL FORMEL TRAINER DATA & LOGIC
+    // EXCEL FORMEL TRAINER DATA & LOGIC (MIT TABELLEN-VORSCHAU)
     const excelData = [
       {
-        task: "Ermittle den Artikelpreis per SVERWEIS aus der Tabelle A1:D50, wobei der Suchbegriff in A2 steht, der Preis in der 3. Spalte liegt und eine exakte Übereinstimmung gesucht ist.",
+        task: "Ermittle den Artikelpreis per SVERWEIS aus der Tabelle (Suchbegriff in A2, Bereich A1:D50, Preis in der 3. Spalte, exakte Übereinstimmung).",
         answers: ["=sverweis(a2;a1:d50;3;falsch)", "=sverweis(a2;a1:d50;3;0)"],
-        hint: "Syntax: =SVERWEIS(Suchkriterium; Matrix; Spaltenindex; 0/FALSCH)"
+        hint: "Syntax: =SVERWEIS(Suchkriterium; Matrix; Spaltenindex; 0/FALSCH)",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>A (Art-Nr)</th><th>B (Bezeichnung)</th><th>C (Preis)</th><th>D (Bestand)</th></tr>
+            <tr><td><strong>1</strong></td><td>Art-Nr</td><td>Bezeichnung</td><td>Preis</td><td>Bestand</td></tr>
+            <tr><td><strong>2</strong></td><td>1001</td><td>Ordner DIN A4</td><td>3,50 €</td><td>45</td></tr>
+            <tr><td><strong>3</strong></td><td>1002</td><td>Druckerpapier</td><td>4,80 €</td><td>120</td></tr>
+          </table>`
       },
       {
-        question: "Prüfe mit einer WENN-Funktion, ob der Wert in Zelle B2 größer als 100 ist. Wenn ja, gib 'Bonus', sonst 'Kein Bonus' aus.",
         task: "Prüfe mit einer WENN-Funktion, ob der Wert in Zelle B2 größer als 100 ist. Wenn ja, gib 'Bonus', sonst 'Kein Bonus' aus.",
         answers: ["=wenn(b2>100;\"bonus\";\"kein bonus\")"],
-        hint: "Syntax: =WENN(Bedingung; Dann-Wert; Sonst-Wert) (Text in Anführungszeichen!)"
+        hint: "Syntax: =WENN(Bedingung; Dann-Wert; Sonst-Wert) (Text in Anführungszeichen!)",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>A (Mitarbeiter)</th><th>B (Umsatz)</th><th>C (Auswertung)</th></tr>
+            <tr><td><strong>1</strong></td><td>Name</td><td>Umsatz</td><td>Prüfung</td></tr>
+            <tr><td><strong>2</strong></td><td>Müller</td><td>125</td><td>[ Hier Formel einfügen ]</td></tr>
+            <tr><td><strong>3</strong></td><td>Schmidt</td><td>90</td><td></td></tr>
+          </table>`
       },
       {
         task: "Zähle in dem Bereich B1:B20 alle Zellen, in denen der Wert größer als 50 ist.",
         answers: ["=zählenwenn(b1:b20;\">50\")"],
-        hint: "Syntax: =ZÄHLENWENN(Bereich; Kriterium)"
+        hint: "Syntax: =ZÄHLENWENN(Bereich; Kriterium)",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>A (Artikel)</th><th>B (Stückzahl)</th></tr>
+            <tr><td><strong>1</strong></td><td>Produkt A</td><td>45</td></tr>
+            <tr><td><strong>2</strong></td><td>Produkt B</td><td>75</td></tr>
+            <tr><td><strong>3</strong></td><td>Produkt C</td><td>60</td></tr>
+          </table>`
       },
       {
         task: "Summiere alle Beträge im Bereich C1:C50, deren zugehöriger Status in B1:B50 den Text 'Bezahlt' enthält.",
         answers: ["=summewenn(b1:b50;\"bezahlt\";c1:c50)"],
-        hint: "Syntax: =SUMMEWENN(Suchbereich; Kriterium; Summenbereich)"
+        hint: "Syntax: =SUMMEWENN(Suchbereich; Kriterium; Summenbereich)",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>A (Rech-Nr)</th><th>B (Status)</th><th>C (Betrag)</th></tr>
+            <tr><td><strong>1</strong></td><td>R-2026-1</td><td>Bezahlt</td><td>150,00 €</td></tr>
+            <tr><td><strong>2</strong></td><td>R-2026-2</td><td>Offen</td><td>80,00 €</td></tr>
+            <tr><td><strong>3</strong></td><td>R-2026-3</td><td>Bezahlt</td><td>210,00 €</td></tr>
+          </table>`
       },
       {
         task: "Runde den Wert in Zelle A1 kaufmännisch auf genau 2 Nachkommastellen.",
         answers: ["=runden(a1;2)"],
-        hint: "Syntax: =RUNDEN(Zahl; Anzahl_Stellen)"
+        hint: "Syntax: =RUNDEN(Zahl; Anzahl_Stellen)",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>A (Rohwert)</th></tr>
+            <tr><td><strong>1</strong></td><td>125,4567</td></tr>
+            <tr><td><strong>2</strong></td><td>89,1234</td></tr>
+          </table>`
       },
       {
         task: "Berechne den Durchschnitt aller Werte im Bereich D1:D10.",
         answers: ["=mittelwert(d1:d10)"],
-        hint: "Syntax: =MITTELWERT(Bereich)"
+        hint: "Syntax: =MITTELWERT(Bereich)",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>...</th><th>D (Notenpunkte)</th></tr>
+            <tr><td><strong>1</strong></td><td>...</td><td>12</td></tr>
+            <tr><td><strong>2</strong></td><td>...</td><td>9</td></tr>
+            <tr><td><strong>3</strong></td><td>...</td><td>14</td></tr>
+          </table>`
       },
       {
         task: "Ermittle den Höchstwert (Maximum) aus dem Bereich E1:E25.",
         answers: ["=max(e1:e25)"],
-        hint: "Syntax: =MAX(Bereich)"
+        hint: "Syntax: =MAX(Bereich)",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>...</th><th>E (Umsatz)</th></tr>
+            <tr><td><strong>1</strong></td><td>...</td><td>4.500 €</td></tr>
+            <tr><td><strong>2</strong></td><td>...</td><td>8.200 €</td></tr>
+            <tr><td><strong>3</strong></td><td>...</td><td>3.100 €</td></tr>
+          </table>`
       },
       {
         task: "Verwende WENNFEHLER, um bei einem eventuellen Fehler in der Division (A1/B1) stattdessen den Text 'Fehler' auszugeben.",
         answers: ["=wennfehler(a1/b1;\"fehler\")"],
-        hint: "Syntax: =WENNFEHLER(Wert; Wert_falls_Fehler)"
+        hint: "Syntax: =WENNFEHLER(Wert; Wert_falls_Fehler)",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>A (Zähler)</th><th>B (Nenner)</th><th>C (Ergebnis)</th></tr>
+            <tr><td><strong>1</strong></td><td>100</td><td>0</td><td>[ Hier Formel einfügen ]</td></tr>
+          </table>`
       },
       {
         task: "Verbinde die Vorname-Zelle A2 und Nachname-Zelle B2 mit einem Leerzeichen dazwischen mithilfe der kaufmännischen Und-Verknüpfung (&).",
         answers: ["=a2&\" \"&b2"],
-        hint: "Nutze das &-Zeichen zur Textverkettung und das Leerzeichen in Anführungszeichen: \" \""
+        hint: "Nutze das &-Zeichen zur Textverkettung und das Leerzeichen in Anführungszeichen: \" \"",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>A (Vorname)</th><th>B (Nachname)</th><th>C (Komplett)</th></tr>
+            <tr><td><strong>1</strong></td><td>Vorname</td><td>Nachname</td><td>Name</td></tr>
+            <tr><td><strong>2</strong></td><td>Anna</td><td>Müller</td><td>[ Hier Formel einfügen ]</td></tr>
+          </table>`
       },
       {
         task: "Ermittle die Anzahl aller numerischen Einträge im Bereich A1:A100.",
         answers: ["=anzahl(a1:a100)"],
-        hint: "Syntax: =ANZAHL(Bereich) – zählt nur Zahlenzellen."
+        hint: "Syntax: =ANZAHL(Bereich) – zählt nur Zahlenzellen.",
+        tableHtml: `
+          <table class="mini-table">
+            <tr><th></th><th>A (Personalnummern)</th></tr>
+            <tr><td><strong>1</strong></td><td>5012</td></tr>
+            <tr><td><strong>2</strong></td><td>5013</td></tr>
+            <tr><td><strong>3</strong></td><td>n.v. (Urlaub)</td></tr>
+          </table>`
       }
     ];
 
@@ -1054,6 +1140,7 @@
       document.getElementById('excel-progress').innerText = `Aufgabe ${currentExcelIndex + 1} von ${excelData.length}`;
       document.getElementById('excel-score-display').innerText = `Punkte: ${excelScore} / ${excelData.length}`;
       document.getElementById('excel-question').innerText = item.task;
+      document.getElementById('excel-table-container').innerHTML = item.tableHtml;
       document.getElementById('excel-user-input').value = '';
       document.getElementById('excel-user-input').disabled = false;
       document.getElementById('excel-feedback').style.display = 'none';
@@ -1070,7 +1157,6 @@
       document.getElementById('excel-user-input').disabled = true;
       feedback.style.display = 'block';
 
-      // Prüfen, ob die Eingabe mit einer der erlaubten Antwort-Varianten übereinstimmt
       const isCorrect = item.answers.some(ans => ans.replace(/\s+/g, '') === userInput);
 
       if (isCorrect) {
@@ -1120,6 +1206,7 @@
           <span id="excel-score-display">Punkte: 0 / 10</span>
         </div>
         <div class="quiz-question" id="excel-question">Lädt Aufgabe...</div>
+        <div id="excel-table-container"></div>
         
         <div class="excel-input-group">
           <input type="text" id="excel-user-input" placeholder="z.B. =SVERWEIS(...)" onkeydown="if(event.key === 'Enter') checkExcelAnswer()">
@@ -1141,7 +1228,7 @@
       return { text: "Note 6 (Ungenügend)", color: "#991b1b" };
     }
 
-    // VOLLSTÄNDIGER IHK GESAMTENOTEN-RECHNER (AP1 & AP2)
+    // IHK NOTENRECHNER
     function calculateTotalGrade() {
       const ap1Max = parseFloat(document.getElementById('ap1-max').value);
       const ap1User = parseFloat(document.getElementById('ap1-user').value);
@@ -1152,18 +1239,13 @@
       const ap2t2Max = parseFloat(document.getElementById('ap2t2-max').value);
       const ap2t2User = parseFloat(document.getElementById('ap2t2-user').value);
 
-      let hasAny = false;
-
-      // AP1 Berechnung (20%)
       if (!isNaN(ap1Max) && !isNaN(ap1User) && ap1Max > 0) {
         const p1 = (ap1User / ap1Max) * 100;
         document.getElementById('ap1-result').innerText = `Prozent: ${Math.round(p1)}% (${getGradeText(p1).text})`;
-        hasAny = true;
       } else {
         document.getElementById('ap1-result').innerText = `Ergebnis: Noch keine Eingabe`;
       }
 
-      // AP2 Teil 1 Berechnung (25%)
       if (!isNaN(ap2t1Max) && !isNaN(ap2t1User) && ap2t1Max > 0) {
         const p2 = (ap2t1User / ap2t1Max) * 100;
         document.getElementById('ap2t1-result').innerText = `Prozent: ${Math.round(p2)}% (${getGradeText(p2).text})`;
@@ -1171,7 +1253,6 @@
         document.getElementById('ap2t1-result').innerText = `Ergebnis: Noch keine Eingabe`;
       }
 
-      // AP2 Teil 2 Berechnung (55%)
       if (!isNaN(ap2t2Max) && !isNaN(ap2t2User) && ap2t2Max > 0) {
         const p3 = (ap2t2User / ap2t2Max) * 100;
         document.getElementById('ap2t2-result').innerText = `Prozent: ${Math.round(p3)}% (${getGradeText(p3).text})`;
@@ -1179,14 +1260,12 @@
         document.getElementById('ap2t2-result').innerText = `Ergebnis: Noch keine Eingabe`;
       }
 
-      // Gesamtergebnis ermitteln, wenn alle Werte vorliegen
       const box = document.getElementById('total-result-box');
       if (!isNaN(ap1Max) && !isNaN(ap1User) && !isNaN(ap2t1Max) && !isNaN(ap2t1User) && !isNaN(ap2t2Max) && !isNaN(ap2t2User) && ap1Max > 0 && ap2t1Max > 0 && ap2t2Max > 0) {
         const p1 = (ap1User / ap1Max) * 100;
         const p2 = (ap2t1User / ap2t1Max) * 100;
         const p3 = (ap2t2User / ap2t2Max) * 100;
 
-        // Gewichtung: AP1 = 20%, AP2 Teil 1 = 25%, AP2 Teil 2 = 55%
         const totalPercent = (p1 * 0.20) + (p2 * 0.25) + (p3 * 0.55);
         const roundedTotal = Math.round(totalPercent);
         const finalGrade = getGradeText(roundedTotal);
@@ -1199,7 +1278,6 @@
       }
     }
 
-    // INITIAL START
     loadQuestion();
     loadExcelTask();
   </script>
