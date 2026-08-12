@@ -96,7 +96,7 @@
       color: #fff;
     }
 
-    /* Sub-Page Dynamic Visibility */
+    /* Dynamic Page Visibility */
     .page-view {
       display: none;
     }
@@ -233,7 +233,7 @@
 
     .grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 24px;
     }
 
@@ -248,6 +248,25 @@
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Download Card Extensions */
+    .download-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .download-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--dark-navy);
+    }
+
+    .download-card p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 16px;
     }
 
     /* Interactive Trainer Styling */
@@ -419,7 +438,7 @@
     </div>
   </header>
 
-  <!-- SEITE 1: STARTSEITE / OVERVIEW -->
+  <!-- SEITE 1: STARTSEITE -->
   <div id="page-home" class="page-view active">
     <section class="hero">
       <div class="container hero-grid">
@@ -463,8 +482,8 @@
           </div>
 
           <div class="card" style="cursor: pointer;" onclick="showPage('downloads')">
-            <h3 style="margin-bottom: 10px;">📁 Excel- & Word-Downloads</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Unformatierte Übungsdateien zur Bezugskalkulation und Serienbrief-Erstellung.</p>
+            <h3 style="margin-bottom: 10px;">📁 Excel-Übungsdateien</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Originale Übungsaufgaben (Szenarien S1 bis S13) als Excel-Download.</p>
             <div style="margin-top: 16px; color: var(--accent-blue); font-weight: 600; font-size: 0.9rem;">Modul öffnen ➔</div>
           </div>
         </div>
@@ -472,7 +491,7 @@
     </section>
   </div>
 
-  <!-- SEITE 2: INTERAKTIVER FORMELTRAINER -->
+  <!-- SEITE 2: FORMELTRAINER -->
   <div id="page-trainer" class="page-view">
     <section style="background-color: #f1f5f9;">
       <div class="container">
@@ -484,7 +503,6 @@
         </div>
 
         <div class="trainer-card">
-          <!-- Task Selection Tabs -->
           <div class="task-nav">
             <button class="task-btn active" id="btn-sverweis" onclick="switchTask('sverweis')">1. SVERWEIS</button>
             <button class="task-btn" id="btn-wenn" onclick="switchTask('wenn')">2. WENN</button>
@@ -495,21 +513,17 @@
             <button class="task-btn" id="btn-statistik" onclick="switchTask('statistik')">7. MITTELWERT / MAX</button>
           </div>
 
-          <!-- Task Description -->
           <div id="task-description" style="font-size: 0.95rem; margin-bottom: 16px;"></div>
 
-          <!-- Excel Grid Simulation -->
           <div id="excel-grid-container">
             <table class="excel-table" id="excel-grid"></table>
           </div>
 
-          <!-- Formula Input Box -->
           <div class="formula-input-group">
             <input type="text" id="formula-input" class="formula-input" placeholder="Geben Sie hier Ihre Formel ein (z. B. =SVERWEIS(...))" autocomplete="off">
             <button class="btn btn-primary" onclick="checkFormula()">Formel prüfen</button>
           </div>
 
-          <!-- Feedback Box -->
           <div id="feedback-box" class="feedback-box"></div>
         </div>
       </div>
@@ -529,7 +543,6 @@
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; align-items: start;">
           
-          <!-- Visuelle Brief-Vorschau -->
           <div style="background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 24px; font-family: sans-serif; font-size: 0.85rem;">
             <div style="font-weight: bold; color: #64748b; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.75rem;">
               📄 Visueller Zonen-Aufbau
@@ -581,7 +594,6 @@
             </div>
           </div>
 
-          <!-- Tabelle der Leerzeilen-Regeln -->
           <div>
             <h3 style="font-size: 1.2rem; margin-bottom: 16px;">Spickzettel: Die IHK-Leerzeilen-Regel</h3>
             
@@ -646,27 +658,127 @@
         <button class="btn btn-back" onclick="showPage('home')">← Zurück zur Übersicht</button>
 
         <div class="section-title" style="text-align: left; margin-bottom: 24px;">
-          <h2>Download-Bereich</h2>
-          <p>Lade unformatierte Rohdateien herunter, um unter realen Prüfungsbedingungen zu üben.</p>
+          <h2>Excel-Übungsdateien (AP1)</h2>
+          <p>Lade die unformatierten Rohdateien herunter, um das Arbeiten unter Prüfungsbedingungen zu üben.</p>
         </div>
+
         <div class="grid-3">
           
-          <div class="card">
-            <h3>📁 Übung: Bezugskalkulation</h3>
-            <p>Unformatierte Excel-Tabelle mit Lieferrabatt, Skonto und Frachtkosten.</p>
-            <a href="./Bezugskalkulation_Uebung.xlsx" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem; margin-top: 12px;">.XLSX herunterladen</a>
+          <!-- S1 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 1 (2018)</h3>
+              <p>Grundlegende Formeln und Tabellenaufbau.</p>
+            </div>
+            <a href="./Excel%202010%20S1%202018_neu.xlsx" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLSX herunterladen</a>
           </div>
 
-          <div class="card">
-            <h3>📁 Übung: Serienbrief & Word</h3>
-            <p>Word-Rohtext und Excel-Datenquelle zum Erstellen eines IHK-Geschäftsbriefs.</p>
-            <a href="#" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem; margin-top: 12px;">.ZIP Paket herunterladen</a>
+          <!-- S2 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 2 (2018)</h3>
+              <p>Praxisnahe Berechnungen & Formatierungen.</p>
+            </div>
+            <a href="./Excel%202010%20S2%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
           </div>
 
-          <div class="card">
-            <h3>📄 DIN 5008 Cheat Sheet</h3>
-            <p>Das wichtigste Zeilen- & Abstandsnetz für den Geschäftsbrief als PDF.</p>
-            <a href="./AP1_Excel_Formelsammlung.pdf" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem; margin-top: 12px;">PDF herunterladen</a>
+          <!-- S3 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 3 (2018)</h3>
+              <p>Kalkulationen mit einfachen Wenn-Logiken.</p>
+            </div>
+            <a href="./Excel%202010%20S3%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S4 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 4 (2018)</h3>
+              <p>Bezugskalkulation & Prozentrechnung.</p>
+            </div>
+            <a href="./Excel%202010%20S4%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S5 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 5 (2018)</h3>
+              <p>Tabellenstruktur & SVERWEIS-Übung.</p>
+            </div>
+            <a href="./Excel%202010%20S5%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S6 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 6 (2018)</h3>
+              <p>Kombinierte Logik- und Statistikanwendungen.</p>
+            </div>
+            <a href="./Excel%202010%20S6%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S7 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 7 (2018)</h3>
+              <p>Auswertung & ZÄHLENWENN / SUMMEWENN.</p>
+            </div>
+            <a href="./Excel%202010%20S7%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S8 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 8 (2018)</h3>
+              <p>Prüfungsrelevante Handelskalkulation.</p>
+            </div>
+            <a href="./Excel%202010%20S8%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S9 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 9 (2018)</h3>
+              <p>Komplexe Excel-Aufgabenstellung.</p>
+            </div>
+            <a href="./Excel%202010%20S9%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S10 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 10 (2018)</h3>
+              <p>Übung zur Vorbereitung auf AP1.</p>
+            </div>
+            <a href="./Excel%202010%20S10%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S11 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 11 (2018)</h3>
+              <p>Spezifische Berechnungen & RUNDEN.</p>
+            </div>
+            <a href="./Excel%202010%20S11%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S12 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 12 (2018)</h3>
+              <p>Logik und Verweis-Strukturen.</p>
+            </div>
+            <a href="./Excel%202010%20S12%202018%20Datei_neu.xls" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLS herunterladen</a>
+          </div>
+
+          <!-- S13 -->
+          <div class="card download-card">
+            <div>
+              <h3>📊 Szenario 13_3 (2018)</h3>
+              <p>Aktualisierte Rohdatei für die Prüfungspraxis.</p>
+            </div>
+            <a href="./Excel%202010%20S13_3%202018%20Datei.xlsx" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">.XLSX herunterladen</a>
           </div>
 
         </div>
@@ -681,9 +793,7 @@
     </div>
   </footer>
 
-  <!-- Navigation & Trainer JavaScript Code -->
   <script>
-    // Navigation / Page View Controller
     function showPage(pageId) {
       document.querySelectorAll('.page-view').forEach(page => {
         page.classList.remove('active');
@@ -696,7 +806,6 @@
       }
     }
 
-    // Trainer Logic
     const tasks = {
       sverweis: {
         title: "1. SVERWEIS",
