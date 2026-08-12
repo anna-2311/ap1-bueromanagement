@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AKTE · IHK AP1 Prüfungsvorbereitung Complete</title>
+  <title>AKTE · IHK AP1 Prüfungsvorbereitung</title>
   <style>
     :root {
       --primary-color: #2563eb;
@@ -25,13 +25,27 @@
       background-color: var(--dark-navy);
       color: white;
       padding: 20px;
-      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       border-bottom: 4px solid var(--primary-color);
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
-    header h1 { font-size: 1.8rem; margin-bottom: 5px; }
-    header p { font-size: 0.95rem; color: #94a3b8; }
-    
+    .header-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+    .header-title p { font-size: 0.95rem; color: #94a3b8; }
+
+    .exam-timer {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: right;
+    }
+    .exam-timer div:first-child { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
+    .exam-timer div:last-child { font-size: 1.2rem; font-weight: bold; color: #f8fafc; }
+
     nav {
       display: flex;
       justify-content: center;
@@ -60,11 +74,22 @@
       border-color: var(--primary-color);
     }
 
-    .container { max-width: 850px; margin: 30px auto; padding: 0 20px; }
+    .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
     .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; }
     
     .page { display: none; }
     .page.active { display: block; }
+
+    /* DOWNLOAD GRID */
+    .download-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-top: 15px; }
+    .download-card { border: 1px solid var(--border-color); padding: 18px; border-radius: 8px; background: #f8fafc; text-align: center; }
+    .download-card h4 { margin-bottom: 8px; color: var(--dark-navy); }
+    .download-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
+
+    /* DIN 5008 TABLE & RULES */
+    .din-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem; }
+    .din-table th, .din-table td { border: 1px solid var(--border-color); padding: 10px 12px; text-align: left; }
+    .din-table th { background: #f1f5f9; font-weight: 700; color: var(--dark-navy); }
 
     /* QUIZ STYLES */
     .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
@@ -79,14 +104,13 @@
     .input-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
     .input-group input, .input-group select { padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 1rem; }
     
-    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; background: var(--primary-color); color: white; margin-top: 15px; transition: background 0.2s; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; background: var(--primary-color); color: white; margin-top: 15px; text-decoration: none; transition: background 0.2s; }
     .btn:hover { background: var(--primary-hover); }
 
     .feedback-box { padding: 15px; border-radius: 8px; margin-top: 15px; font-size: 0.95rem; display: none; }
     .feedback-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: var(--success); }
     .feedback-error { background: #fef2f2; border: 1px solid #fecaca; color: var(--error); }
 
-    /* Document Fehlersuche */
     .doc-preview { background: #ffffff; border: 2px dashed #cbd5e1; padding: 25px; border-radius: 8px; font-family: "Courier New", Courier, monospace; font-size: 0.95rem; line-height: 1.8; }
     .error-tag { background: #fef08a; padding: 2px 6px; border-radius: 4px; cursor: pointer; font-weight: bold; }
     .error-tag:hover { background: #fde047; }
@@ -95,21 +119,107 @@
 <body>
 
   <header>
-    <h1>AKTE · IHK AP1 Prüfungsvorbereitung</h1>
-    <p>Kaufleute für Büromanagement – Theorie & Interaktive Praxis</p>
+    <div class="header-title">
+      <h1>AKTE · IHK AP1 Lernportal</h1>
+      <p>Kaufleute für Büromanagement – Prüfungsvorbereitung</p>
+    </div>
+    <div class="exam-timer">
+      <div>Uhrzeit / Datum</div>
+      <div id="live-clock">--:--:--</div>
+    </div>
   </header>
 
   <nav>
-    <button class="nav-btn active" onclick="showPage('quiz')">📝 20-Fragen-Quiz</button>
+    <button class="nav-btn active" onclick="showPage('downloads')">📁 Downloads</button>
+    <button class="nav-btn" onclick="showPage('din5008')">📐 DIN 5008 Spickzettel</button>
+    <button class="nav-btn" onclick="showPage('quiz')">📝 20-Fragen-Quiz</button>
     <button class="nav-btn" onclick="showPage('excel-builder')">📊 Excel-Baukasten</button>
-    <button class="nav-btn" onclick="showPage('din-checker')">✉️ DIN 5008 Fehlersuche</button>
+    <button class="nav-btn" onclick="showPage('din-checker')">✉️ Brief-Fehlersuche</button>
     <button class="nav-btn" onclick="showPage('calc-task')">🧮 Kalkulations-Trainer</button>
   </nav>
 
   <div class="container">
 
-    <!-- TAB 1: 20-FRAGEN QUIZ -->
-    <div id="page-quiz" class="page active">
+    <!-- TAB 1: DOWNLOADBEREICH -->
+    <div id="page-downloads" class="page active">
+      <div class="card">
+        <h3>📂 Vorlagen & Übungsdateien zum Download</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 5px;">
+          Nutze diese Dateien für das praktische Training am eigenen PC.
+        </p>
+
+        <div class="download-grid">
+          <div class="download-card">
+            <h4>📄 DIN 5008 Spickzettel (PDF)</h4>
+            <p>Alle Zeilenabstände, Ränder und Regeln auf einen Blick zum Ausdrucken.</p>
+            <button class="btn" onclick="window.print()">Spickzettel drucken 🖨️</button>
+          </div>
+          <div class="download-card">
+            <h4>📊 Excel Übungsdatei (.csv)</h4>
+            <p>Datensatz mit Kundendaten, SVERWEIS-Matrizen und Berechnungsaufgaben.</p>
+
+            <a class="btn" href="data:text/csv;charset=utf-8,Kunden-ID%3BKundenname%3BBestellwert%3BRabatt%0A1001%3BMustermann%20GmbH%3B1250%0A1002%3BSchmidt%20KG%3B800%0A1003%3BWeber%20e.K.%3B2100" download="AP1_Excel_Uebungsdatei.csv">Datei herunterladen 💾</a>
+          </div>
+          <div class="download-card">
+            <h4>✉️ Brief-Vorlage (DIN 5008)</h4>
+            <p>Standardisierte Word-Vorlage inklusive Formularfeldern und Faltmarken.</p>
+            <button class="btn" onclick="alert('Lade die Vorlage direkt in deinen Dokumentenordner herunter.')">Vorlage laden 📥</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: DIN 5008 NACHSCHLAGEWERK -->
+    <div id="page-din5008" class="page">
+      <div class="card">
+        <h3>📐 DIN 5008 Kompakt-Regelwerk</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+          Die wichtigsten Standards der IHK-Prüfung auf einen Blick:
+        </p>
+
+        <table class="din-table">
+          <thead>
+            <tr>
+              <th>Briefabstand / Bereich</th>
+              <th>Normregel nach DIN 5008</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Seitenränder</strong></td>
+              <td>Links: 24,1 mm (2,5 cm) | Rechts: mind. 20 mm | Oben: 45 mm (Form B)</td>
+            </tr>
+            <tr>
+              <td><strong>Anschriftfeld zu Betreff</strong></td>
+              <td>Exakt <strong>2 Leerzeilen</strong> Abstand</td>
+            </tr>
+            <tr>
+              <td><strong>Betreffzeile</strong></td>
+              <td>Fett hervorgehoben, <strong>kein Satzpunkt</strong> am Ende!</td>
+            </tr>
+            <tr>
+              <td><strong>Betreff zu Anrede</strong></td>
+              <td>Exakt <strong>2 Leerzeilen</strong> Abstand</td>
+            </tr>
+            <tr>
+              <td><strong>Anrede zu Fließtext</strong></td>
+              <td>Exakt <strong>1 Leerzeile</strong> Abstand (Text beginnt klein, falls Anrede mit Komma endet)</td>
+            </tr>
+            <tr>
+              <td><strong>Grußformel zu Name</strong></td>
+              <td>Exakt <strong>3 Leerzeilen</strong> für die handschriftliche Unterschrift</td>
+            </tr>
+            <tr>
+              <td><strong>Absatz-Nachabstand (Word)</strong></td>
+              <td>Im gesamten Geschäftsbrief zwingend auf <strong>0 pt</strong> stellen!</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3: 20-FRAGEN QUIZ -->
+    <div id="page-quiz" class="page">
       <div class="card" id="quiz-card">
         <div class="quiz-header">
           <span id="quiz-progress">Frage 1 von 20</span>
@@ -122,7 +232,7 @@
       </div>
     </div>
 
-    <!-- TAB 2: EXCEL FORMEL BAUKASTEN -->
+    <!-- TAB 4: EXCEL FORMEL BAUKASTEN -->
     <div id="page-excel-builder" class="page">
       <div class="card">
         <h3>📊 IHK-Aufgabe: SVERWEIS & Logik verknüpfen</h3>
@@ -150,7 +260,7 @@
       </div>
     </div>
 
-    <!-- TAB 3: DIN 5008 FEHLERSUCHE -->
+    <!-- TAB 5: DIN 5008 FEHLERSUCHE -->
     <div id="page-din-checker" class="page">
       <div class="card">
         <h3>✉️ IHK-Aufgabe: Fehler im Geschäftsbrief finden</h3>
@@ -176,7 +286,7 @@
       </div>
     </div>
 
-    <!-- TAB 4: KALKULATIONS-TRAINER -->
+    <!-- TAB 6: KALKULATIONS-TRAINER -->
     <div id="page-calc-task" class="page">
       <div class="card">
         <h3>🧮 IHK-Aufgabe: Bezugskalkulation</h3>
@@ -208,6 +318,14 @@
   </div>
 
   <script>
+    // LIVE UHR
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('live-clock').innerText = now.toLocaleTimeString('de-DE');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
     // NAVIGATION
     function showPage(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -216,7 +334,7 @@
       event.target.classList.add('active');
     }
 
-    // --- QUIZ LOGIC (20 FRAGEN & NOTENBERECHNUNG) ---
+    // --- QUIZ LOGIC ---
     const quizData = [
       { question: "1. Wie viele Leerzeilen stehen laut DIN 5008 direkt VOR der Betreffzeile?", options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine Leerzeile"], correct: 1, explanation: "Zwischen Anschriftfeld und Betreffzeile stehen laut DIN 5008 genau 2 Leerzeilen." },
       { question: "2. Wie viele Leerzeilen gehören VOR die Anrede im Geschäftsbrief?", options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine Leerzeile"], correct: 1, explanation: "Vor der Anrede werden laut DIN 5008 ebenfalls 2 Leerzeilen eingefügt." },
