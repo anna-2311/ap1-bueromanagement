@@ -1,6 +1,191 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossar: Informationstechnisches Büromanagement</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 25px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        strong {
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Prüfungsvorbereitung Büromanagement</h1>
+            <p>Teil 1 der gestreckten Abschlussprüfung – IT-Büromanagement (Funktionen & Befehle)</p>
+        </header>
+
+        <!-- 1. Programmübergreifendes Basiswissen -->
+        <section>
+            <h2>1. Programmübergreifendes Basiswissen</h2>
+            <ul>
+                <li><strong>Zeichenformatierung:</strong> Umfasst grundlegende Anpassungen der Schrifteigenschaften wie Schriftart, Schriftgröße, Textfarbe, Fetterschrift und Unterstreichung[cite: 2].</li>
+                <li><strong>Absatzformatierung:</strong> Steuert die Ausrichtung von Texten (z. B. linksbündig, zentriert), den Zeilenabstand, Schattierungen bzw. Füllfarben sowie Rahmenlinien[cite: 2].</li>
+                <li><strong>Seitenlayout:</strong> Beinhaltet die Definition von Seitenrändern, der Ausrichtung (Hoch- oder Querformat), Kopf-/Fußzeilen sowie das Anpassen von Dokumenten an bestimmte Seitenanzahlen[cite: 2].</li>
+                <li><strong>Tabelle:</strong> Umfasst das Anpassen von Spaltenbreiten/Zeilenhöhen, die Bearbeitung der Tabellenstruktur und das Verwalten von Tabellenblättern[cite: 2].</li>
+                <li><strong>Textfeld, Hyperlink, Symbol, Grafik, Clipart:</strong> Einfügen zusätzlicher Elemente inklusive Größen-/Positionsanpassung, Hyperlinks und Sonderzeichen[cite: 2].</li>
+                <li><strong>Programmübergreifende Anwendung:</strong> Ermöglicht das Einfügen von Dateien, Diagrammen und Tabellen sowie das Erstellen von Screenshots[cite: 2].</li>
+                <li><strong>Suchen, Ersetzen und Sortieren:</strong> Grundlegende Befehle zum Auffinden/Austauschen von Textpassagen und Sortieren von Datenbeständen[cite: 2].</li>
+            </ul>
+        </section>
+
+        <!-- 2. Textverarbeitung -->
+        <section>
+            <h2>2. Anwendungen und Befehle für die Textverarbeitung</h2>
+            <p><em>Hinweis: Schreib- und Gestaltungsregeln nach DIN 5008 sind durch Automatisierungsfunktionen umzusetzen[cite: 2].</em></p>
+            
+            <h3>Weiterführende Absatzformatierung</h3>
+            <ul>
+                <li><strong>Aufzählung:</strong> Erstellung von Listen mit Aufzählungszeichen zur optischen Gliederung[cite: 2].</li>
+                <li><strong>Gliederung:</strong> Strukturierung von Texten in verschiedene Ebenen (hierarchische Nummerierung)[cite: 2].</li>
+                <li><strong>Nummerierung:</strong> Automatisierte Erstellung fortlaufend nummerierter Listen[cite: 2].</li>
+                <li><strong>Sondereinzug:</strong> Spezielle Formatierungen wie hängender Einzug oder Erstzeileneinzug[cite: 2].</li>
+                <li><strong>Tabulator (Tabstopp nutzen):</strong> Gezieltes Ausrichten von Texten auf horizontaler Ebene[cite: 2].</li>
+            </ul>
+
+            <h3>Weiterführendes Seitenlayout & Dokumentgestaltung</h3>
+            <ul>
+                <li><strong>Silbentrennung:</strong> Automatische/manuelle Trennung von Wörtern am Zeilenende[cite: 2].</li>
+                <li><strong>Spalte:</strong> Aufteilung des Textes in mehrere Spalten (z. B. für Newsletter)[cite: 2].</li>
+                <li><strong>Umbruch:</strong> Steuerung von Seiten-, Spalten- oder Textumbrüchen[cite: 2].</li>
+                <li><strong>Wasserzeichen:</strong> Hinterlegen von grafischen oder textlichen Elementen im Hintergrund[cite: 2].</li>
+                <li><strong>Bild / Grafik formatieren:</strong> Werkzeuge zur Bearbeitung eingefügter Abbildungen[cite: 2].</li>
+                <li><strong>Besondere Schrifteffekte (WordArt, Fontwork):</strong> Grafische Textaufbereitungen[cite: 2].</li>
+            </ul>
+
+            <h3>Texterstellung automatisieren</h3>
+            <ul>
+                <li><strong>Überarbeitungsfunktion:</strong> Protokolliert sämtliche Änderungen zur transparenten Nachverfolgung[cite: 2].</li>
+                <li><strong>Kommentar:</strong> Hinzufügen von Notizen für die teaminterne Zusammenarbeit[cite: 2].</li>
+                <li><strong>Fußnote:</strong> Erstellung und Verwaltung von Quellenangaben oder Zusatzhinweisen[cite: 2].</li>
+                <li><strong>Formularfelder & Steuerelemente:</strong> Auswahlfelder, Kontrollkästchen und Formularfelder für interaktive Dokumente[cite: 2].</li>
+                <li><strong>Dokumentvorlage & Autotext:</strong> Vorgefertigte Layouts und automatisches Einfügen von Textbausteinen[cite: 2].</li>
+                <li><strong>Serienbrieffunktion:</strong> Erstellung personalisierter Massenbriefe inkl. Bedingungsfeldern[cite: 2].</li>
+            </ul>
+        </section>
+
+        <!-- 3. Tabellenkalkulation -->
+        <section>
+            <h2>3. Befehle und Funktionen für die Tabellenkalkulation</h2>
+            
+            <h3>Funktionen für Berechnungen</h3>
+            <ul>
+                <li><strong>SUMME / MITTELWERT:</strong> Addiert Werte oder berechnet den arithmetischen Durchschnitt[cite: 2].</li>
+                <li><strong>ANZAHL / ANZAHL2:</strong> Zählt numerische bzw. alle nicht-leeren Zellen[cite: 2].</li>
+                <li><strong>MIN / MAX:</strong> Ermittelt den kleinsten oder größten Wert[cite: 2].</li>
+                <li><strong>WENN (verschachtelt) / ODER / UND:</strong> Logische Operationen und bedingte Abfragen[cite: 2].</li>
+                <li><strong>SVERWEIS:</strong> Sucht nach einem Wert in der ersten Spalte einer Matrix und gibt Daten aus einer anderen Spalte aus[cite: 2].</li>
+                <li><strong>ZÄHLENWENN / SUMMEWENN:</strong> Zählt oder addiert Zellen basierend auf bestimmten Kriterien[cite: 2].</li>
+                <li><strong>RUNDEN, AUFRUNDEN, ABRUNDEN:</strong> Rundet Zahlen auf bestimmte Dezimalstellen[cite: 2].</li>
+                <li><strong>HEUTE / JAHR / MONAT / TAG / TAGE360:</strong> Datums- und Zeitfunktionen[cite: 2].</li>
+            </ul>
+
+            <h3>Diagramme erstellen und bearbeiten</h3>
+            <ul>
+                <li><strong>Achsen & Legende:</strong> Skalierung, Beschriftung und Erklärung der Datenreihen[cite: 2].</li>
+                <li><strong>Datenbeschriftung & Gitternetzlinien:</strong> Direkte Werteanzeige und Orientierungslinien im Hintergrund[cite: 2].</li>
+                <li><strong>Trendlinie hinzufügen:</strong> Einzeichnen von Ausgleichsgeraden zur Tendenzerkennung[cite: 2].</li>
+            </ul>
+
+            <h3>Allgemeine Rechen-Operationen</h3>
+            <ul>
+                <li><strong>Dreisatz & Prozentberechnung:</strong> Standardmethoden für Proportionen, Auf-/Abschläge und Wachstumsraten[cite: 2].</li>
+                <li><strong>Benutzerdefiniertes Format:</strong> Individuelle Formatierung von Zahlen, Währungen und Texten[cite: 2].</li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 – Prüfungsvorbereitung IT-Büromanagement</p>
+        </footer>
+    </div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AKTE Prüfungsvorbereitungs-Plattform</title>
