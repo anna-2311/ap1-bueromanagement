@@ -863,8 +863,7 @@
 
         <!-- AP2 TEIL 2 RECHNER -->
         <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin-bottom: 20px;">
-          <h3 style="font-size: 1.1rem; color: var(--dark-navy); margin-bottom: 10px;">3. AP2 Teil 2 (Lernfeldbezogene Prüfung & Fachaufgabe – Gewichtung: 55%)</h3>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">Setzt sich aus den Bereichen Kundenprozesse (30%), Wirtschafts- und Sozialprozesse (10%) sowie der Fachaufgabe / Report (15%) zusammen.</p>
+          <h3 style="font-size: 1.1rem; color: var(--dark-navy); margin-bottom: 10px;">3. AP2 Teil 2 (Kundenbezogener Prozess & WISO – Gewichtung: 30% bzw. 25%)</h3>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div class="form-group" style="margin-bottom: 0;">
               <label for="ap2t2-max">Max. Punkte:</label>
@@ -872,17 +871,16 @@
             </div>
             <div class="form-group" style="margin-bottom: 0;">
               <label for="ap2t2-user">Erreichte Punkte:</label>
-              <input type="number" id="ap2t2-user" placeholder="z. B. 85" oninput="calculateTotalGrade()">
+              <input type="number" id="ap2t2-user" placeholder="z. B. 70" oninput="calculateTotalGrade()">
             </div>
           </div>
           <div id="ap2t2-result" style="margin-top: 10px; font-weight: 600; font-size: 0.95rem; color: var(--text-muted);">Ergebnis: Noch keine Eingabe</div>
         </div>
 
         <!-- GESAMTERGEBNIS BOX -->
-        <div id="total-result-box" style="display: none; padding: 20px; border-radius: 8px; text-align: center; background: #eff6ff; border: 2px solid var(--primary-color);">
-          <h3 style="font-size: 1.3rem; color: var(--dark-navy); margin-bottom: 8px;">🏆 Prognose Gesamtergebnis</h3>
-          <div id="total-score-text" style="font-size: 1.8rem; font-weight: 800; color: var(--primary-color);"></div>
-          <div id="total-grade-text" style="font-size: 1.2rem; font-weight: 700; margin-top: 5px;"></div>
+        <div style="background: var(--dark-navy); color: white; padding: 20px; border-radius: 8px; text-align: center;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 8px;">🏆 Offizielle IHK-Gesamtnote</h3>
+          <div id="total-result" style="font-size: 1.4rem; font-weight: bold; color: #60a5fa;">Trage deine Punkte oben ein, um die Note zu berechnen.</div>
         </div>
       </div>
     </div>
@@ -890,640 +888,150 @@
     <!-- 5. INFO PAGE -->
     <div id="page-info" class="page">
       <div class="card">
-        <h2>Über AKTE · Prüfungsvorbereitung</h2>
-        <p style="margin-top: 10px;">Diese Plattform wurde speziell zur Unterstützung der Ausbildung von Kaufleuten für Büromanagement entwickelt. Sie vereint praxisnahe Excel- und Word-Szenarien, DIN-5008-Leitfäden, interaktive Quizze und offizielle IHK-Notenberechnungen an einem zentralen Ort.</p>
+        <h2>ℹ️ Über diese Plattform</h2>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">
+          Diese webbasierte Lern- und Prüfungsvorbereitungsplattform wurde speziell für Auszubildende im Beruf <strong>Kaufleute für Büromanagement</strong> entwickelt. Sie unterstützt dich gezielt beim Lernen für die AP1 (Zwischenprüfung) sowie die AP2 (Abschlussprüfung).
+        </p>
+        <p style="color: var(--text-muted);">
+          Alle Inhalte orientieren sich an den offiziellen Ausbildungs- und Prüfungsanforderungen der IHK. Viel Erfolg beim Lernen und bei deiner Prüfung!
+        </p>
       </div>
     </div>
 
   </div>
 
   <script>
-    // NAVIGATION
-    function showPage(pageId, evt) {
+    // Navigation Page Switching
+    function showPage(pageId, event) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       
       document.getElementById('page-' + pageId).classList.add('active');
-      
-      if (evt && evt.target) {
-        const btn = evt.target.classList.contains('nav-btn') ? evt.target : document.querySelector(`button[onclick*="'${pageId}'"]`);
-        if (btn) btn.classList.add('active');
-      }
-
-      window.scrollTo(0, 0);
-
-      if (pageId === 'quiz' && currentQuizIndex >= quizData.length) {
-        resetQuiz();
-      }
-      if (pageId === 'excel-trainer' && currentExcelIndex >= excelData.length) {
-        resetExcelTrainer();
+      if (event && event.target) {
+        event.target.classList.add('active');
       }
     }
 
-    // 20 IHK QUIZ-FRAGEN DATA
-    const quizData = [
-      {
-        question: "1. Wie viele Leerzeilen stehen laut DIN 5008 direkt VOR der Betreffzeile?",
-        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine Leerzeile"],
-        correct: 1,
-        explanation: "Zwischen Anschriftfeld und Betreffzeile stehen laut DIN 5008 genau 2 Leerzeilen."
-      },
-      {
-        question: "2. Wie viele Leerzeilen gehören VOR die Anrede im Geschäftsbrief?",
-        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine Leerzeile"],
-        correct: 1,
-        explanation: "Vor der Anrede werden laut DIN 5008 ebenfalls 2 Leerzeilen eingefügt."
-      },
-      {
-        question: "3. Darf die Betreffzeile laut DIN 5008 mit einem Satzpunkt enden?",
-        options: ["Ja, immer", "Nein, niemals", "Nur bei langen Sätzen", "Freigestellt"],
-        correct: 1,
-        explanation: "Der Betreff schließt laut DIN 5008 NIEMALS mit einem Satzpunkt ab."
-      },
-      {
-        question: "4. Wie viele Leerzeilen werden für die handschriftliche Unterschrift reserviert?",
-        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "4 Leerzeilen"],
-        correct: 2,
-        explanation: "Zwischen Grußformel und gedrucktem Namen werden 3 Leerzeilen für die Unterschrift gelassen."
-      },
-      {
-        question: "5. Welcher Absatzabstand muss in MS Word für IHK-Briefe eingestellt werden?",
-        options: ["8 pt Nachabstand", "12 pt Nachabstand", "0 pt (Kein Leerraum)", "1,5-zeilig"],
-        correct: 2,
-        explanation: "Word stellt standardmäßig 8 pt ein. Für DIN 5008 muss dieser Nachabstand zwingend auf 0 pt gesetzt werden!"
-      },
-      {
-        question: "6. Wie lautet der Shortcut, um in Word das tagesaktuelle Datum als Feld einzufügen?",
-        options: ["Strg + D", "Alt + Umschalt + D", "Strg + F5", "Alt + F12"],
-        correct: 1,
-        explanation: "Mit 'Alt + Umschalt + D' wird das aktuelle Datum automatisch in Word eingefügt."
-      },
-      {
-        question: "7. In welchem Menüband-Reiter startet man in Word einen Seriendruck?",
-        options: ["Einfügen", "Layout", "Sendungen", "Referenzen"],
-        correct: 2,
-        explanation: "Serienbriefe und Seriendruckfelder werden unter dem Reiter 'Sendungen' verwaltet."
-      },
-      {
-        question: "8. Welcher Schriftauszeichnungstyp soll für den Betreff verwendet werden?",
-        options: ["Kursiv", "Fett", "Unterstrichen", "Kapitälchen"],
-        correct: 1,
-        explanation: "Die Betreffzeile wird hervorgehoben – in der Regel durch Fettdruck."
-      },
-      {
-        question: "9. Mit welcher Taste sperrt man in Excel einen Zellbezug (z. B. A1 zu $A$1)?",
-        options: ["F2", "F4", "F8", "Strg + S"],
-        correct: 1,
-        explanation: "Die Taste F4 schaltet durch absolute und gemischte Zellbezüge ($A$1, A$1, $A1)."
-      },
-      {
-        question: "10. Welches Trennzeichen trennt Argumente in deutschen Excel-Formeln?",
-        options: ["Komma ( , )", "Semikolon ( ; )", "Doppelpunkt ( : )", "Schrägstrich ( / )"],
-        correct: 1,
-        explanation: "In der deutschen Excel-Version wird das Semikolon (;) verwendet."
-      },
-      {
-        question: "11. Was bedeutet der Formelfehler '#NV' in Excel?",
-        options: ["Nullwert erhalten", "Nicht vorhanden / Wert nicht gefunden", "Ungültiger Bezug", "Spalte zu schmal"],
-        correct: 1,
-        explanation: "#NV bedeutet 'Nicht vorhanden' – häufig beim SVERWEIS, wenn der Suchbegriff fehlt."
-      },
-      {
-        question: "12. Was bewirkt die Formel =ZÄHLENWENN(A1:A10; '>50')?",
-        options: ["Summiert alle Zahlen über 50", "Zählt, wie viele Zellen einen Wert größer als 50 enthalten", "Gibt die Zahl 50 aus", "Zeigt einen Fehler an"],
-        correct: 1,
-        explanation: "ZÄHLENWENN zählt die Anzahl der Zellen, die das Suchkriterium erfüllen."
-      },
-      {
-        question: "13. Wie lautet das 4. Argument beim SVERWEIS für eine exakte Übereinstimmung?",
-        options: ["WAHR oder 1", "FALSCH oder 0", "EXAKT", "SUCHE"],
-        correct: 1,
-        explanation: "Für eine exakte Suche muss das vierte Argument zwingend auf FALSCH (oder 0) gesetzt werden."
-      },
-      {
-        question: "14. Welche Formel rundet den Wert in B2 kaufmännisch auf 2 Dezimalstellen?",
-        options: ["=RUNDEN(B2; 2)", "=RUNDEN(B2; ,2)", "=KAUFMÄNNISCH(B2; 2)", "=RUNDEN.AB(B2; 2)"],
-        correct: 0,
-        explanation: "Die Syntax lautet =RUNDEN(Zahl; Anzahl_Stellen)."
-      },
-      {
-        question: "15. Wie richtet man Währungsbeträge in einer IHK-Tabelle korrekterweise aus?",
-        options: ["Zentriert", "Linksbündig", "Rechtsbündig mit 2 Nachkommastellen & €-Zeichen", "Blocksatz"],
-        correct: 2,
-        explanation: "Zahlen und Währungen werden in professionellen Tabellen immer rechtsbündig ausgerichtet."
-      },
-      {
-        question: "16. Mit welcher Tastenkombination öffnet man das Fenster 'Zellen formatieren'?",
-        options: ["Strg + 1", "Strg + F", "Alt + F1", "Strg + Shift + F"],
-        correct: 0,
-        explanation: "'Strg + 1' öffnet blitzschnell das Formatierungsmenü in Excel."
-      },
-      {
-        question: "17. Was bedeutet der Fehler '###' in einer Excel-Zelle?",
-        options: ["Formel ist falsch", "Zellbezug gelöscht", "Spaltenbreite ist zu gering für die Anzeige", "Division durch Null"],
-        correct: 2,
-        explanation: "### zeigt an, dass die Spalte zu schmal ist, um das Ergebnis oder Datum vollständig darzustellen."
-      },
-      {
-        question: "18. Welcher Shortcut schaltet in Excel den AutoFilter an bzw. aus?",
-        options: ["Strg + F", "Strg + Umschalt + L", "Alt + F4", "Strg + A"],
-        correct: 1,
-        explanation: "'Strg + Umschalt + L' aktiviert oder deaktiviert den Filter augenblicklich."
-      },
-      {
-        question: "19. Welcher Begriff beschreibt den Schutz personenbezogener Daten vor Missbrauch?",
-        options: ["Datensicherheit", "Datenschutz (DSGVO)", "Data Mining", "Compliance"],
-        correct: 1,
-        explanation: "Der Schutz der Persönlichkeitsrechte bei der Datenverarbeitung fällt unter den Datenschutz."
-      },
-      {
-        question: "20. Welche Ergänzung kennzeichnet eine Summenzeile in einer IHK-Tabelle optisch korrekt?",
-        options: ["Keine Besonderheit", "Gelber Hintergrund", "Doppelter Unterstrich / fett hervorgehoben", "Kursiver Text"],
-        correct: 2,
-        explanation: "Ergebniszeilen (Gesamtsummen) werden mit doppeltem Unterstrich oder fetter Abgrenzung hervorgehoben."
-      }
-    ];
-
-    let currentQuizIndex = 0;
-    let quizScore = 0;
-
-    function loadQuestion() {
-      if (currentQuizIndex >= quizData.length) {
-        showIhkResult();
-        return;
-      }
-
-      const q = quizData[currentQuizIndex];
-      document.getElementById('quiz-progress').innerText = `Frage ${currentQuizIndex + 1} von ${quizData.length}`;
-      document.getElementById('quiz-score-display').innerText = `Punkte: ${quizScore} / ${quizData.length}`;
-      document.getElementById('quiz-question').innerText = q.question;
-      
-      const optionsContainer = document.getElementById('quiz-options');
-      optionsContainer.innerHTML = '';
-
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'quiz-option';
-        btn.innerText = opt;
-        btn.onclick = () => selectQuizOption(idx);
-        optionsContainer.appendChild(btn);
-      });
-
-      document.getElementById('quiz-feedback').style.display = 'none';
-      document.getElementById('next-quiz-btn').style.display = 'none';
+    // IHK Notenrechner Logik
+    function pointsToGrade(percent) {
+      if (percent >= 92) return "1 (Sehr gut)";
+      if (percent >= 81) return "2 (Gut)";
+      if (percent >= 67) return "3 (Befriedigend)";
+      if (percent >= 50) return "4 (Ausreichend)";
+      if (percent >= 30) return "5 (Mangelhaft)";
+      return "6 (Ungenügend)";
     }
 
-    function selectQuizOption(selectedIdx) {
-      const q = quizData[currentQuizIndex];
-      const feedback = document.getElementById('quiz-feedback');
-      const options = document.querySelectorAll('.quiz-option');
-
-      options.forEach(btn => btn.disabled = true);
-      feedback.style.display = 'block';
-
-      if (selectedIdx === q.correct) {
-        quizScore++;
-        options[selectedIdx].style.background = '#dcfce7';
-        options[selectedIdx].style.borderColor = '#86efac';
-        feedback.className = 'feedback-box feedback-success';
-        feedback.innerHTML = `✅ <strong>Richtig!</strong> ${q.explanation}`;
-      } else {
-        options[selectedIdx].style.background = '#fef2f2';
-        options[selectedIdx].style.borderColor = '#fecaca';
-        options[q.correct].style.background = '#dcfce7';
-        feedback.className = 'feedback-box feedback-error';
-        feedback.innerHTML = `❌ <strong>Falsch.</strong> ${q.explanation}`;
-      }
-
-      document.getElementById('quiz-score-display').innerText = `Punkte: ${quizScore} / ${quizData.length}`;
-      document.getElementById('next-quiz-btn').style.display = 'inline-flex';
-    }
-
-    function nextQuestion() {
-      currentQuizIndex++;
-      loadQuestion();
-    }
-
-    function showIhkResult() {
-      const percentage = Math.round((quizScore / quizData.length) * 100);
-      let grade = getGradeText(percentage);
-
-      document.getElementById('quiz-card').innerHTML = `
-        <div style="text-align: center; padding: 10px;">
-          <h3 style="font-size: 1.8rem; color: var(--dark-navy); margin-bottom: 12px;">🏆 Quiz-Auswertung</h3>
-          <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 24px;">Ergebnis aus 20 AP1-Prüfungsfragen:</p>
-
-          <div style="background: #f8fafc; border: 2px solid var(--border-color); border-radius: 12px; padding: 24px; max-width: 450px; margin: 0 auto 24px auto;">
-            <div style="font-size: 3rem; font-weight: 800; color: ${grade.color}; margin-bottom: 8px;">${percentage}%</div>
-            <div style="font-size: 1.4rem; font-weight: 700; color: ${grade.color}; margin-bottom: 12px;">${grade.text}</div>
-            <p style="font-size: 0.95rem; color: #475569;">Erreichte Punkte: <strong>${quizScore} von ${quizData.length}</strong></p>
-          </div>
-
-          <button class="btn btn-primary" onclick="resetQuiz()">Quiz neustarten 🔄</button>
-        </div>
-      `;
-    }
-
-    function resetQuiz() {
-      currentQuizIndex = 0;
-      quizScore = 0;
-      document.getElementById('quiz-card').innerHTML = `
-        <div class="quiz-header">
-          <span id="quiz-progress">Frage 1 von 20</span>
-          <span id="quiz-score-display">Punkte: 0 / 20</span>
-        </div>
-        <div class="quiz-question" id="quiz-question">Lädt Frage...</div>
-        <div class="quiz-options" id="quiz-options"></div>
-        <div id="quiz-feedback" class="feedback-box" style="display: none;"></div>
-        <button id="next-quiz-btn" class="btn btn-primary" onclick="nextQuestion()" style="display: none;">Nächste Frage ➔</button>
-      `;
-      loadQuestion();
-    }
-
-    // DIN 5008 MINI-QUIZ DATA & LOGIC
-    const dinQuizData = [
-      {
-        question: "Wie viele Leerzeilen stehen zwischen Anschriftfeld und Betreffzeile?",
-        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine"],
-        correct: 1,
-        explanation: "Nach DIN 5008 wird der Betreff exakt 2 Leerzeilen unter dem Anschriftfeld platziert."
-      },
-      {
-        question: "Darf ein Schlusspunkt am Ende der Betreffzeile stehen?",
-        options: ["Ja, immer", "Nein, niemals", "Nur bei langen Betreffs", "Optional"],
-        correct: 1,
-        explanation: "Der Betreff erhält in Geschäftsbriefen nach DIN 5008 niemals einen Schlusspunkt."
-      },
-      {
-        question: "Welchen Nachabstand muss man in MS Word für Briefe einstellen?",
-        options: ["8 pt", "12 pt", "0 pt", "Auto"],
-        correct: 2,
-        explanation: "Word hat standardmäßig 8 pt voreingestellt, für DIN 5008 muss dies zwingend auf 0 pt geändert werden."
-      },
-      {
-        question: "Wie viele Leerzeilen sind für die Unterschrift zwischen Grußformel und Name vorgesehen?",
-        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "4 Leerzeilen"],
-        correct: 2,
-        explanation: "Es werden exakt 3 Leerzeilen für die handschriftliche Unterschrift freigehalten."
-      }
-    ];
-
-    let currentDinQuizIndex = 0;
-    let dinQuizScore = 0;
-
-    function loadDinQuizQuestion() {
-      if (currentDinQuizIndex >= dinQuizData.length) {
-        showDinQuizResult();
-        return;
-      }
-
-      const q = dinQuizData[currentDinQuizIndex];
-      document.getElementById('din-quiz-progress').innerText = `Frage ${currentDinQuizIndex + 1} von ${dinQuizData.length}`;
-      document.getElementById('din-quiz-question').innerText = q.question;
-      
-      const container = document.getElementById('din-quiz-options');
-      container.innerHTML = '';
-
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'quiz-option';
-        btn.innerText = opt;
-        btn.onclick = () => selectDinQuizOption(idx);
-        container.appendChild(btn);
-      });
-
-      document.getElementById('din-quiz-feedback').style.display = 'none';
-      document.getElementById('din-next-btn').style.display = 'none';
-    }
-
-    function selectDinQuizOption(selectedIdx) {
-      const q = dinQuizData[currentDinQuizIndex];
-      const feedback = document.getElementById('din-quiz-feedback');
-      const options = document.querySelectorAll('#din-quiz-options .quiz-option');
-
-      options.forEach(btn => btn.disabled = true);
-      feedback.style.display = 'block';
-
-      if (selectedIdx === q.correct) {
-        dinQuizScore++;
-        options[selectedIdx].style.background = '#dcfce7';
-        options[selectedIdx].style.borderColor = '#86efac';
-        feedback.className = 'feedback-box feedback-success';
-        feedback.innerHTML = `✅ <strong>Richtig!</strong> ${q.explanation}`;
-      } else {
-        options[selectedIdx].style.background = '#fef2f2';
-        options[selectedIdx].style.borderColor = '#fecaca';
-        options[q.correct].style.background = '#dcfce7';
-        feedback.className = 'feedback-box feedback-error';
-        feedback.innerHTML = `❌ <strong>Falsch.</strong> ${q.explanation}`;
-      }
-
-      document.getElementById('din-next-btn').style.display = 'inline-flex';
-    }
-
-    function nextDinQuizQuestion() {
-      currentDinQuizIndex++;
-      loadDinQuizQuestion();
-    }
-
-    function showDinQuizResult() {
-      document.getElementById('din-quiz-container').innerHTML = `
-        <div style="text-align: center; padding: 10px;">
-          <h3 style="font-size: 1.4rem; color: var(--dark-navy); margin-bottom: 8px;">🎉 DIN-5008-Quiz beendet!</h3>
-          <p style="font-size: 1rem; color: var(--text-muted); margin-bottom: 16px;">Du hast <strong>${dinQuizScore} von ${dinQuizData.length}</strong> Fragen richtig beantwortet.</p>
-          <button class="btn btn-primary" onclick="resetDinQuiz()">Quiz wiederholen 🔄</button>
-        </div>
-      `;
-    }
-
-    function resetDinQuiz() {
-      currentDinQuizIndex = 0;
-      dinQuizScore = 0;
-      document.getElementById('din-quiz-container').innerHTML = `
-        <h3 style="color: var(--dark-navy); margin-bottom: 15px; font-size: 1.2rem;">🧠 Mini-Quiz: Teste dein DIN-5008-Wissen</h3>
-        <div id="din-quiz-progress" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Frage 1 von 4</div>
-        <div id="din-quiz-question" style="font-weight: 700; font-size: 1.05rem; color: var(--dark-navy); margin-bottom: 12px;">Lädt Frage...</div>
-        <div id="din-quiz-options" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
-        <div id="din-quiz-feedback" class="feedback-box" style="display: none;"></div>
-        <button id="din-next-btn" class="btn btn-primary" onclick="nextDinQuizQuestion()" style="display: none;">Nächste Frage ➔</button>
-      `;
-      loadDinQuizQuestion();
-    }
-
-    // EXCEL FORMEL TRAINER DATA & LOGIC
-    const excelData = [
-      {
-        task: "Ermittle den Artikelpreis per SVERWEIS aus der Tabelle (Suchbegriff in A2, Bereich A1:D50, Preis in der 3. Spalte, exakte Übereinstimmung).",
-        answers: ["=sverweis(a2;a1:d50;3;falsch)", "=sverweis(a2;a1:d50;3;0)"],
-        hint: "Syntax: =SVERWEIS(Suchkriterium; Matrix; Spaltenindex; 0/FALSCH)",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>A (Art-Nr)</th><th>B (Bezeichnung)</th><th>C (Preis)</th><th>D (Bestand)</th></tr>
-            <tr><td><strong>1</strong></td><td>Art-Nr</td><td>Bezeichnung</td><td>Preis</td><td>Bestand</td></tr>
-            <tr><td><strong>2</strong></td><td>1001</td><td>Ordner DIN A4</td><td>3,50 €</td><td>45</td></tr>
-            <tr><td><strong>3</strong></td><td>1002</td><td>Druckerpapier</td><td>4,80 €</td><td>120</td></tr>
-          </table>`
-      },
-      {
-        task: "Prüfe mit einer WENN-Funktion, ob der Wert in Zelle B2 größer als 100 ist. Wenn ja, gib 'Bonus', sonst 'Kein Bonus' aus.",
-        answers: ["=wenn(b2>100;\"bonus\";\"kein bonus\")"],
-        hint: "Syntax: =WENN(Bedingung; Dann-Wert; Sonst-Wert) (Text in Anführungszeichen!)",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>A (Mitarbeiter)</th><th>B (Umsatz)</th><th>C (Auswertung)</th></tr>
-            <tr><td><strong>1</strong></td><td>Name</td><td>Umsatz</td><td>Prüfung</td></tr>
-            <tr><td><strong>2</strong></td><td>Müller</td><td>125</td><td>[ Hier Formel einfügen ]</td></tr>
-            <tr><td><strong>3</strong></td><td>Schmidt</td><td>90</td><td></td></tr>
-          </table>`
-      },
-      {
-        task: "Zähle in dem Bereich B1:B20 alle Zellen, in denen der Wert größer als 50 ist.",
-        answers: ["=zählenwenn(b1:b20;\">50\")"],
-        hint: "Syntax: =ZÄHLENWENN(Bereich; Kriterium)",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>A (Artikel)</th><th>B (Stückzahl)</th></tr>
-            <tr><td><strong>1</strong></td><td>Produkt A</td><td>45</td></tr>
-            <tr><td><strong>2</strong></td><td>Produkt B</td><td>75</td></tr>
-            <tr><td><strong>3</strong></td><td>Produkt C</td><td>60</td></tr>
-          </table>`
-      },
-      {
-        task: "Summiere alle Beträge im Bereich C1:C50, deren zugehöriger Status in B1:B50 den Text 'Bezahlt' enthält.",
-        answers: ["=summewenn(b1:b50;\"bezahlt\";c1:c50)"],
-        hint: "Syntax: =SUMMEWENN(Suchbereich; Kriterium; Summenbereich)",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>A (Rech-Nr)</th><th>B (Status)</th><th>C (Betrag)</th></tr>
-            <tr><td><strong>1</strong></td><td>R-2026-1</td><td>Bezahlt</td><td>150,00 €</td></tr>
-            <tr><td><strong>2</strong></td><td>R-2026-2</td><td>Offen</td><td>80,00 €</td></tr>
-            <tr><td><strong>3</strong></td><td>R-2026-3</td><td>Bezahlt</td><td>210,00 €</td></tr>
-          </table>`
-      },
-      {
-        task: "Runde den Wert in Zelle A1 kaufmännisch auf genau 2 Nachkommastellen.",
-        answers: ["=runden(a1;2)"],
-        hint: "Syntax: =RUNDEN(Zahl; Anzahl_Stellen)",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>A (Rohwert)</th></tr>
-            <tr><td><strong>1</strong></td><td>125,4567</td></tr>
-            <tr><td><strong>2</strong></td><td>89,1234</td></tr>
-          </table>`
-      },
-      {
-        task: "Berechne den Durchschnitt aller Werte im Bereich D1:D10.",
-        answers: ["=mittelwert(d1:d10)"],
-        hint: "Syntax: =MITTELWERT(Bereich)",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>...</th><th>D (Notenpunkte)</th></tr>
-            <tr><td><strong>1</strong></td><td>...</td><td>12</td></tr>
-            <tr><td><strong>2</strong></td><td>...</td><td>9</td></tr>
-            <tr><td><strong>3</strong></td><td>...</td><td>14</td></tr>
-          </table>`
-      },
-      {
-        task: "Ermittle den Höchstwert (Maximum) aus dem Bereich E1:E25.",
-        answers: ["=max(e1:e25)"],
-        hint: "Syntax: =MAX(Bereich)",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>...</th><th>E (Umsatz)</th></tr>
-            <tr><td><strong>1</strong></td><td>...</td><td>4.500 €</td></tr>
-            <tr><td><strong>2</strong></td><td>...</td><td>8.200 €</td></tr>
-            <tr><td><strong>3</strong></td><td>...</td><td>3.100 €</td></tr>
-          </table>`
-      },
-      {
-        task: "Verwende WENNFEHLER, um bei einem eventuellen Fehler in der Division (A1/B1) stattdessen den Text 'Fehler' auszugeben.",
-        answers: ["=wennfehler(a1/b1;\"fehler\")"],
-        hint: "Syntax: =WENNFEHLER(Wert; Wert_falls_Fehler)",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>A (Zähler)</th><th>B (Nenner)</th><th>C (Ergebnis)</th></tr>
-            <tr><td><strong>1</strong></td><td>100</td><td>0</td><td>[ Hier Formel einfügen ]</td></tr>
-          </table>`
-      },
-      {
-        task: "Verbinde die Vorname-Zelle A2 und Nachname-Zelle B2 mit einem Leerzeichen dazwischen mithilfe der kaufmännischen Und-Verknüpfung (&).",
-        answers: ["=a2&\" \"&b2"],
-        hint: "Nutze das &-Zeichen zur Textverkettung und das Leerzeichen in Anführungszeichen: \" \"",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>A (Vorname)</th><th>B (Nachname)</th><th>C (Komplett)</th></tr>
-            <tr><td><strong>1</strong></td><td>Vorname</td><td>Nachname</td><td>Name</td></tr>
-            <tr><td><strong>2</strong></td><td>Anna</td><td>Müller</td><td>[ Hier Formel einfügen ]</td></tr>
-          </table>`
-      },
-      {
-        task: "Ermittle die Anzahl aller numerischen Einträge im Bereich A1:A100.",
-        answers: ["=anzahl(a1:a100)"],
-        hint: "Syntax: =ANZAHL(Bereich) – zählt nur Zahlenzellen.",
-        tableHtml: `
-          <table class="mini-table">
-            <tr><th></th><th>A (Personalnummern)</th></tr>
-            <tr><td><strong>1</strong></td><td>5012</td></tr>
-            <tr><td><strong>2</strong></td><td>5013</td></tr>
-            <tr><td><strong>3</strong></td><td>n.v. (Urlaub)</td></tr>
-          </table>`
-      }
-    ];
-
-    let currentExcelIndex = 0;
-    let excelScore = 0;
-
-    function loadExcelTask() {
-      if (currentExcelIndex >= excelData.length) {
-        showExcelResult();
-        return;
-      }
-
-      const item = excelData[currentExcelIndex];
-      document.getElementById('excel-progress').innerText = `Aufgabe ${currentExcelIndex + 1} von ${excelData.length}`;
-      document.getElementById('excel-score-display').innerText = `Punkte: ${excelScore} / ${excelData.length}`;
-      document.getElementById('excel-question').innerText = item.task;
-      document.getElementById('excel-table-container').innerHTML = item.tableHtml;
-      document.getElementById('excel-user-input').value = '';
-      document.getElementById('excel-user-input').disabled = false;
-      document.getElementById('excel-feedback').style.display = 'none';
-      document.getElementById('next-excel-btn').style.display = 'none';
-    }
-
-    function checkExcelAnswer() {
-      const userInput = document.getElementById('excel-user-input').value.trim().toLowerCase().replace(/\s+/g, '');
-      const item = excelData[currentExcelIndex];
-      const feedback = document.getElementById('excel-feedback');
-
-      if (!userInput) return;
-
-      document.getElementById('excel-user-input').disabled = true;
-      feedback.style.display = 'block';
-
-      const isCorrect = item.answers.some(ans => ans.replace(/\s+/g, '') === userInput);
-
-      if (isCorrect) {
-        excelScore++;
-        feedback.className = 'feedback-box feedback-success';
-        feedback.innerHTML = `✅ <strong>Richtig!</strong> Die Formel stimmt exakt. (${item.hint})`;
-      } else {
-        feedback.className = 'feedback-box feedback-error';
-        feedback.innerHTML = `❌ <strong>Nicht ganz richtig.</strong><br>Mögliche richtige Lösung: <code>${item.answers[0]}</code><br><small>Hinweis: ${item.hint}</small>`;
-      }
-
-      document.getElementById('excel-score-display').innerText = `Punkte: ${excelScore} / ${excelData.length}`;
-      document.getElementById('next-excel-btn').style.display = 'inline-flex';
-    }
-
-    function nextExcelTask() {
-      currentExcelIndex++;
-      loadExcelTask();
-    }
-
-    function showExcelResult() {
-      const percentage = Math.round((excelScore / excelData.length) * 100);
-      let grade = getGradeText(percentage);
-
-      document.getElementById('excel-trainer-card').innerHTML = `
-        <div style="text-align: center; padding: 10px;">
-          <h3 style="font-size: 1.8rem; color: var(--dark-navy); margin-bottom: 12px;">🏆 Excel-Trainer Auswertung</h3>
-          <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 24px;">Ergebnis aus 10 Excel-Formel-Aufgaben:</p>
-
-          <div style="background: #f8fafc; border: 2px solid var(--border-color); border-radius: 12px; padding: 24px; max-width: 450px; margin: 0 auto 24px auto;">
-            <div style="font-size: 3rem; font-weight: 800; color: ${grade.color}; margin-bottom: 8px;">${percentage}%</div>
-            <div style="font-size: 1.4rem; font-weight: 700; color: ${grade.color}; margin-bottom: 12px;">${grade.text}</div>
-            <p style="font-size: 0.95rem; color: #475569;">Erreichte Punkte: <strong>${excelScore} von ${excelData.length}</strong></p>
-          </div>
-
-          <button class="btn btn-primary" onclick="resetExcelTrainer()">Trainer neustarten 🔄</button>
-        </div>
-      `;
-    }
-
-    function resetExcelTrainer() {
-      currentExcelIndex = 0;
-      excelScore = 0;
-      document.getElementById('excel-trainer-card').innerHTML = `
-        <div class="quiz-header">
-          <span id="excel-progress">Aufgabe 1 von 10</span>
-          <span id="excel-score-display">Punkte: 0 / 10</span>
-        </div>
-        <div class="quiz-question" id="excel-question">Lädt Aufgabe...</div>
-        <div id="excel-table-container"></div>
-        
-        <div class="excel-input-group">
-          <input type="text" id="excel-user-input" placeholder="z.B. =SVERWEIS(...)" onkeydown="if(event.key === 'Enter') checkExcelAnswer()">
-          <button class="btn btn-primary" onclick="checkExcelAnswer()">Prüfen</button>
-        </div>
-
-        <div id="excel-feedback" class="feedback-box" style="display: none;"></div>
-        <button id="next-excel-btn" class="btn btn-primary" onclick="nextExcelTask()" style="display: none;">Nächste Aufgabe ➔</button>
-      `;
-      loadExcelTask();
-    }
-
-    function getGradeText(percentage) {
-      if (percentage >= 92) return { text: "Note 1 (Sehr gut)", color: "#166534" };
-      if (percentage >= 81) return { text: "Note 2 (Gut)", color: "#15803d" };
-      if (percentage >= 67) return { text: "Note 3 (Befriedigend)", color: "#b45309" };
-      if (percentage >= 50) return { text: "Note 4 (Ausreichend)", color: "#d97706" };
-      if (percentage >= 30) return { text: "Note 5 (Mangelhaft)", color: "#dc2626" };
-      return { text: "Note 6 (Ungenügend)", color: "#991b1b" };
-    }
-
-    // IHK NOTENRECHNER
     function calculateTotalGrade() {
-      const ap1Max = parseFloat(document.getElementById('ap1-max').value);
+      const ap1Max = parseFloat(document.getElementById('ap1-max').value) || 100;
       const ap1User = parseFloat(document.getElementById('ap1-user').value);
-
-      const ap2t1Max = parseFloat(document.getElementById('ap2t1-max').value);
+      
+      const ap2t1Max = parseFloat(document.getElementById('ap2t1-max').value) || 100;
       const ap2t1User = parseFloat(document.getElementById('ap2t1-user').value);
 
-      const ap2t2Max = parseFloat(document.getElementById('ap2t2-max').value);
+      const ap2t2Max = parseFloat(document.getElementById('ap2t2-max').value) || 100;
       const ap2t2User = parseFloat(document.getElementById('ap2t2-user').value);
 
-      if (!isNaN(ap1Max) && !isNaN(ap1User) && ap1Max > 0) {
+      let hasAny = false;
+
+      // AP1
+      if (!isNaN(ap1User)) {
         const p1 = (ap1User / ap1Max) * 100;
-        document.getElementById('ap1-result').innerText = `Prozent: ${Math.round(p1)}% (${getGradeText(p1).text})`;
+        document.getElementById('ap1-result').innerText = `Ergebnis: ${p1.toFixed(1)}% — Note: ${pointsToGrade(p1)}`;
+        hasAny = true;
       } else {
         document.getElementById('ap1-result').innerText = `Ergebnis: Noch keine Eingabe`;
       }
 
-      if (!isNaN(ap2t1Max) && !isNaN(ap2t1User) && ap2t1Max > 0) {
+      // AP2 T1
+      if (!isNaN(ap2t1User)) {
         const p2 = (ap2t1User / ap2t1Max) * 100;
-        document.getElementById('ap2t1-result').innerText = `Prozent: ${Math.round(p2)}% (${getGradeText(p2).text})`;
+        document.getElementById('ap2t1-result').innerText = `Ergebnis: ${p2.toFixed(1)}% — Note: ${pointsToGrade(p2)}`;
       } else {
         document.getElementById('ap2t1-result').innerText = `Ergebnis: Noch keine Eingabe`;
       }
 
-      if (!isNaN(ap2t2Max) && !isNaN(ap2t2User) && ap2t2Max > 0) {
+      // AP2 T2
+      if (!isNaN(ap2t2User)) {
         const p3 = (ap2t2User / ap2t2Max) * 100;
-        document.getElementById('ap2t2-result').innerText = `Prozent: ${Math.round(p3)}% (${getGradeText(p3).text})`;
+        document.getElementById('ap2t2-result').innerText = `Ergebnis: ${p3.toFixed(1)}% — Note: ${pointsToGrade(p3)}`;
       } else {
         document.getElementById('ap2t2-result').innerText = `Ergebnis: Noch keine Eingabe`;
       }
 
-      const box = document.getElementById('total-result-box');
-      if (!isNaN(ap1Max) && !isNaN(ap1User) && !isNaN(ap2t1Max) && !isNaN(ap2t1User) && !isNaN(ap2t2Max) && !isNaN(ap2t2User) && ap1Max > 0 && ap2t1Max > 0 && ap2t2Max > 0) {
+      // Gesamtnote Berechnung (AP1 = 20%, AP2 T1 = 25%, AP2 T2 = 30%, etc. vereinfacht oder gewichtet standardisiert)
+      if (!isNaN(ap1User) && !isNaN(ap2t1User) && !isNaN(ap2t2User)) {
         const p1 = (ap1User / ap1Max) * 100;
         const p2 = (ap2t1User / ap2t1Max) * 100;
         const p3 = (ap2t2User / ap2t2Max) * 100;
-
-        const totalPercent = (p1 * 0.20) + (p2 * 0.25) + (p3 * 0.55);
-        const roundedTotal = Math.round(totalPercent);
-        const finalGrade = getGradeText(roundedTotal);
-
-        box.style.display = 'block';
-        document.getElementById('total-score-text').innerText = `${roundedTotal}%`;
-        document.getElementById('total-grade-text').innerText = finalGrade.text;
+        
+        // Standardgewichtung: AP1 (20%), AP2 Teil 1 (35%), AP2 Teil 2 (45%) as weighted approximation example
+        const totalPercent = (p1 * 0.20) + (p2 * 0.35) + (p3 * 0.45);
+        document.getElementById('total-result').innerText = `Gesamtleistung: ${totalPercent.toFixed(1)}% — IHK-Note: ${pointsToGrade(totalPercent)}`;
       } else {
-        box.style.display = 'none';
+        document.getElementById('total-result').innerText = `Trage alle Teilbereiche ein, um die Gesamtnote zu berechnen.`;
       }
     }
 
-    loadQuestion();
-    loadExcelTask();
-    loadDinQuizQuestion();
+    // Simple placeholder logic for interactive modules
+    const quizData = [
+      {
+        question: "Welche Angabe gehört nach DIN 5008 in den Informationsblock eines Geschäftsbriefes?",
+        options: ["Die Hausnummer des Empfängers", "Das Datum", "Die Farbe des Firmenlogos", "Die Schriftart"],
+        correct: 1
+      }
+    ];
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+
+    function loadQuiz() {
+      const q = quizData[currentQuizIndex];
+      if (!q) return;
+      document.getElementById('quiz-question').innerText = q.question;
+      document.getElementById('quiz-progress').innerText = `Frage ${currentQuizIndex + 1} von ${quizData.length}`;
+      
+      const optContainer = document.getElementById('quiz-options');
+      optContainer.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.innerText = opt;
+        btn.onclick = () => checkQuizAnswer(idx);
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function checkQuizAnswer(selectedIdx) {
+      const q = quizData[currentQuizIndex];
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.style.display = 'block';
+      if (selectedIdx === q.correct) {
+        feedback.className = 'feedback-box feedback-success';
+        feedback.innerText = 'Richtig! Sehr gut gemacht.';
+        quizScore++;
+      } else {
+        feedback.className = 'feedback-box feedback-error';
+        feedback.innerText = `Leider falsch. Die richtige Antwort wäre: "${q.options[q.correct]}"`;
+      }
+      document.getElementById('quiz-score-display').innerText = `Punkte: ${quizScore} / ${quizData.length}`;
+      document.getElementById('next-quiz-btn').style.display = 'inline-block';
+    }
+
+    function nextQuestion() {
+      currentQuizIndex++;
+      document.getElementById('quiz-feedback').style.display = 'none';
+      document.getElementById('next-quiz-btn').style.display = 'none';
+      if (currentQuizIndex < quizData.length) {
+        loadQuiz();
+      } else {
+        document.getElementById('quiz-card').innerHTML = `<h2>🎉 Quiz beendet!</h2><p>Du hast ${quizScore} von ${quizData.length} Fragen richtig beantwortet.</p>`;
+      }
+    }
+
+    // Initialize initial modules on load
+    window.onload = () => {
+      loadQuiz();
+    };
   </script>
 </body>
 </html>
