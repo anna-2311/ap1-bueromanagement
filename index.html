@@ -16,88 +16,113 @@
     .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
     .btn-primary { background: var(--primary); color: white; }
     .btn-primary:hover { background: #1d4ed8; }
+    
+    /* Navigation / Buttons für die Ansichten */
+    .nav-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+    .tab-btn { background: #e2e8f0; color: var(--dark-navy); border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+    .tab-btn.active { background: var(--primary); color: white; }
+
+    .section-content { display: none; }
+    .section-content.active { display: block; }
+
     .feedback-box { padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 0.95rem; }
     .feedback-success { background: #dcfce7; border: 1px solid #86efac; color: #166534; }
     .feedback-error { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; }
     .mini-table { border-collapse: collapse; width: 100%; margin: 15px 0; font-size: 0.9rem; }
     .mini-table th, .mini-table td { border: 1px solid var(--border-color); padding: 8px 12px; text-align: left; }
     .mini-table th { background: #f1f5f9; }
-    .glossary-section { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+    
     .glossary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
-    .glossary-item { background: white; padding: 12px; border-radius: 6px; border: 1px solid var(--border-color); }
+    .glossary-item { background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid var(--border-color); }
     .glossary-item strong { color: var(--primary); display: block; margin-bottom: 4px; }
+    
     .quiz-option { display: block; width: 100%; text-align: left; padding: 12px 16px; margin-bottom: 8px; background: white; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; font-size: 1rem; transition: all 0.2s; }
     .quiz-option:hover:not(:disabled) { border-color: var(--primary); background: #f8fafc; }
     .excel-input-group { display: flex; gap: 10px; margin: 15px 0; }
     .excel-input-group input { flex: 1; padding: 10px; border: 2px solid var(--border-color); border-radius: 6px; font-family: monospace; font-size: 1rem; }
-    .section-card { background: white; border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; margin-bottom: 25px; }
+    
+    .download-card { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
   </style>
 </head>
 <body>
 
 <div class="container">
   <h1>AKTE Prüfungsvorbereitungs-Plattform</h1>
-  <p>Willkommen auf deiner Lernplattform. Hier findest du das EDV-Glossar, das IHK-Prüfungsquiz, das DIN-5008-Quiz, den Excel-Trainer und den Notenrechner.</p>
+  <p>Wähle einen Bereich aus, um zu lernen, zu trainieren oder Materialien herunterzuladen.</p>
 
-  <!-- GLOSSAR: WICHTIGE EDV-FUNKTIONEN -->
-  <section class="glossary-section">
-    <h2>📖 Glossar: Wichtige EDV-Funktionen</h2>
+  <!-- NAVIGATION BUTTONS -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('glossary-tab', this)">📖 EDV-Glossar</button>
+    <button class="tab-btn" onclick="switchTab('ihk-tab', this)">🧠 IHK-Quiz</button>
+    <button class="tab-btn" onclick="switchTab('din-tab', this)">📐 DIN 5008</button>
+    <button class="tab-btn" onclick="switchTab('excel-tab', this)">⚡ Excel-Trainer</button>
+    <button class="tab-btn" onclick="switchTab('noten-tab', this)">📊 Notenrechner</button>
+    <button class="tab-btn" onclick="switchTab('download-tab', this)">📂 Downloads</button>
+  </div>
+
+  <!-- TEIL 0: GLOSSAR -->
+  <div id="glossary-tab" class="section-content active">
+    <h2>Glossar: Wichtige EDV-Funktionen</h2>
     <div class="glossary-grid">
       <div class="glossary-item"><strong>SVERWEIS</strong> Sucht in der ersten Spalte einer Matrix nach einem Wert und gibt den Wert in der gleichen Zeile aus einer angegebenen Spalte zurück.</div>
       <div class="glossary-item"><strong>WENN</strong> Prüft eine Bedingung und gibt einen Wert zurück, wenn die Bedingung wahr ist, und einen anderen, wenn sie falsch ist.</div>
-      <div class="glossary-item"><strong>ZÄHLENWENN</strong> Zählt Zellen in einem Bereich, die ein bestimmtes Kriterium erfüllen.</div>
-      <div class="glossary-item"><strong>SUMMEWENN</strong> Addiert die Zellen in einem Bereich, die ein bestimmtes Kriterium erfüllen.</div>
+      <div class="glossary-item"><strong>ZÄHLENWENN</strong> Zählt Zellen in einem Bereich, der ein bestimmtes Kriterium erfüllt.</div>
+      <div class="glossary-item"><strong>SUMMEWENN</strong> Addiert die Zellen in einem Bereich, der ein bestimmtes Kriterium erfüllt.</div>
       <div class="glossary-item"><strong>RUNDEN</strong> Rundet eine Zahl auf eine angegebene Anzahl von Stellen.</div>
       <div class="glossary-item"><strong>MITTELWERT</strong> Berechnet den Durchschnitt der Argumente.</div>
       <div class="glossary-item"><strong>WENNFEHLER</strong> Gibt einen festgelegten Wert zurück, wenn eine Formel einen Fehler auswertet; andernfalls das Formelergebnis.</div>
     </div>
-  </section>
+  </div>
 
   <!-- TEIL 1: IHK-PRÜFUNGS-QUIZ -->
-  <section class="section-card" id="quiz-card">
-    <h2 style="margin-top: 0; color: var(--dark-navy);">🧠 IHK AP1 Prüfungsquiz (20 Fragen)</h2>
-    <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: var(--text-muted);">
-      <span id="quiz-progress">Frage 1 von 20</span>
-      <span id="quiz-score-display">Punkte: 0 / 20</span>
+  <div id="ihk-tab" class="section-content">
+    <div id="quiz-card">
+      <h2 style="margin-top: 0; color: var(--dark-navy);">IHK AP1 Prüfungsquiz (20 Fragen)</h2>
+      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: var(--text-muted);">
+        <span id="quiz-progress">Frage 1 von 20</span>
+        <span id="quiz-score-display">Punkte: 0 / 20</span>
+      </div>
+      <div class="quiz-question" id="quiz-question" style="font-size: 1.1rem; font-weight: bold; margin-bottom: 15px;">Lädt Frage...</div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div id="quiz-feedback" class="feedback-box" style="display: none;"></div>
+      <button id="next-quiz-btn" class="btn btn-primary" onclick="nextQuestion()" style="display: none; margin-top: 15px;">Nächste Frage ➔</button>
     </div>
-    <div class="quiz-question" id="quiz-question" style="font-size: 1.1rem; font-weight: bold; margin-bottom: 15px;">Lädt Frage...</div>
-    <div class="quiz-options" id="quiz-options"></div>
-    <div id="quiz-feedback" class="feedback-box" style="display: none;"></div>
-    <button id="next-quiz-btn" class="btn btn-primary" onclick="nextQuestion()" style="display: none; margin-top: 15px;">Nächste Frage ➔</button>
-  </section>
+  </div>
 
   <!-- TEIL 2: DIN 5008 MINI-QUIZ -->
-  <section class="section-card" id="din-quiz-container">
-    <h3 style="color: var(--dark-navy); margin-top: 0; margin-bottom: 15px; font-size: 1.2rem;">📐 Mini-Quiz: Teste dein DIN-5008-Wissen</h3>
-    <div id="din-quiz-progress" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Frage 1 von 4</div>
-    <div id="din-quiz-question" style="font-weight: 700; font-size: 1.05rem; color: var(--dark-navy); margin-bottom: 12px;">Lädt Frage...</div>
-    <div id="din-quiz-options" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
-    <div id="din-quiz-feedback" class="feedback-box" style="display: none;"></div>
-    <button id="din-next-btn" class="btn btn-primary" onclick="nextDinQuizQuestion()" style="display: none;">Nächste Frage ➔</button>
-  </section>
+  <div id="din-tab" class="section-content">
+    <div id="din-quiz-container">
+      <h2 style="color: var(--dark-navy); margin-top: 0; margin-bottom: 15px;">Mini-Quiz: Teste dein DIN-5008-Wissen</h2>
+      <div id="din-quiz-progress" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Frage 1 von 4</div>
+      <div id="din-quiz-question" style="font-weight: 700; font-size: 1.05rem; color: var(--dark-navy); margin-bottom: 12px;">Lädt Frage...</div>
+      <div id="din-quiz-options" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
+      <div id="din-quiz-feedback" class="feedback-box" style="display: none;"></div>
+      <button id="din-next-btn" class="btn btn-primary" onclick="nextDinQuizQuestion()" style="display: none;">Nächste Frage ➔</button>
+    </div>
+  </div>
 
   <!-- TEIL 3: EXCEL FORMEL TRAINER -->
-  <section class="section-card" id="excel-trainer-card">
-    <h2 style="margin-top: 0; color: var(--dark-navy);">⚡ Excel Formel-Trainer</h2>
-    <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: var(--text-muted);">
-      <span id="excel-progress">Aufgabe 1 von 10</span>
-      <span id="excel-score-display">Punkte: 0 / 10</span>
+  <div id="excel-tab" class="section-content">
+    <div id="excel-trainer-card">
+      <h2 style="margin-top: 0; color: var(--dark-navy);">Excel Formel-Trainer</h2>
+      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: var(--text-muted);">
+        <span id="excel-progress">Aufgabe 1 von 10</span>
+        <span id="excel-score-display">Punkte: 0 / 10</span>
+      </div>
+      <div class="quiz-question" id="excel-question" style="font-size: 1.1rem; font-weight: bold; margin-bottom: 15px;">Lädt Aufgabe...</div>
+      <div id="excel-table-container"></div>
+      <div class="excel-input-group">
+        <input type="text" id="excel-user-input" placeholder="z.B. =SVERWEIS(...)" onkeydown="if(event.key === 'Enter') checkExcelAnswer()">
+        <button class="btn btn-primary" onclick="checkExcelAnswer()">Prüfen</button>
+      </div>
+      <div id="excel-feedback" class="feedback-box" style="display: none;"></div>
+      <button id="next-excel-btn" class="btn btn-primary" onclick="nextExcelTask()" style="display: none; margin-top: 15px;">Nächste Aufgabe ➔</button>
     </div>
-    <div class="quiz-question" id="excel-question" style="font-size: 1.1rem; font-weight: bold; margin-bottom: 15px;">Lädt Aufgabe...</div>
-    <div id="excel-table-container"></div>
-    
-    <div class="excel-input-group">
-      <input type="text" id="excel-user-input" placeholder="z.B. =SVERWEIS(...)" onkeydown="if(event.key === 'Enter') checkExcelAnswer()">
-      <button class="btn btn-primary" onclick="checkExcelAnswer()">Prüfen</button>
-    </div>
-
-    <div id="excel-feedback" class="feedback-box" style="display: none;"></div>
-    <button id="next-excel-btn" class="btn btn-primary" onclick="nextExcelTask()" style="display: none; margin-top: 15px;">Nächste Aufgabe ➔</button>
-  </section>
+  </div>
 
   <!-- NOTENRECHNER -->
-  <section class="section-card">
-    <h2 style="margin-top: 0; color: var(--dark-navy);">📊 IHK Notenrechner</h2>
+  <div id="noten-tab" class="section-content">
+    <h2>IHK Notenrechner</h2>
     <p>Trage deine Punkte ein, um deine Noten zu berechnen:</p>
     <div style="display: grid; gap: 10px; margin-bottom: 15px;">
       <div>
@@ -122,142 +147,79 @@
     <div id="total-result-box" style="display: none; background: #f1f5f9; padding: 15px; border-radius: 8px; font-weight: bold;">
       Gesamtergebnis: <span id="total-score-text"></span> – <span id="total-grade-text"></span>
     </div>
-  </section>
+  </div>
+
+  <!-- DOWNLOAD BEREICH -->
+  <div id="download-tab" class="section-content">
+    <h2>📂 Download-Bereich</h2>
+    <p>Hier kannst du dir wichtige Dokumente, Formelsammlungen und Zusammenfassungen herunterladen:</p>
+    
+    <div class="download-card">
+      <div>
+        <strong>Formelsammlung Excel & EDV</strong><br>
+        <small style="color: var(--text-muted);">PDF-Übersicht aller wichtigen Funktionen (SVERWEIS, WENN, etc.)</small>
+      </div>
+      <a href="#" class="btn btn-primary" onclick="alert('Download gestartet (Beispiel)')">Herunterladen ⬇</a>
+    </div>
+
+    <div class="download-card">
+      <div>
+        <strong>DIN 5008 Spickzettel</strong><br>
+        <small style="color: var(--text-muted);">Die wichtigsten Regeln für Geschäftsbriefe und Word-Abstände</small>
+      </div>
+      <a href="#" class="btn btn-primary" onclick="alert('Download gestartet (Beispiel)')">Herunterladen ⬇</a>
+    </div>
+
+    <div class="download-card">
+      <div>
+        <strong>Prüfungskatalog AP1 - Lernzettel</strong><br>
+        <small style="color: var(--text-muted);">Zusammenfassung der relevanten Prüfungsthemen</small>
+      </div>
+      <a href="#" class="btn btn-primary" onclick="alert('Download gestartet (Beispiel)')">Herunterladen ⬇</a>
+    </div>
+  </div>
+
 </div>
 
   <script>
+    // Tab-Umschalt-Funktion
+    function switchTab(tabId, btnElement) {
+      document.querySelectorAll('.section-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      btnElement.classList.add('active');
+    }
+
     // --- 1. IHK QUIZ DATEN & LOGIK ---
     const quizData = [
-      {
-        question: "1. Was ist ein zentrales Merkmal der Aufbauorganisation?",
-        options: ["Regelung von Arbeitsabläufen", "Hierarchie und Abteilungsbildung", "Bestimmung der Software", "Zeitmanagement"],
-        correct: 1,
-        explanation: "Die Aufbauorganisation strukturiert das Unternehmen hierarchisch (Struktur der Stellen und Abteilungen)."
-      },
-      {
-        question: "2. Welcher Kommunikationsstil gehört zu einem professionellen Geschäftsbrief nach DIN 5008?",
-        options: ["Umgangssprachlich und locker", "Sachlich, höflich und klar", "Sehr emotional und ausschweifend", "Aggressiv fordernd"],
-        correct: 1,
-        explanation: "Geschäftsbriefe sollten stets sachlich, höflich und unmissverständlich formuliert sein."
-      },
-      {
-        question: "3. Was versteht man unter dem Begriff 'Compliance' im Unternehmen?",
-        options: ["Die Einhaltung von Gesetzen und internen Richtlinien", "Die Mülltrennung im Büro", "Das Verfassen von Protokollen", "Die Bedienung von Druckern"],
-        correct: 0,
-        explanation: "Compliance bezeichnet die Regeltreue des Unternehmens und seiner Mitarbeiter."
-      },
-      {
-        question: "4. Welches Dokument weist Waren bei einer Lieferung detailliert aus?",
-        options: ["Lieferschein", "Mahnung", "Bestellbestätigung", "Inventurliste"],
-        correct: 0,
-        explanation: "Der Lieferschein listet die tatsächlich gelieferten Artikel und Mengen auf."
-      },
-      {
-        question: "5. Wie lange beträgt die gesetzliche Aufbewahrungsfrist für Handelsbücher und Buchungsbelege in Deutschland i.d.R.?",
-        options: ["2 Jahre", "5 Jahre", "10 Jahre", "30 Jahre"],
-        correct: 2,
-        explanation: "Gemäß § 147 AO bzw. § 257 HGB beträgt die Aufbewahrungsfrist für Rechnungen und Buchungsbelege 10 Jahre."
-      },
-      {
-        question: "6. Welcher Schutzaspekt steht hinter der Datensicherheit (im Gegensatz zum Datenschutz)?",
-        options: ["Schutz vor unberechtigtem Zugriff, Verlust und Beschädigung von Daten", "Schutz personenbezogener Daten vor Missbrauch", "Nur das Recht auf Vergessenwerden", "Die Erstellung von Arbeitsverträgen"],
-        correct: 0,
-        explanation: "Datensicherheit umfasst die technischen und organisatorischen Maßnahmen zum Schutz der Daten (Integrität, Vertraulichkeit, Verfügbarkeit)."
-      },
-      {
-        question: "7. Was ist eine primäre Aufgabe der Materialwirtschaft?",
-        options: ["Werbung für neue Produkte schalten", "Bereitstellung der richtigen Materialien zur richtigen Zeit am richtigen Ort", "Erstellung der Bilanz", "Führung von Gehaltsverhandlungen"],
-        correct: 1,
-        explanation: "Die Materialwirtschaft sichert die Versorgung des Betriebs mit Rohstoffen, Hilfsstoffen und Betriebsmitteln."
-      },
-      {
-        question: "8. Welches Organ vertritt die Arbeitnehmerschaft in einem Betrieb nach dem Betriebsverfassungsgesetz (BetrVG)?",
-        options: ["Der Vorstand", "Der Betriebsrat", "Die Geschäftsführung", "Das Arbeitsgericht"],
-        correct: 1,
-        explanation: "Der Betriebsrat ist die gesetzliche Vertretung der Arbeitnehmer in Unternehmen ab 5 Wahlberechtigten."
-      },
-      {
-        question: "9. Was bedeutet das Prinzip der doppelten Buchführung?",
-        options: ["Jeder Beleg wird zweimal kopiert", "Jeder Geschäftsvorfall wird auf mindestens zwei Konten (Soll an Haben) gebucht", "Es werden zwei Kassenbücher geführt", "Man schreibt Rechnungen doppelt"],
-        correct: 1,
-        explanation: "In der doppelten Buchführung wird jeder Betrag im Soll und im Haben eingetragen."
-      },
-      {
-        question: "10. Was wird bei einer Inventur ermittelt?",
-        options: ["Der aktuelle Gewinn des Vorjahres", "Die genaue Bestandsaufnahme aller Vermögenswerte und Schulden zu einem Stichtag", "Die Zufriedenheit der Kundschaft", "Die Auslastung der Maschinen"],
-        correct: 1,
-        explanation: "Die Inventur ist die Bestandsaufnahme aller Vermögensgegenstände und Schulden."
-      },
-      {
-        question: "11. Welcher Zahlungsweg gilt im B2B-Bereich als internationale Standardzahlung?",
-        options: ["Briefmarken", "Dokumenten-Akisitiv / SEPA-Überweisung", "Private Kreditkarte", "Gutschein"],
-        correct: 1,
-        explanation: "Im internationalen und europäischen Wirtschaftsverkehr sind SEPA und standardisierte Zahlungswege üblich."
-      },
-      {
-        question: "12. Welches Ziel verfolgt das betriebliche Qualitätsmanagement (z.B. nach ISO 9001)?",
-        options: ["Senkung der Mitarbeiterzahl", "Dauerhafte Steigerung der Produkt- und Prozessqualität sowie Kundenzufriedenheit", "Vermeidung jeglicher Dokumentation", "Verlängerung der Arbeitszeiten"],
-        correct: 1,
-        explanation: "Qualitätsmanagement optimiert Prozesse und stellt konstante Qualität sicher."
-      },
-      {
-        question: "13. Wie nennt man die Kosten, die direkt einem bestimmten Produkt zugeordnet werden können?",
-        options: ["Gemeinkosten", "Fixkosten", "Einzelkosten", "Salkosten"],
-        correct: 2,
-        explanation: "Einzelkosten (z.B. Fertigungsmaterial) lassen sich direkt dem Kostenträger zurechnen."
-      },
-      {
-        question: "14. Welches Programm wird typischerweise für die Erstellung von Tabellenkalkulationen genutzt?",
-        options: ["Microsoft Word", "Microsoft Excel", "Microsoft PowerPoint", "Microsoft Outlook"],
-        correct: 1,
-        explanation: "Excel ist das Standard-Tabellenkalkulationsprogramm."
-      },
-      {
-        question: "15. Was ist ein wesentlicher Bestandteil eines Projektstrukturplans (PSP)?",
-        options: ["Die Aufteilung des Projekts in hierarchische Teilaufgaben und Arbeitspakete", "Die Auflistung aller Privatadressen", "Der Kontenrahmen", "Die Urlaubsplanung"],
-        correct: 0,
-        explanation: "Der PSP zerlegt ein Projekt übersichtlich in Teilschritte."
-      },
-      {
-        question: "16. Was bedeutet der Begriff 'Skonto'?",
-        options: ["Ein Preisnachlass bei sofortiger / fristgerechter Zahlung innerhalb einer Zahlungsfrist", "Eine Mahngebühr", "Ein Frachtkostenaufschlag", "Eine Steuerart"],
-        correct: 0,
-        explanation: "Skonto ist ein Nachlass bei schneller Bezahlung."
-      },
-      {
-        question: "17. Welche Form der Arbeitsorganisation ermöglicht das Arbeiten von zu Hause aus über digitale Medien?",
-        options: ["Fließbandarbeit", "Homeoffice / Telearbeit", "Präsenzpflicht", "Nachtschicht"],
-        correct: 1,
-        explanation: "Telearbeit bzw. Homeoffice beschreibt das ortsunabhängige Arbeiten."
-      },
-      {
-        question: "18. Welcher Vertrag regelt die Ausbildung in Deutschland rechtlich?",
-        options: ["Kaufvertrag", "Ausbildungsvertrag (nach BBiG)", "Mietvertrag", "Leasingvertrag"],
-        correct: 1,
-        explanation: "Das Berufsbildungsgesetz (BBiG) regelt den Ausbildungsvertrag."
-      },
-      {
-        question: "19. Welcher Begriff beschreibt den Schutz personenbezogener Daten vor Missbrauch?",
-        options: ["Datensicherheit", "Datenschutz (DSGVO)", "Data Mining", "Compliance"],
-        correct: 1,
-        explanation: "Der Schutz der Persönlichkeitsrechte bei der Datenverarbeitung fällt unter den Datenschutz."
-      },
-      {
-        question: "20. Welche Ergänzung kennzeichnet eine Summenzeile in einer IHK-Tabelle optisch korrekt?",
-        options: ["Keine Besonderheit", "Gelber Hintergrund", "Doppelter Unterstrich / fett hervorgehoben", "Kursiver Text"],
-        correct: 2,
-        explanation: "Ergebniszeilen (Gesamtsummen) werden mit doppeltem Unterstrich oder fetter Abgrenzung hervorgehoben."
-      }
+      { question: "1. Was ist ein zentrales Merkmal der Aufbauorganisation?", options: ["Regelung von Arbeitsabläufen", "Hierarchie und Abteilungsbildung", "Bestimmung der Software", "Zeitmanagement"], correct: 1, explanation: "Die Aufbauorganisation strukturiert das Unternehmen hierarchisch (Struktur der Stellen und Abteilungen)." },
+      { question: "2. Welcher Kommunikationsstil gehört zu einem professionellen Geschäftsbrief nach DIN 5008?", options: ["Umgangssprachlich und locker", "Sachlich, höflich und klar", "Sehr emotional und ausschweifend", "Aggressiv fordernd"], correct: 1, explanation: "Geschäftsbriefe sollten stets sachlich, höflich und unmissverständlich formuliert sein." },
+      { question: "3. Was versteht man unter dem Begriff 'Compliance' im Unternehmen?", options: ["Die Einhaltung von Gesetzen und internen Richtlinien", "Die Mülltrennung im Büro", "Das Verfassen von Protokollen", "Die Bedienung von Druckern"], correct: 0, explanation: "Compliance bezeichnet die Regeltreue des Unternehmens und seiner Mitarbeiter." },
+      { question: "4. Welches Dokument weist Waren bei einer Lieferung detailliert aus?", options: ["Lieferschein", "Mahnung", "Bestellbestätigung", "Inventurliste"], correct: 0, explanation: "Der Lieferschein listet die tatsächlich gelieferten Artikel und Mengen auf." },
+      { question: "5. Wie lange beträgt die gesetzliche Aufbewahrungsfrist für Handelsbücher und Buchungsbelege in Deutschland i.d.R.?", options: ["2 Jahre", "5 Jahre", "10 Jahre", "30 Jahre"], correct: 2, explanation: "Gemäß § 147 AO bzw. § 257 HGB beträgt die Aufbewahrungsfrist für Rechnungen und Buchungsbelege 10 Jahre." },
+      { question: "6. Welcher Schutzaspekt steht hinter der Datensicherheit (im Gegensatz zum Datenschutz)?", options: ["Schutz vor unberechtigtem Zugriff, Verlust und Beschädigung von Daten", "Schutz personenbezogener Daten vor Missbrauch", "Nur das Recht auf Vergessenwerden", "Die Erstellung von Arbeitsverträgen"], correct: 0, explanation: "Datensicherheit umfasst die technischen und organisatorischen Maßnahmen zum Schutz der Daten." },
+      { question: "7. Was ist eine primäre Aufgabe der Materialwirtschaft?", options: ["Werbung schalten", "Bereitstellung der richtigen Materialien zur richtigen Zeit am richtigen Ort", "Erstellung der Bilanz", "Gehaltsverhandlungen"], correct: 1, explanation: "Die Materialwirtschaft sichert die Versorgung des Betriebs mit Rohstoffen und Betriebsmitteln." },
+      { question: "8. Welches Organ vertritt die Arbeitnehmerschaft in einem Betrieb nach dem BetrVG?", options: ["Der Vorstand", "Der Betriebsrat", "Die Geschäftsführung", "Das Arbeitsgericht"], correct: 1, explanation: "Der Betriebsrat ist die gesetzliche Vertretung der Arbeitnehmer." },
+      { question: "9. Was bedeutet das Prinzip der doppelten Buchführung?", options: ["Jeder Beleg wird zweimal kopiert", "Jeder Geschäftsvorfall wird auf mindestens zwei Konten (Soll an Haben) gebucht", "Es werden zwei Kassenbücher geführt", "Man schreibt Rechnungen doppelt"], correct: 1, explanation: "In der doppelten Buchführung wird jeder Betrag im Soll und im Haben eingetragen." },
+      { question: "10. Was wird bei einer Inventur ermittelt?", options: ["Der aktuelle Gewinn", "Die genaue Bestandsaufnahme aller Vermögenswerte und Schulden zu einem Stichtag", "Die Kundenzufriedenheit", "Die Maschinenauslastung"], correct: 1, explanation: "Die Inventur ist die Bestandsaufnahme aller Vermögensgegenstände und Schulden." },
+      { question: "11. Welcher Zahlungsweg gilt im B2B-Bereich als internationaler Standard?", options: ["Briefmarken", "SEPA-Überweisung / Dokumenten-Akisitiv", "Private Kreditkarte", "Gutschein"], correct: 1, explanation: "Im internationalen und europäischen Wirtschaftsverkehr sind SEPA und standardisierte Zahlungswege üblich." },
+      { question: "12. Welches Ziel verfolgt das betriebliche Qualitätsmanagement (z.B. ISO 9001)?", options: ["Senkung der Mitarbeiterzahl", "Dauerhafte Steigerung der Produkt- und Prozessqualität sowie Kundenzufriedenheit", "Vermeidung jeglicher Dokumentation", "Verlängerung der Arbeitszeiten"], correct: 1, explanation: "Qualitätsmanagement optimiert Prozesse und stellt konstante Qualität sicher." },
+      { question: "13. Wie nennt man Kosten, die direkt einem Produkt zugeordnet werden können?", options: ["Gemeinkosten", "Fixkosten", "Einzelkosten", "Salkosten"], correct: 2, explanation: "Einzelkosten lassen sich direkt dem Kostenträger zurechnen." },
+      { question: "14. Welches Programm wird typischerweise für Tabellenkalkulationen genutzt?", options: ["Microsoft Word", "Microsoft Excel", "Microsoft PowerPoint", "Microsoft Outlook"], correct: 1, explanation: "Excel ist das Standard-Tabellenkalkulationsprogramm." },
+      { question: "15. Was ist ein wesentlicher Bestandteil eines Projektstrukturplans (PSP)?", options: ["Die Aufteilung des Projekts in hierarchische Teilaufgaben und Arbeitspakete", "Die Privatadressen", "Der Kontenrahmen", "Urlaubsplanung"], correct: 0, explanation: "Der PSP zerlegt ein Projekt übersichtlich in Teilschritte." },
+      { question: "16. Was bedeutet der Begriff 'Skonto'?", options: ["Ein Preisnachlass bei sofortiger / fristgerechter Zahlung", "Mahngebühr", "Frachtkostenaufschlag", "Steuerart"], correct: 0, explanation: "Skonto ist ein Nachlass bei schneller Bezahlung." },
+      { question: "17. Welche Arbeitsform ermöglicht das Arbeiten von zu Hause über digitale Medien?", options: ["Fließbandarbeit", "Homeoffice / Telearbeit", "Präsenzpflicht", "Nachtschicht"], correct: 1, explanation: "Telearbeit bzw. Homeoffice beschreibt das ortsunabhängige Arbeiten." },
+      { question: "18. Welcher Vertrag regelt die Ausbildung in Deutschland rechtlich?", options: ["Kaufvertrag", "Ausbildungsvertrag (nach BBiG)", "Mietvertrag", "Leasingvertrag"], correct: 1, explanation: "Das Berufsbildungsgesetz (BBiG) regelt den Ausbildungsvertrag." },
+      { question: "19. Welcher Begriff beschreibt den Schutz personenbezogener Daten vor Missbrauch?", options: ["Datensicherheit", "Datenschutz (DSGVO)", "Data Mining", "Compliance"], correct: 1, explanation: "Der Schutz der Persönlichkeitsrechte bei der Datenverarbeitung fällt unter den Datenschutz." },
+      { question: "20. Welche Ergänzung kennzeichnet eine Summenzeile in einer IHK-Tabelle optisch korrekt?", options: ["Keine Besonderheit", "Gelber Hintergrund", "Doppelter Unterstrich / fett hervorgehoben", "Kursiver Text"], correct: 2, explanation: "Ergebniszeilen (Gesamtsummen) werden mit doppeltem Unterstrich oder fetter Abgrenzung hervorgehoben." }
     ];
 
     let currentQuizIndex = 0;
     let quizScore = 0;
 
     function loadQuestion() {
-      if (currentQuizIndex >= quizData.length) {
-        showIhkResult();
-        return;
-      }
+      if (currentQuizIndex >= quizData.length) { showIhkResult(); return; }
       const q = quizData[currentQuizIndex];
       document.getElementById('quiz-progress').innerText = `Frage ${currentQuizIndex + 1} von ${quizData.length}`;
       document.getElementById('quiz-score-display').innerText = `Punkte: ${quizScore} / ${quizData.length}`;
@@ -265,7 +227,6 @@
       
       const optionsContainer = document.getElementById('quiz-options');
       optionsContainer.innerHTML = '';
-
       q.options.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.className = 'quiz-option';
@@ -273,7 +234,6 @@
         btn.onclick = () => selectQuizOption(idx);
         optionsContainer.appendChild(btn);
       });
-
       document.getElementById('quiz-feedback').style.display = 'none';
       document.getElementById('next-quiz-btn').style.display = 'none';
     }
@@ -281,8 +241,7 @@
     function selectQuizOption(selectedIdx) {
       const q = quizData[currentQuizIndex];
       const feedback = document.getElementById('quiz-feedback');
-      const options = document.querySelectorAll('.quiz-option');
-
+      const options = document.querySelectorAll('#quiz-options .quiz-option');
       options.forEach(btn => btn.disabled = true);
       feedback.style.display = 'block';
 
@@ -303,10 +262,7 @@
       document.getElementById('next-quiz-btn').style.display = 'inline-flex';
     }
 
-    function nextQuestion() {
-      currentQuizIndex++;
-      loadQuestion();
-    }
+    function nextQuestion() { currentQuizIndex++; loadQuestion(); }
 
     function showIhkResult() {
       const percentage = Math.round((quizScore / quizData.length) * 100);
@@ -325,10 +281,9 @@
     }
 
     function resetQuiz() {
-      currentQuizIndex = 0;
-      quizScore = 0;
+      currentQuizIndex = 0; quizScore = 0;
       document.getElementById('quiz-card').innerHTML = `
-        <h2 style="margin-top: 0; color: var(--dark-navy);">🧠 IHK AP1 Prüfungsquiz (20 Fragen)</h2>
+        <h2 style="margin-top: 0; color: var(--dark-navy);">IHK AP1 Prüfungsquiz (20 Fragen)</h2>
         <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: var(--text-muted);">
           <span id="quiz-progress">Frage 1 von 20</span>
           <span id="quiz-score-display">Punkte: 0 / 20</span>
@@ -342,49 +297,25 @@
     }
 
 
-    // --- 2. DIN 5008 MINI-QUIZ DATEN & LOGIK ---
+    // --- 2. DIN 5008 MINI-QUIZ ---
     const dinQuizData = [
-      {
-        question: "Wie viele Leerzeilen stehen zwischen Anschriftfeld und Betreffzeile?",
-        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine"],
-        correct: 1,
-        explanation: "Nach DIN 5008 wird der Betreff exakt 2 Leerzeilen unter dem Anschriftfeld platziert."
-      },
-      {
-        question: "Darf ein Schlusspunkt am Ende der Betreffzeile stehen?",
-        options: ["Ja, immer", "Nein, niemals", "Nur bei langen Betreffs", "Optional"],
-        correct: 1,
-        explanation: "Der Betreff erhält in Geschäftsbriefen nach DIN 5008 niemals einen Schlusspunkt."
-      },
-      {
-        question: "Welchen Nachabstand muss man in MS Word für Briefe einstellen?",
-        options: ["8 pt", "12 pt", "0 pt", "Auto"],
-        correct: 2,
-        explanation: "Word hat standardmäßig 8 pt voreingestellt, für DIN 5008 muss dies zwingend auf 0 pt geändert werden."
-      },
-      {
-        question: "Wie viele Leerzeilen sind für die Unterschrift zwischen Grußformel und Name vorgesehen?",
-        options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "4 Leerzeilen"],
-        correct: 2,
-        explanation: "Es werden exakt 3 Leerzeilen für die handschriftliche Unterschrift freigehalten."
-      }
+      { question: "Wie viele Leerzeilen stehen zwischen Anschriftfeld und Betreffzeile?", options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "Keine"], correct: 1, explanation: "Nach DIN 5008 wird der Betreff exakt 2 Leerzeilen unter dem Anschriftfeld platziert." },
+      { question: "Darf ein Schlusspunkt am Ende der Betreffzeile stehen?", options: ["Ja, immer", "Nein, niemals", "Nur bei langen Betreffs", "Optional"], correct: 1, explanation: "Der Betreff erhält in Geschäftsbriefen nach DIN 5008 niemals einen Schlusspunkt." },
+      { question: "Welchen Nachabstand muss man in MS Word für Briefe einstellen?", options: ["8 pt", "12 pt", "0 pt", "Auto"], correct: 2, explanation: "Word hat standardmäßig 8 pt voreingestellt, für DIN 5008 muss dies auf 0 pt geändert werden." },
+      { question: "Wie viele Leerzeilen sind für die Unterschrift zwischen Grußformel und Name vorgesehen?", options: ["1 Leerzeile", "2 Leerzeilen", "3 Leerzeilen", "4 Leerzeilen"], correct: 2, explanation: "Es werden exakt 3 Leerzeilen für die handschriftliche Unterschrift freigehalten." }
     ];
 
     let currentDinQuizIndex = 0;
     let dinQuizScore = 0;
 
     function loadDinQuizQuestion() {
-      if (currentDinQuizIndex >= dinQuizData.length) {
-        showDinQuizResult();
-        return;
-      }
+      if (currentDinQuizIndex >= dinQuizData.length) { showDinQuizResult(); return; }
       const q = dinQuizData[currentDinQuizIndex];
       document.getElementById('din-quiz-progress').innerText = `Frage ${currentDinQuizIndex + 1} von ${dinQuizData.length}`;
       document.getElementById('din-quiz-question').innerText = q.question;
       
       const container = document.getElementById('din-quiz-options');
       container.innerHTML = '';
-
       q.options.forEach((opt, idx) => {
         const btn = document.createElement('button');
         btn.className = 'quiz-option';
@@ -392,7 +323,6 @@
         btn.onclick = () => selectDinQuizOption(idx);
         container.appendChild(btn);
       });
-
       document.getElementById('din-quiz-feedback').style.display = 'none';
       document.getElementById('din-next-btn').style.display = 'none';
     }
@@ -401,7 +331,6 @@
       const q = dinQuizData[currentDinQuizIndex];
       const feedback = document.getElementById('din-quiz-feedback');
       const options = document.querySelectorAll('#din-quiz-options .quiz-option');
-
       options.forEach(btn => btn.disabled = true);
       feedback.style.display = 'block';
 
@@ -421,10 +350,7 @@
       document.getElementById('din-next-btn').style.display = 'inline-flex';
     }
 
-    function nextDinQuizQuestion() {
-      currentDinQuizIndex++;
-      loadDinQuizQuestion();
-    }
+    function nextDinQuizQuestion() { currentDinQuizIndex++; loadDinQuizQuestion(); }
 
     function showDinQuizResult() {
       document.getElementById('din-quiz-container').innerHTML = `
@@ -437,10 +363,9 @@
     }
 
     function resetDinQuiz() {
-      currentDinQuizIndex = 0;
-      dinQuizScore = 0;
+      currentDinQuizIndex = 0; dinQuizScore = 0;
       document.getElementById('din-quiz-container').innerHTML = `
-        <h3 style="color: var(--dark-navy); margin-top: 0; margin-bottom: 15px; font-size: 1.2rem;">📐 Mini-Quiz: Teste dein DIN-5008-Wissen</h3>
+        <h2 style="color: var(--dark-navy); margin-top: 0; margin-bottom: 15px;">Mini-Quiz: Teste dein DIN-5008-Wissen</h2>
         <div id="din-quiz-progress" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px;">Frage 1 von 4</div>
         <div id="din-quiz-question" style="font-weight: 700; font-size: 1.05rem; color: var(--dark-navy); margin-bottom: 12px;">Lädt Frage...</div>
         <div id="din-quiz-options" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;"></div>
@@ -451,78 +376,25 @@
     }
 
 
-    // --- 3. EXCEL FORMEL TRAINER DATEN & LOGIK ---
+    // --- 3. EXCEL FORMEL TRAINER ---
     const excelData = [
-      {
-        task: "Ermittle den Artikelpreis per SVERWEIS aus der Tabelle (Suchbegriff in A2, Bereich A1:D50, Preis in der 3. Spalte, exakte Übereinstimmung).",
-        answers: ["=sverweis(a2;a1:d50;3;falsch)", "=sverweis(a2;a1:d50;3;0)"],
-        hint: "Syntax: =SVERWEIS(Suchkriterium; Matrix; Spaltenindex; 0/FALSCH)",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>A (Art-Nr)</th><th>B (Bezeichnung)</th><th>C (Preis)</th><th>D (Bestand)</th></tr><tr><td><strong>1</strong></td><td>Art-Nr</td><td>Bezeichnung</td><td>Preis</td><td>Bestand</td></tr><tr><td><strong>2</strong></td><td>1001</td><td>Ordner DIN A4</td><td>3,50 €</td><td>45</td></tr></table>`
-      },
-      {
-        task: "Prüfe mit einer WENN-Funktion, ob der Wert in Zelle B2 größer als 100 ist. Wenn ja, gib 'Bonus', sonst 'Kein Bonus' aus.",
-        answers: ["=wenn(b2>100;\"bonus\";\"kein bonus\")"],
-        hint: "Syntax: =WENN(Bedingung; Dann-Wert; Sonst-Wert)",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>A (Mitarbeiter)</th><th>B (Umsatz)</th><th>C (Auswertung)</th></tr><tr><td><strong>2</strong></td><td>Müller</td><td>125</td><td>[ Hier Formel einfügen ]</td></tr></table>`
-      },
-      {
-        task: "Zähle in dem Bereich B1:B20 alle Zellen, in denen der Wert größer als 50 ist.",
-        answers: ["=zählenwenn(b1:b20;\">50\")"],
-        hint: "Syntax: =ZÄHLENWENN(Bereich; Kriterium)",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>A (Artikel)</th><th>B (Stückzahl)</th></tr><tr><td><strong>1</strong></td><td>Produkt A</td><td>45</td></tr></table>`
-      },
-      {
-        task: "Summiere alle Beträge im Bereich C1:C50, deren Status in B1:B50 den Text 'Bezahlt' enthält.",
-        answers: ["=summewenn(b1:b50;\"bezahlt\";c1:c50)"],
-        hint: "Syntax: =SUMMEWENN(Suchbereich; Kriterium; Summenbereich)",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>A (Rech-Nr)</th><th>B (Status)</th><th>C (Betrag)</th></tr><tr><td><strong>1</strong></td><td>R-1</td><td>Bezahlt</td><td>150,00 €</td></tr></table>`
-      },
-      {
-        task: "Runde den Wert in Zelle A1 kaufmännisch auf genau 2 Nachkommastellen.",
-        answers: ["=runden(a1;2)"],
-        hint: "Syntax: =RUNDEN(Zahl; Anzahl_Stellen)",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>A (Rohwert)</th></tr><tr><td><strong>1</strong></td><td>125,4567</td></tr></table>`
-      },
-      {
-        task: "Berechne den Durchschnitt aller Werte im Bereich D1:D10.",
-        answers: ["=mittelwert(d1:d10)"],
-        hint: "Syntax: =MITTELWERT(Bereich)",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>D (Notenpunkte)</th></tr><tr><td><strong>1</strong></td><td>12</td></tr></table>`
-      },
-      {
-        task: "Ermittle den Höchstwert (Maximum) aus dem Bereich E1:E25.",
-        answers: ["=max(e1:e25)"],
-        hint: "Syntax: =MAX(Bereich)",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>E (Umsatz)</th></tr><tr><td><strong>1</strong></td><td>4.500 €</td></tr></table>`
-      },
-      {
-        task: "Verwende WENNFEHLER, um bei einem Fehler in der Division (A1/B1) stattdessen 'Fehler' auszugeben.",
-        answers: ["=wennfehler(a1/b1;\"fehler\")"],
-        hint: "Syntax: =WENNFEHLER(Wert; Wert_falls_Fehler)",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th><th>C</th></tr><tr><td><strong>1</strong></td><td>100</td><td>0</td><td>[ Formel ]</td></tr></table>`
-      },
-      {
-        task: "Verbinde Vorname A2 und Nachname B2 mit einem Leerzeichen dazwischen (&).",
-        answers: ["=a2&\" \"&b2"],
-        hint: "Nutze das &-Zeichen und ein Leerzeichen in Anführungszeichen.",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th><th>C</th></tr><tr><td><strong>2</strong></td><td>Anna</td><td>Müller</td><td>[ Formel ]</td></tr></table>`
-      },
-      {
-        task: "Ermittle die Anzahl aller numerischen Einträge im Bereich A1:A100.",
-        answers: ["=anzahl(a1:a100)"],
-        hint: "Syntax: =ANZAHL(Bereich)",
-        tableHtml: `<table class="mini-table"><tr><th></th><th>A</th></tr><tr><td><strong>1</strong></td><td>5012</td></tr></table>`
-      }
+      { task: "Ermittle den Artikelpreis per SVERWEIS aus der Tabelle (Suchbegriff in A2, Bereich A1:D50, Preis in der 3. Spalte, exakte Übereinstimmung).", answers: ["=sverweis(a2;a1:d50;3;falsch)", "=sverweis(a2;a1:d50;3;0)"], hint: "Syntax: =SVERWEIS(Suchkriterium; Matrix; Spaltenindex; 0/FALSCH)", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr><tr><td><strong>2</strong></td><td>1001</td><td>Ordner DIN A4</td><td>3,50 €</td><td>45</td></tr></table>` },
+      { task: "Prüfe mit einer WENN-Funktion, ob der Wert in Zelle B2 größer als 100 ist. Wenn ja, gib 'Bonus', sonst 'Kein Bonus' aus.", answers: ["=wenn(b2>100;\"bonus\";\"kein bonus\")"], hint: "Syntax: =WENN(Bedingung; Dann-Wert; Sonst-Wert)", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th><th>C</th></tr><tr><td><strong>2</strong></td><td>Müller</td><td>125</td><td>[ Formel ]</td></tr></table>` },
+      { task: "Zähle in dem Bereich B1:B20 alle Zellen, in denen der Wert größer als 50 ist.", answers: ["=zählenwenn(b1:b20;\">50\")"], hint: "Syntax: =ZÄHLENWENN(Bereich; Kriterium)", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th></tr><tr><td><strong>1</strong></td><td>Produkt A</td><td>45</td></tr></table>` },
+      { task: "Summiere alle Beträge im Bereich C1:C50, deren Status in B1:B50 den Text 'Bezahlt' enthält.", answers: ["=summewenn(b1:b50;\"bezahlt\";c1:c50)"], hint: "Syntax: =SUMMEWENN(Suchbereich; Kriterium; Summenbereich)", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th><th>C</th></tr><tr><td><strong>1</strong></td><td>R-1</td><td>Bezahlt</td><td>150,00 €</td></tr></table>` },
+      { task: "Runde den Wert in Zelle A1 kaufmännisch auf genau 2 Nachkommastellen.", answers: ["=runden(a1;2)"], hint: "Syntax: =RUNDEN(Zahl; Anzahl_Stellen)", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th></tr><tr><td><strong>1</strong></td><td>125,4567</td></tr></table>` },
+      { task: "Berechne den Durchschnitt aller Werte im Bereich D1:D10.", answers: ["=mittelwert(d1:d10)"], hint: "Syntax: =MITTELWERT(Bereich)", tableHtml: `<table class="mini-table"><tr><th></th><th>D</th></tr><tr><td><strong>1</strong></td><td>12</td></tr></table>` },
+      { task: "Ermittle den Höchstwert (Maximum) aus dem Bereich E1:E25.", answers: ["=max(e1:e25)"], hint: "Syntax: =MAX(Bereich)", tableHtml: `<table class="mini-table"><tr><th></th><th>E</th></tr><tr><td><strong>1</strong></td><td>4.500 €</td></tr></table>` },
+      { task: "Verwende WENNFEHLER, um bei einem Fehler in der Division (A1/B1) stattdessen 'Fehler' auszugeben.", answers: ["=wennfehler(a1/b1;\"fehler\")"], hint: "Syntax: =WENNFEHLER(Wert; Wert_falls_Fehler)", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th></tr><tr><td><strong>1</strong></td><td>100</td><td>0</td></tr></table>` },
+      { task: "Verbinde Vorname A2 und Nachname B2 mit einem Leerzeichen dazwischen (&).", answers: ["=a2&\" \"&b2"], hint: "Nutze das &-Zeichen und ein Leerzeichen in Anführungszeichen.", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th></tr><tr><td><strong>2</strong></td><td>Anna</td><td>Müller</td></tr></table>` },
+      { task: "Ermittle die Anzahl aller numerischen Einträge im Bereich A1:A100.", answers: ["=anzahl(a1:a100)"], hint: "Syntax: =ANZAHL(Bereich)", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th></tr><tr><td><strong>1</strong></td><td>5012</td></tr></table>` }
     ];
 
     let currentExcelIndex = 0;
     let excelScore = 0;
 
     function loadExcelTask() {
-      if (currentExcelIndex >= excelData.length) {
-        showExcelResult();
-        return;
-      }
+      if (currentExcelIndex >= excelData.length) { showExcelResult(); return; }
       const item = excelData[currentExcelIndex];
       document.getElementById('excel-progress').innerText = `Aufgabe ${currentExcelIndex + 1} von ${excelData.length}`;
       document.getElementById('excel-score-display').innerText = `Punkte: ${excelScore} / ${excelData.length}`;
@@ -538,52 +410,45 @@
       const userInput = document.getElementById('excel-user-input').value.trim().toLowerCase().replace(/\s+/g, '');
       const item = excelData[currentExcelIndex];
       const feedback = document.getElementById('excel-feedback');
-
       if (!userInput) return;
 
       document.getElementById('excel-user-input').disabled = true;
       feedback.style.display = 'block';
 
       const isCorrect = item.answers.some(ans => ans.replace(/\s+/g, '') === userInput);
-
       if (isCorrect) {
         excelScore++;
         feedback.className = 'feedback-box feedback-success';
-        feedback.innerHTML = `✅ <strong>Richtig!</strong> Die Formel stimmt exakt. (${item.hint})`;
+        feedback.innerHTML = `✅ <strong>Richtig!</strong> (${item.hint})`;
       } else {
         feedback.className = 'feedback-box feedback-error';
-        feedback.innerHTML = `❌ <strong>Nicht ganz richtig.</strong><br>Mögliche richtige Lösung: <code>${item.answers[0]}</code><br><small>Hinweis: ${item.hint}</small>`;
+        feedback.innerHTML = `❌ <strong>Nicht ganz richtig.</strong><br>Mögliche Lösung: <code>${item.answers[0]}</code>`;
       }
       document.getElementById('excel-score-display').innerText = `Punkte: ${excelScore} / ${excelData.length}`;
       document.getElementById('next-excel-btn').style.display = 'inline-flex';
     }
 
-    function nextExcelTask() {
-      currentExcelIndex++;
-      loadExcelTask();
-    }
+    function nextExcelTask() { currentExcelIndex++; loadExcelTask(); }
 
     function showExcelResult() {
       const percentage = Math.round((excelScore / excelData.length) * 100);
       let grade = getGradeText(percentage);
       document.getElementById('excel-trainer-card').innerHTML = `
         <div style="text-align: center; padding: 10px;">
-          <h3 style="font-size: 1.8rem; color: var(--dark-navy); margin-bottom: 12px;">🏆 Excel-Trainer Auswertung</h3>
+          <h3 style="font-size: 1.8rem; color: var(--dark-navy); margin-bottom: 12px;">🏆 Auswertung</h3>
           <div style="background: #f8fafc; border: 2px solid var(--border-color); border-radius: 12px; padding: 24px; max-width: 450px; margin: 0 auto 24px auto;">
             <div style="font-size: 3rem; font-weight: 800; color: ${grade.color}; margin-bottom: 8px;">${percentage}%</div>
             <div style="font-size: 1.4rem; font-weight: 700; color: ${grade.color}; margin-bottom: 12px;">${grade.text}</div>
-            <p style="font-size: 0.95rem; color: #475569;">Erreichte Punkte: <strong>${excelScore} von ${excelData.length}</strong></p>
           </div>
-          <button class="btn btn-primary" onclick="resetExcelTrainer()">Trainer neustarten 🔄</button>
+          <button class="btn btn-primary" onclick="resetExcelTrainer()">Neustarten 🔄</button>
         </div>
       `;
     }
 
     function resetExcelTrainer() {
-      currentExcelIndex = 0;
-      excelScore = 0;
+      currentExcelIndex = 0; excelScore = 0;
       document.getElementById('excel-trainer-card').innerHTML = `
-        <h2 style="margin-top: 0; color: var(--dark-navy);">⚡ Excel Formel-Trainer</h2>
+        <h2 style="margin-top: 0; color: var(--dark-navy);">Excel Formel-Trainer</h2>
         <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: var(--text-muted);">
           <span id="excel-progress">Aufgabe 1 von 10</span>
           <span id="excel-score-display">Punkte: 0 / 10</span>
@@ -600,7 +465,6 @@
       loadExcelTask();
     }
 
-    // Hilfsfunktion Noten
     function getGradeText(percentage) {
       if (percentage >= 92) return { text: "Note 1 (Sehr gut)", color: "#166534" };
       if (percentage >= 81) return { text: "Note 2 (Gut)", color: "#15803d" };
@@ -620,42 +484,31 @@
       const ap2t2User = parseFloat(document.getElementById('ap2t2-user').value);
 
       if (!isNaN(ap1Max) && !isNaN(ap1User) && ap1Max > 0) {
-        const p1 = (ap1User / ap1Max) * 100;
-        document.getElementById('ap1-result').innerText = `Prozent: ${Math.round(p1)}% (${getGradeText(p1).text})`;
-      } else {
-        document.getElementById('ap1-result').innerText = "";
+        let p1 = (ap1User / ap1Max) * 100;
+        document.getElementById('ap1-result').innerText = `${Math.round(p1)}% (${getGradeText(p1).text})`;
       }
       if (!isNaN(ap2t1Max) && !isNaN(ap2t1User) && ap2t1Max > 0) {
-        const p2 = (ap2t1User / ap2t1Max) * 100;
-        document.getElementById('ap2t1-result').innerText = `Prozent: ${Math.round(p2)}% (${getGradeText(p2).text})`;
-      } else {
-        document.getElementById('ap2t1-result').innerText = "";
+        let p2 = (ap2t1User / ap2t1Max) * 100;
+        document.getElementById('ap2t1-result').innerText = `${Math.round(p2)}% (${getGradeText(p2).text})`;
       }
       if (!isNaN(ap2t2Max) && !isNaN(ap2t2User) && ap2t2Max > 0) {
-        const p3 = (ap2t2User / ap2t2Max) * 100;
-        document.getElementById('ap2t2-result').innerText = `Prozent: ${Math.round(p3)}% (${getGradeText(p3).text})`;
-      } else {
-        document.getElementById('ap2t2-result').innerText = "";
+        let p3 = (ap2t2User / ap2t2Max) * 100;
+        document.getElementById('ap2t2-result').innerText = `${Math.round(p3)}% (${getGradeText(p3).text})`;
       }
 
       const box = document.getElementById('total-result-box');
       if (!isNaN(ap1Max) && !isNaN(ap1User) && !isNaN(ap2t1Max) && !isNaN(ap2t1User) && !isNaN(ap2t2Max) && !isNaN(ap2t2User) && ap1Max > 0 && ap2t1Max > 0 && ap2t2Max > 0) {
-        const p1 = (ap1User / ap1Max) * 100;
-        const p2 = (ap2t1User / ap2t1Max) * 100;
-        const p3 = (ap2t2User / ap2t2Max) * 100;
-        const totalPercent = (p1 * 0.20) + (p2 * 0.25) + (p3 * 0.55);
-        const roundedTotal = Math.round(totalPercent);
-        const finalGrade = getGradeText(roundedTotal);
-
+        let totalPercent = (((ap1User/ap1Max)*100) * 0.20) + (((ap2t1User/ap2t1Max)*100) * 0.25) + (((ap2t2User/ap2t2Max)*100) * 0.55);
+        let rounded = Math.round(totalPercent);
         box.style.display = 'block';
-        document.getElementById('total-score-text').innerText = `${roundedTotal}%`;
-        document.getElementById('total-grade-text').innerText = finalGrade.text;
+        document.getElementById('total-score-text').innerText = `${rounded}%`;
+        document.getElementById('total-grade-text').innerText = getGradeText(rounded).text;
       } else {
         box.style.display = 'none';
       }
     }
 
-    // Init beim Start
+    // Init
     loadQuestion();
     loadExcelTask();
     loadDinQuizQuestion();
