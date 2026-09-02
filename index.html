@@ -119,7 +119,8 @@
   <div class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('glossary-tab', this)">📖 EDV-Glossar</button>
     <button class="tab-btn" onclick="switchTab('ihk-tab', this)">🧠 IHK-Quiz</button>
-    <button class="tab-btn" onclick="switchTab('din-tab', this)">📐 DIN 5008</button>
+    <button class="tab-btn" onclick="switchTab('din-info-tab', this)">📋 DIN 5008 Regeln</button>
+    <button class="tab-btn" onclick="switchTab('din-tab', this)">📐 DIN 5008 Quiz</button>
     <button class="tab-btn" onclick="switchTab('excel-tab', this)">⚡ Excel-Trainer</button>
     <button class="tab-btn" onclick="switchTab('noten-tab', this)">📊 Notenrechner</button>
     <button class="tab-btn" onclick="switchTab('download-tab', this)">📂 Downloads</button>
@@ -218,6 +219,121 @@
       <div class="quiz-options" id="quiz-options"></div>
       <div id="quiz-feedback" class="feedback-box" style="display: none;"></div>
       <button id="next-quiz-btn" class="btn btn-primary" onclick="nextQuestion()" style="display: none; margin-top: 15px;">Nächste Frage ➔</button>
+    </div>
+  </div>
+
+  <div id="din-info-tab" class="section-content">
+    <h2 style="margin-top: 0; color: var(--primary);">📋 DIN 5008 – Die Regeln für Geschäftsbriefe</h2>
+    <p style="color: var(--text-muted); margin-bottom: 25px;">Aufbau, Zeichensetzung, Zahlenschreibweise und Anschrift – alles, was du für die AP1 zur DIN 5008 wissen musst. Am Ende geht's direkt weiter zum Mini-Quiz.</p>
+
+    <div class="glossary-grid-detailed">
+
+      <div class="detail-card">
+        <h3>📄 Form A vs. Form B</h3>
+        <div class="syntax-box">Form A: Datum bei 27 mm<br>Form B: Datum bei 45 mm (Standard)</div>
+        <p><strong>Erklärung:</strong> Die DIN 5008 kennt zwei Layoutvarianten für den Briefbogen. Form B ist die in der Praxis übliche Form – sie lässt mehr Platz für einen ausführlichen Briefkopf (z. B. mit Firmenlogo) oberhalb des Anschriftfeldes und ist auf Fensterumschläge abgestimmt.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>📐 Seitenränder</h3>
+        <div class="syntax-box">Links: 25 mm<br>Rechts: mind. 10 mm (empf. 20 mm)<br>Oben/Unten: 20 mm</div>
+        <p><strong>Erklärung:</strong> Der linke Rand ist bewusst großzügig für die Abheftung (Lochung) bemessen. Rechts genügt laut Norm ein Mindestabstand von 10 mm, in der Praxis wird aber meist 20 mm für ein ausgewogenes Schriftbild verwendet.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>📬 Anschriftfeld: Aufbau</h3>
+        <div class="syntax-box">Größe: 85,0 mm × 40,0 mm<br>Zusatz-/Vermerkzone: 5 Zeilen<br>Anschriftzone: 6 Zeilen</div>
+        <p><strong>Erklärung:</strong> Das Anschriftfeld ist in zwei Bereiche geteilt. Oben steht die Zusatz- und Vermerkzone (z. B. „Einschreiben", „Vertraulich", Absenderzeile). Darunter folgt die eigentliche Anschriftzone mit Empfängername, Straße und Ort. Leerzeilen innerhalb des Feldes sind nicht vorgesehen – jede Zeile wird direkt genutzt.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>🌍 Anschrift: Inland & Ausland</h3>
+        <div class="syntax-box">Inland: Musterstraße 1<br>12345 Musterstadt<br><br>Ausland: Bahnhofstr. 5<br>CH-8001 ZÜRICH<br>SCHWEIZ</div>
+        <p><strong>Erklärung:</strong> Bei Inlandsadressen steht die Postleitzahl unmittelbar (ungegliedert) vor dem Ort. Bei Auslandssendungen wird der Bestimmungsort in Großbuchstaben geschrieben, und in der letzten Zeile steht – ebenfalls in Großbuchstaben – der Ländername auf Deutsch.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>📅 Datum schreiben</h3>
+        <div class="syntax-box">Numerisch (ISO): 2026-08-18<br>Alphanumerisch: 18. August 2026</div>
+        <p><strong>Erklärung:</strong> Bei der numerischen Schreibweise wird das Datum nach ISO-Norm mit vierstelligem Jahr zuerst geschrieben (JJJJ-MM-TT), damit es eindeutig und international verständlich ist. In der alphanumerischen Variante wird der Monatsname immer ausgeschrieben, niemals abgekürzt.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>📝 Betreffzeile</h3>
+        <div class="syntax-box">Kein „Betreff:" davor<br>Kein Punkt danach<br>Meist fett hervorgehoben</div>
+        <p><strong>Erklärung:</strong> Nach DIN 5008 entfällt das einleitende Wort „Betreff". Die Zeile steht für sich, oft fett gedruckt, und endet ohne Schlusspunkt. Zwischen Anschriftfeld und Betreffzeile liegen 2 Leerzeilen, zwischen Betreffzeile und Anrede folgt eine weitere Leerzeile.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>👋 Anrede & Grußformel</h3>
+        <div class="syntax-box">„Sehr geehrte Damen und Herren,"<br>„Mit freundlichen Grüßen"</div>
+        <p><strong>Erklärung:</strong> Nach der Anrede folgt eine Leerzeile, bevor der Brieftext beginnt. Vor der Grußformel steht ebenfalls eine Leerzeile. Wichtig: Nach „Mit freundlichen Grüßen" steht <strong>kein</strong> Komma – die Grußformel ist kein vollständiger Satz.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>✍️ Unterschrift & Namenswiederholung</h3>
+        <div class="syntax-box">3 Leerzeilen für die Unterschrift</div>
+        <p><strong>Erklärung:</strong> Zwischen Grußformel und dem maschinengeschriebenen Namen des Unterzeichners werden 3 Leerzeilen freigehalten, damit dort handschriftlich unterschrieben werden kann. Der Name wird darunter in Klarschrift wiederholt – ohne Klammern oder Bindestrich davor.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>📎 Anlagenvermerk & Verteiler</h3>
+        <div class="syntax-box">Anlagen<br>Kein Doppelpunkt danach</div>
+        <p><strong>Erklärung:</strong> Das Wort „Anlagen" wird meist fett gesetzt und steht ohne Doppelpunkt. Darunter werden die beigefügten Dokumente einzeln aufgelistet. Der Anlagenvermerk folgt mit 1 Leerzeile Abstand unter der Namenswiederholung des Unterzeichners.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>☎️ Telefon & Fax</h3>
+        <div class="syntax-box">0221 91234-56<br>Vorwahl [Leerzeichen] Rufnummer-Durchwahl</div>
+        <p><strong>Erklärung:</strong> Vorwahl und Rufnummer werden durch ein Leerzeichen getrennt. Eine Durchwahl wird direkt mit einem Bindestrich an die Rufnummer angehängt – ohne zusätzliches Leerzeichen davor.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>🏦 IBAN & Postfach</h3>
+        <div class="syntax-box">IBAN: DE12 3456 7890 1234 5678 90<br>Postfach: 12 34 56</div>
+        <p><strong>Erklärung:</strong> Die IBAN wird von links nach rechts in Blöcken zu je 4 Zeichen mit Leerzeichen gegliedert. Postfachnummern werden dagegen von <strong>rechts</strong> nach links in Zweiergruppen gegliedert – anders als die Postleitzahl, die immer ungegliedert bleibt.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>🕐 Uhrzeit & Geldbeträge</h3>
+        <div class="syntax-box">Uhrzeit: 14:30 Uhr<br>Betrag: 1.234,56 €</div>
+        <p><strong>Erklärung:</strong> Uhrzeiten werden zweistellig mit Doppelpunkt getrennt (Stunden:Minuten). Bei Geldbeträgen gliedert der Punkt die Tausenderstellen, das Komma trennt die Nachkommastellen (Cent-Beträge).</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>➖ Bindestrich vs. Gedankenstrich</h3>
+        <div class="syntax-box">Bindestrich: Word-Datei (kein Leerzeichen)<br>Gedankenstrich: Montag – Freitag (mit Leerzeichen)</div>
+        <p><strong>Erklärung:</strong> Der kurze Bindestrich verbindet zwei Wortteile ohne Leerzeichen davor oder danach. Der längere Gedankenstrich (Halbgeviertstrich) trennt dagegen Satzteile oder kennzeichnet Wertebereiche und wird jeweils mit einem Leerzeichen davor und danach geschrieben.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>🖋️ Hervorhebungen im Text</h3>
+        <div class="syntax-box">Fettdruck · Kursivschrift · Sperrung</div>
+        <p><strong>Erklärung:</strong> Wichtige Textstellen können durch Fettdruck, Kursivschrift oder Sperrung hervorgehoben werden. Eine Unterstreichung ist nach DIN 5008 speziell für Internetadressen und E-Mail-Adressen vorgesehen, nicht für normale Textbetonung.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>💻 Besonderheiten bei E-Mails</h3>
+        <div class="syntax-box">Zeilenlänge einzeilig<br>Keine Silbentrennung</div>
+        <p><strong>Erklärung:</strong> Für die E-Mail-Gestaltung gelten eigene Empfehlungen der DIN 5008: Absätze werden durch eine Leerzeile getrennt (kein Einzug), es wird nicht manuell silbentrennt, und lange Zeilen werden nicht hart umgebrochen, damit die Darstellung beim Empfänger nicht verrutscht.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>🔢 Ziffern & Zahlwörter</h3>
+        <div class="syntax-box">Ziffern ab 13: 13, 25, 100<br>Zahlwörter bis 12: eins bis zwölf</div>
+        <p><strong>Erklärung:</strong> Als praktische Faustregel im Geschäftsschriftverkehr werden Zahlen von eins bis zwölf häufig ausgeschrieben, ab 13 wird in der Regel die Ziffer verwendet. Bei technischen Angaben, Mengen oder Beträgen werden aber grundsätzlich Ziffern genutzt, unabhängig von der Höhe.</p>
+      </div>
+
+      <div class="detail-card">
+        <h3>✅ Kurz-Checkliste Geschäftsbrief</h3>
+        <div class="syntax-box">Anschrift → Datum → Betreff → Anrede → Text → Gruß → Unterschrift → Anlagen</div>
+        <p><strong>Erklärung:</strong> Das ist die typische Reihenfolge eines DIN-5008-konformen Geschäftsbriefs von oben nach unten. Wer sich diese Kette merkt, hat das Grundgerüst für fast jede AP1-Aufgabe zum Thema Geschäftskorrespondenz parat.</p>
+      </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+      <button class="btn btn-primary" onclick="switchTab('din-tab', document.querySelectorAll('.tab-btn')[3])">Weiter zum DIN 5008 Quiz ➔</button>
     </div>
   </div>
 
