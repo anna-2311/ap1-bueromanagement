@@ -98,6 +98,27 @@
     .excel-input-group input { flex: 1; padding: 12px; border: 2px solid var(--border); border-radius: 8px; font-family: monospace; font-size: 1rem; }
     
     .download-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 15px 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+
+    /* Musterbrief-Mockup */
+    .letter-mockup { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+    .letter-paper {
+      background: #ffffff; border: 1px solid var(--border); border-radius: 4px;
+      box-shadow: 0 10px 25px -8px rgba(0,0,0,0.15);
+      padding: 40px 45px; width: 480px; max-width: 100%;
+      font-family: 'Courier New', monospace; font-size: 0.82rem; line-height: 1.55; color: #1e293b;
+    }
+    .letter-line { white-space: pre; }
+    .letter-sender { font-size: 0.68rem; color: var(--text-muted); border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 4px; white-space: normal; }
+    .letter-date { text-align: right; }
+    .letter-bold { font-weight: 700; }
+    .din-marker {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 18px; height: 18px; border-radius: 50%; background: var(--secondary); color: white;
+      font-size: 0.65rem; font-weight: 700; font-family: 'Inter', sans-serif; margin-left: 4px;
+    }
+    .letter-legend { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--text-main); }
+    .letter-legend > div { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+    .letter-legend .din-marker { margin-left: 0; margin-right: 8px; flex: none; }
     .download-card.is-disabled { opacity: 0.75; }
     .download-status { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
     .scenario-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
@@ -332,6 +353,52 @@
 
     </div>
 
+    <h3 style="margin-top: 40px; color: var(--primary);">📄 Musterbrief mit Anmerkungen</h3>
+    <p style="color: var(--text-muted); margin-bottom: 15px;">So sieht ein vollständiger Geschäftsbrief nach DIN 5008 aus. Die Kreise verweisen auf die Regeln aus den Karten oben.</p>
+
+    <div class="letter-mockup">
+      <div class="letter-paper">
+        <div class="letter-line letter-sender">Musterfirma GmbH &middot; Musterstraße 1 &middot; 12345 Musterstadt</div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">Frau <span class="din-marker">①</span></div>
+        <div class="letter-line">Erika Musterfrau</div>
+        <div class="letter-line">Beispielweg 22</div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">54321 Beispielstadt</div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line letter-date">18. August 2026 <span class="din-marker">②</span></div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line letter-bold">Bewerbung als Kauffrau für Büromanagement <span class="din-marker">③</span></div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">Sehr geehrte Damen und Herren, <span class="din-marker">④</span></div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">vielen Dank für die Ausschreibung der Stelle. Hiermit bewerbe ich mich um</div>
+        <div class="letter-line">die ausgeschriebene Position und freue mich auf Ihre Rückmeldung.</div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">Mit freundlichen Grüßen <span class="din-marker">⑤</span></div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line">Erika Musterfrau <span class="din-marker">⑥</span></div>
+        <div class="letter-line">&nbsp;</div>
+        <div class="letter-line letter-bold">Anlagen <span class="din-marker">⑦</span></div>
+        <div class="letter-line">Lebenslauf</div>
+        <div class="letter-line">Zeugniskopien</div>
+      </div>
+
+      <div class="letter-legend">
+        <div><span class="din-marker">①</span> Anschriftzone: Anrede, Name, Straße, PLZ/Ort - ohne Leerzeilen dazwischen</div>
+        <div><span class="din-marker">②</span> Datum rechtsbündig, alphanumerisch mit ausgeschriebenem Monat</div>
+        <div><span class="din-marker">③</span> Betreffzeile: kein „Betreff:", kein Punkt am Ende, meist fett</div>
+        <div><span class="din-marker">④</span> Nach der Anrede folgt 1 Leerzeile vor dem Brieftext</div>
+        <div><span class="din-marker">⑤</span> Grußformel ohne Komma danach, da kein vollständiger Satz</div>
+        <div><span class="din-marker">⑥</span> 3 Leerzeilen Platz für die handschriftliche Unterschrift</div>
+        <div><span class="din-marker">⑦</span> „Anlagen" ohne Doppelpunkt, darunter die einzelnen Dokumente</div>
+      </div>
+    </div>
+
     <div style="text-align: center; margin-top: 30px;">
       <button class="btn btn-primary" onclick="switchTab('din-tab', document.querySelectorAll('.tab-btn')[3])">Weiter zum DIN 5008 Quiz ➔</button>
     </div>
@@ -352,8 +419,8 @@
     <div id="excel-trainer-card">
       <h2 style="margin-top: 0; color: var(--primary);">⚡ Excel Formel-Trainer</h2>
       <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: var(--text-muted);">
-        <span id="excel-progress">Aufgabe 1 von 5</span>
-        <span id="excel-score-display">Punkte: 0 / 5</span>
+        <span id="excel-progress">Aufgabe 1 von 12</span>
+        <span id="excel-score-display">Punkte: 0 / 12</span>
       </div>
       <div class="quiz-question" id="excel-question" style="font-size: 1.1rem; font-weight: bold; margin-bottom: 15px;">Lädt Aufgabe...</div>
       <div id="excel-table-container"></div>
@@ -626,7 +693,14 @@
       { task: "Prüfe mit WENN: Ist B2 größer 100? Wenn ja, 'Bonus', sonst 'Kein Bonus'.", answers: ["=wenn(b2>100;\"bonus\";\"keinbonus\")"], hint: "Syntax: =WENN(Bedingung; Dann-Wert; Sonst-Wert) - Texte in Anführungszeichen!", tableHtml: `<table class="mini-table"><tr><th>A</th><th>B</th><th>C</th></tr><tr><td>Müller</td><td>125</td><td>[ Formel ]</td></tr></table>` },
       { task: "Zähle im Bereich B1:B20 alle Zellen, in denen der Wert größer als 50 ist.", answers: ["=zählenwenn(b1:b20;\">50\")"], hint: "Syntax: =ZÄHLENWENN(Bereich; Kriterium)", tableHtml: `<table class="mini-table"><tr><th>A</th><th>B</th></tr><tr><td>Produkt A</td><td>45</td></tr></table>` },
       { task: "Summiere alle Beträge in C1:C50, deren Status in B1:B50 'Bezahlt' ist.", answers: ["=summewenn(b1:b50;\"bezahlt\";c1:c50)"], hint: "Syntax: =SUMMEWENN(Suchbereich; Kriterium; Summenbereich)", tableHtml: `<table class="mini-table"><tr><th>A</th><th>B</th><th>C</th></tr><tr><td>R-1</td><td>Bezahlt</td><td>150,00 €</td></tr></table>` },
-      { task: "Runde den Wert in A1 kaufmännisch auf 2 Nachkommastellen.", answers: ["=runden(a1;2)"], hint: "Syntax: =RUNDEN(Zahl; Stellen)", tableHtml: `<table class="mini-table"><tr><th>A</th></tr><tr><td>125,4567</td></tr></table>` }
+      { task: "Runde den Wert in A1 kaufmännisch auf 2 Nachkommastellen.", answers: ["=runden(a1;2)"], hint: "Syntax: =RUNDEN(Zahl; Stellen)", tableHtml: `<table class="mini-table"><tr><th>A</th></tr><tr><td>125,4567</td></tr></table>` },
+      { task: "Berechne in C2 den Bruttopreis: Nettopreis (B2) multipliziert mit dem MwSt-Satz aus der fixierten Zelle B1. Nutze einen absoluten Bezug auf B1, damit die Formel später nach unten kopiert werden kann.", answers: ["=b2*$b$1", "=$b$1*b2"], hint: "Syntax: Ein absoluter Bezug wird mit $-Zeichen fixiert, z. B. $B$1 - er bleibt beim Kopieren immer gleich.", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th><th>C</th></tr><tr><td><strong>1</strong></td><td>MwSt-Satz</td><td>1,19</td><td></td></tr><tr><td><strong>2</strong></td><td>Nettopreis</td><td>100,00 €</td><td>[ Formel ]</td></tr></table>` },
+      { task: "Zähle in B1:B6, wie viele Zellen befüllt sind - auch Textzellen sollen mitgezählt werden.", answers: ["=anzahl2(b1:b6)"], hint: "Syntax: =ANZAHL2(Bereich) - zählt alle nicht-leeren Zellen, auch Text. ANZAHL zählt dagegen nur reine Zahlen.", tableHtml: `<table class="mini-table"><tr><th>A</th><th>B</th></tr><tr><td>Kunde 1</td><td>bezahlt</td></tr><tr><td>Kunde 2</td><td>120</td></tr><tr><td>Kunde 3</td><td>(leer)</td></tr></table>` },
+      { task: "Berechne in C8 den Durchschnitt der Verkaufszahlen in B2:B7.", answers: ["=mittelwert(b2:b7)"], hint: "Syntax: =MITTELWERT(Bereich)", tableHtml: `<table class="mini-table"><tr><th>A</th><th>B</th></tr><tr><td>Januar</td><td>320</td></tr><tr><td>Februar</td><td>410</td></tr><tr><td>...</td><td>...</td></tr></table>` },
+      { task: "Ermittle in C2 den Rang des Wertes aus B2 innerhalb von B2:B6 - der höchste Wert soll Rang 1 erhalten.", answers: ["=rang.gleich(b2;b2:b6)"], hint: "Syntax: =RANG.GLEICH(Zahl; Bezug) - ohne Reihenfolge-Parameter wird automatisch absteigend sortiert (höchster Wert = Rang 1).", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th><th>C</th></tr><tr><td><strong>2</strong></td><td>Team A</td><td>87</td><td>[ Formel ]</td></tr><tr><td>3</td><td>Team B</td><td>95</td><td></td></tr></table>` },
+      { task: "Berechne in B3 die Anzahl der Tage zwischen dem Ausgangsdatum in B1 und dem Enddatum in B2 auf Basis eines 360-Tage-Jahres.", answers: ["=tage360(b1;b2)"], hint: "Syntax: =TAGE360(Ausgangsdatum; Enddatum) - wird häufig in der Zinsberechnung genutzt.", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th></tr><tr><td><strong>1</strong></td><td>Start</td><td>01.01.2026</td></tr><tr><td><strong>2</strong></td><td>Ende</td><td>31.03.2026</td></tr></table>` },
+      { task: "Prüfe mit WENN und UND: Ist die Bestellmenge (B2) größer als 50 UND ist der Kunde ein Stammkunde (C2 = 'ja')? Wenn beides zutrifft, gib 'Rabatt' aus, sonst 'KeinRabatt'.", answers: ["=wenn(und(b2>50;c2=\"ja\");\"rabatt\";\"keinrabatt\")"], hint: "Syntax: =WENN(UND(Bedingung1;Bedingung2);Dann-Wert;Sonst-Wert) - bei UND müssen beide Bedingungen erfüllt sein.", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th><th>C</th></tr><tr><td><strong>2</strong></td><td>Müller</td><td>75</td><td>ja</td></tr></table>` },
+      { task: "Prüfe mit WENN und ODER: Liegt die Note in B2 bei 1 ODER bei 2? Wenn ja, gib 'Top' aus, sonst 'Weiter'.", answers: ["=wenn(oder(b2=1;b2=2);\"top\";\"weiter\")"], hint: "Syntax: =WENN(ODER(Bedingung1;Bedingung2);Dann-Wert;Sonst-Wert) - bei ODER reicht eine einzige erfüllte Bedingung.", tableHtml: `<table class="mini-table"><tr><th></th><th>A</th><th>B</th></tr><tr><td><strong>2</strong></td><td>Schmidt</td><td>2</td></tr></table>` }
     ];
     let currentExcelIndex = 0; let excelScore = 0;
 
